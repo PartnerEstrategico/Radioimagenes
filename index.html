@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard RRA – Radioimágenes · 1–5 jun 2026</title>
+<title>Dashboard RRA – Radioimágenes · Radiólogos Asociados</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -15,48 +15,53 @@
   --text:#111827;--text2:#6b7280;--border:#e5e7eb;
   --radius:8px;--radius-lg:12px;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
-.wrap{max-width:1100px;margin:0 auto;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,.08);}
-.hdr{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
-.hdr-left{display:flex;align-items:center;gap:12px;}
-.hdr-icon{width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.hdr-icon i{font-size:18px;color:#fff;}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+.wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;}
+.hdr{background:var(--navy);color:#fff;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;}
 .hdr-name{font-size:15px;font-weight:600;color:#fff;}
 .hdr-sub{font-size:11px;color:#8fa8c8;margin-top:2px;}
 .hdr-right{font-size:11px;color:#8fa8c8;text-align:right;}
-.tabs{background:var(--navy);display:flex;padding:0 24px;border-bottom:1px solid #1e3a5f;overflow-x:auto;}
-.tab{padding:10px 16px;font-size:13px;color:#8fa8c8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;}
+/* TABS */
+.tabs{background:var(--navy);display:flex;padding:0 28px;border-bottom:1px solid #1e3a5f;overflow-x:auto;}
+.tab{padding:10px 18px;font-size:13px;color:#8fa8c8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal);}
 .tab:hover:not(.active){color:#c5d5e8;}
-.page{display:none;padding:20px 24px;background:var(--bg);}
+/* FILTER BAR */
+.filterbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.filterbar label{font-size:12px;color:var(--text2);}
+.fsel{font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;color:var(--text);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:26px;}
+.fsel:focus{outline:none;border-color:var(--teal);}
+.finput{font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;color:var(--text);}
+.finput:focus{outline:none;border-color:var(--teal);}
+.pill{background:var(--navy);color:#fff;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;}
+.pill-r{background:var(--red);color:#fff;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;}
+.fdate-wrap{display:flex;align-items:center;gap:8px;}
+#fecha-wrap{display:none;}
+#rango-wrap{display:none;}
+/* PAGES */
+.page{display:none;padding:20px 28px;background:var(--bg);flex:1;}
 .page.active{display:block;}
-/* periodo */
-.periodo{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
-.periodo label{font-size:12px;color:var(--text2);}
-.sel{font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;}
-.pill{background:var(--navy);color:#fff;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:500;}
-.pill-r{background:var(--red);color:#fff;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:500;}
-/* section label */
+/* SECTION LABEL */
 .lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text2);margin-bottom:10px;}
-/* kpi */
+/* KPI */
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
 @media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
 .kpi{background:var(--surface);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);border-top:3px solid var(--border);}
-.kpi.t{border-top-color:var(--teal);} .kpi.g{border-top-color:var(--green);} .kpi.r{border-top-color:var(--red);}
+.kpi.t{border-top-color:var(--teal);}.kpi.g{border-top-color:var(--green);}.kpi.r{border-top-color:var(--red);}
 .kpi-l{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:4px;}
 .kpi-n{font-size:28px;font-weight:700;line-height:1;color:var(--text);}
-.kpi.t .kpi-n{color:var(--teal);} .kpi.g .kpi-n{color:var(--green);} .kpi.r .kpi-n{color:var(--red);}
+.kpi.t .kpi-n{color:var(--teal);}.kpi.g .kpi-n{color:var(--green);}.kpi.r .kpi-n{color:var(--red);}
 .kpi-s{font-size:11px;color:var(--text2);margin-top:4px;}
 .kpi-p{font-weight:600;}
-.kpi.t .kpi-p{color:var(--teal);} .kpi.g .kpi-p{color:var(--green);} .kpi.r .kpi-p{color:var(--red);}
-/* card */
+.kpi.t .kpi-p{color:var(--teal);}.kpi.g .kpi-p{color:var(--green);}.kpi.r .kpi-p{color:var(--red);}
+/* CARDS */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:14px;}
 .card.ra{border-left:4px solid var(--red);}
 .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 .ct{font-size:14px;font-weight:600;color:var(--text);}
 .cd{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;}
 .cd strong{color:var(--text);}
-/* cupos */
+/* CUPOS */
 .cupos-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 @media(max-width:600px){.cupos-g{grid-template-columns:repeat(2,1fr);}}
 .cp{background:#fff5f5;border:1px solid #fca5a5;border-radius:var(--radius);padding:10px;text-align:center;}
@@ -66,71 +71,67 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cp-tot{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:var(--radius);padding:10px;text-align:center;}
 .cp-tot-n{font-size:22px;font-weight:700;color:var(--green);}
 .cp-tot-l{font-size:10px;color:#166534;}
-/* alerts */
+/* ALERTS */
 .aa{background:#fffbeb;border:1px solid #fcd34d;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#78350f;margin-top:10px;line-height:1.5;}
 .aa strong{color:#451a03;}
 .at{background:var(--teal-l);border:1px solid #80deea;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--teal-d);margin-top:10px;line-height:1.5;}
 .at strong{color:#004d56;}
 .note{font-size:10px;color:var(--text2);margin-top:8px;}
-/* two col */
+/* TWO COL */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 @media(max-width:650px){.two{grid-template-columns:1fr;}}
-/* bar rows */
+/* BAR ROWS */
 .br{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .bl{font-size:12px;color:var(--text2);width:140px;flex-shrink:0;}
 .bt{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;}
 .bf{height:100%;border-radius:4px;}
 .bv{font-size:11px;color:var(--text);width:80px;text-align:right;flex-shrink:0;}
-/* donut */
+/* DONUT */
 .dw{display:flex;align-items:center;gap:20px;}
 .li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);margin-bottom:8px;}
 .ld{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-/* duration */
+/* DURATION */
 .dg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;}
 .dv{font-size:20px;font-weight:700;color:var(--text);}
 .dbw{height:44px;display:flex;align-items:flex-end;justify-content:center;margin:4px 0;}
 .db{width:40px;border-radius:3px 3px 0 0;}
 .dl{font-size:10px;color:var(--text2);}
 .dp{font-size:11px;color:var(--text2);}
-/* tables */
+/* TABLES */
 .tbl{width:100%;font-size:12px;border-collapse:collapse;}
 .tbl th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#fff;background:var(--navy);padding:9px 11px;text-align:left;}
 .tbl td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--text);}
 .tbl tr:hover td{background:var(--surface2);}
 .tbl tr.tot td{font-weight:600;background:var(--surface2);}
 .bdg{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;}
-.b-r{background:#fee2e2;color:#991b1b;} .b-a{background:#fef3c7;color:#78350f;}
-.b-b{background:#dbeafe;color:#1e40af;} .b-g{background:#dcfce7;color:#166534;}
-/* spec list */
+.b-r{background:#fee2e2;color:#991b1b;}.b-a{background:#fef3c7;color:#78350f;}
+.b-b{background:#dbeafe;color:#1e40af;}.b-g{background:#dcfce7;color:#166534;}
+/* SPEC LIST */
 .sl{display:flex;flex-direction:column;gap:6px;}
 .si{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius);border:1px solid var(--border);}
 .sr{font-size:12px;font-weight:700;color:var(--teal);width:18px;}
 .sn{font-size:12px;color:var(--text);flex:1;}
 .sc{font-size:13px;font-weight:700;color:var(--text);width:26px;text-align:right;}
 .sep{font-size:11px;color:var(--text2);margin-top:10px;padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;}
-/* fuentes */
+/* FUENTES */
 .fkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
 @media(max-width:600px){.fkpi{grid-template-columns:1fr;}}
-/* trend chart legend */
+/* CHART LEGEND */
 .chart-legend{display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap;}
 .cl{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
 .cs{width:10px;height:10px;border-radius:2px;}
 </style>
 </head>
 <body>
-<div style="padding:16px;">
 <div class="wrap">
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="hdr-left">
-    <div class="hdr-icon"><i class="ti ti-radio"></i></div>
-    <div>
-      <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
-      <div class="hdr-sub">Gestión de confirmación de citas</div>
-    </div>
+  <div>
+    <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
+    <div class="hdr-sub">Gestión de confirmación de citas</div>
   </div>
-  <div class="hdr-right">1 al 5 jun 2026 · 3.840 registros</div>
+  <div class="hdr-right" id="hdr-meta">1 al 5 jun 2026 · 3.840 registros</div>
 </div>
 
 <!-- TABS -->
@@ -141,114 +142,141 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="tab" onclick="st('fuentes')">Fuentes y cobertura</div>
 </div>
 
+<!-- FILTER BAR -->
+<div class="filterbar">
+  <label>Período:</label>
+  <select class="fsel" id="periodo-sel" onchange="onPeriodo()">
+    <option value="todos">Todos los datos</option>
+    <option value="7dias">Últimos 7 días</option>
+    <option value="mes">Último mes</option>
+    <option value="fecha" selected>Fecha específica</option>
+    <option value="rango">Rango personalizado</option>
+  </select>
+
+  <div id="fecha-wrap" class="fdate-wrap">
+    <label>Fecha:</label>
+    <select class="fsel" id="fecha-sel" onchange="applyFilter()">
+      <option value="1">1 jun 2026</option>
+      <option value="2">2 jun 2026</option>
+      <option value="3">3 jun 2026</option>
+      <option value="4">4 jun 2026</option>
+      <option value="5" selected>5 jun 2026</option>
+    </select>
+  </div>
+
+  <div id="rango-wrap" class="fdate-wrap">
+    <label>Desde:</label>
+    <select class="fsel" id="rango-desde" onchange="applyFilter()">
+      <option value="1">1 jun 2026</option>
+      <option value="2">2 jun 2026</option>
+      <option value="3">3 jun 2026</option>
+      <option value="4">4 jun 2026</option>
+      <option value="5">5 jun 2026</option>
+    </select>
+    <label>Hasta:</label>
+    <select class="fsel" id="rango-hasta" onchange="applyFilter()">
+      <option value="1">1 jun 2026</option>
+      <option value="2">2 jun 2026</option>
+      <option value="3">3 jun 2026</option>
+      <option value="4">4 jun 2026</option>
+      <option value="5" selected>5 jun 2026</option>
+    </select>
+  </div>
+
+  <span class="pill" id="pill-citas">3.840 citas</span>
+</div>
+
 <!-- ===== RESUMEN ===== -->
 <div class="page active" id="p-resumen">
-  <div class="periodo">
-    <label>Período:</label><span class="sel">1 – 5 jun 2026</span>
-    <span class="pill">3.840 citas</span>
-    <span style="font-size:11px;color:var(--text2);">5 días hábiles</span>
-  </div>
   <p class="lbl">Indicadores clave del período</p>
   <div class="kpi-row">
-    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n">3.840</div><div class="kpi-s">~768 citas/día promedio</div></div>
-    <div class="kpi t"><div class="kpi-l">Contactadas</div><div class="kpi-n">2.713</div><div class="kpi-s"><span class="kpi-p">70.7%</span> contact ratio</div></div>
-    <div class="kpi g"><div class="kpi-l">Confirman asistencia</div><div class="kpi-n">2.111</div><div class="kpi-s"><span class="kpi-p">95.9%</span> de encuestados</div></div>
-    <div class="kpi r"><div class="kpi-l">Cancelaciones</div><div class="kpi-n">90</div><div class="kpi-s"><span class="kpi-p">4.1%</span> cupos liberados</div></div>
+    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n" id="k-total">3.840</div><div class="kpi-s" id="k-total-s">~768 citas/día promedio</div></div>
+    <div class="kpi t"><div class="kpi-l">Contactadas</div><div class="kpi-n" id="k-contact">2.713</div><div class="kpi-s"><span class="kpi-p" id="k-contact-p">70.7%</span> contact ratio</div></div>
+    <div class="kpi g"><div class="kpi-l">Confirman asistencia</div><div class="kpi-n" id="k-asiste">2.111</div><div class="kpi-s"><span class="kpi-p" id="k-asiste-p">95.9%</span> de encuestados</div></div>
+    <div class="kpi r"><div class="kpi-l">Cancelaciones</div><div class="kpi-n" id="k-cancel">90</div><div class="kpi-s"><span class="kpi-p" id="k-cancel-p">4.1%</span> cupos liberados</div></div>
   </div>
 
   <div class="card ra">
-    <div class="ch"><span class="ct">Cupos liberados por modalidad — período completo</span><span class="pill-r">90 cupos libres</span></div>
-    <div class="cd"><strong>90 pacientes</strong> solicitaron cancelar su cita durante el período 1–5 de junio. Cupos que pudieron reasignarse a pacientes en lista de espera.</div>
-    <div class="cupos-g">
-      <div class="cp"><div class="cp-l">Ultrasonido</div><div class="cp-n">52</div><div class="cp-s">cupos</div></div>
-      <div class="cp"><div class="cp-l">Rayos X</div><div class="cp-n">17</div><div class="cp-s">cupos</div></div>
-      <div class="cp"><div class="cp-l">Mamografía</div><div class="cp-n">12</div><div class="cp-s">cupos</div></div>
-      <div class="cp"><div class="cp-l">Tomografía</div><div class="cp-n">5</div><div class="cp-s">cupos</div></div>
+    <div class="ch"><span class="ct">Cupos liberados por modalidad</span><span class="pill-r" id="badge-cupos">90 cupos libres</span></div>
+    <div class="cd" id="cupos-desc"><strong>90 pacientes</strong> solicitaron cancelar su cita durante el período seleccionado.</div>
+    <div class="cupos-g" id="cupos-grid">
+      <div class="cp"><div class="cp-l">Ultrasonido</div><div class="cp-n" id="c-us">52</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Rayos X</div><div class="cp-n" id="c-rx">17</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Mamografía</div><div class="cp-n" id="c-mam">12</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Tomografía</div><div class="cp-n" id="c-tac">5</div><div class="cp-s">cupos</div></div>
     </div>
     <div class="cupos-g" style="margin-top:8px;">
-      <div class="cp"><div class="cp-l">Fluoroscopía</div><div class="cp-n">3</div><div class="cp-s">cupos</div></div>
-      <div class="cp"><div class="cp-l">Densitometría</div><div class="cp-n">1</div><div class="cp-s">cupos</div></div>
-      <div style="grid-column:span 1;"></div>
-      <div class="cp-tot"><div class="cp-tot-l">Total recuperable</div><div class="cp-tot-n">90</div><div class="cp-tot-l">cupos totales</div></div>
+      <div class="cp"><div class="cp-l">Fluoroscopía</div><div class="cp-n" id="c-flu">3</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Densitometría</div><div class="cp-n" id="c-den">1</div><div class="cp-s">cupos</div></div>
+      <div></div>
+      <div class="cp-tot"><div class="cp-tot-l">Total recuperable</div><div class="cp-tot-n" id="c-tot">90</div><div class="cp-tot-l">cupos totales</div></div>
     </div>
-    <div class="aa"><strong>Acción sugerida:</strong> Ultrasonido concentra el 57.8% de las cancelaciones (52 cupos). Priorizar lista de espera en esta modalidad. Mamografía (12.5%) y Fluoroscopía (15.0%) tienen tasas críticas que requieren revisión.</div>
-    <p class="note">* Detalle de agenda y horario disponibles en el archivo DETALLE de cada informe diario</p>
+    <div class="aa">⚠ <strong>Ultrasonido</strong> concentra el mayor volumen de cancelaciones. Mamografía y Fluoroscopía presentan las tasas más altas y requieren revisión.</div>
+    <p class="note">* Detalle de agenda disponible en el archivo DETALLE de cada informe diario</p>
   </div>
 
   <div class="two">
     <div class="card">
       <p class="lbl">Resultado encuesta</p>
       <div class="dw">
-        <div style="position:relative;width:100px;height:100px;flex-shrink:0;">
-          <canvas id="dc"></canvas>
-        </div>
+        <div style="position:relative;width:100px;height:100px;flex-shrink:0;"><canvas id="dc"></canvas></div>
         <div>
-          <div class="li"><span class="ld" style="background:var(--teal);"></span>Asistirá — 2.111 (95.9%)</div>
-          <div class="li"><span class="ld" style="background:var(--red);"></span>Cancela — 90 (4.1%)</div>
-          <div class="li"><span class="ld" style="background:#d1d5db;"></span>Ignoró encuesta — 174</div>
-          <div class="li"><span class="ld" style="background:#e5e7eb;border:1px solid #d1d5db;"></span>No contactados — 1.465</div>
+          <div class="li"><span class="ld" style="background:var(--teal);"></span>Asistirá — <span id="leg-asiste">2.111 (95.9%)</span></div>
+          <div class="li"><span class="ld" style="background:var(--red);"></span>Cancela — <span id="leg-cancel">90 (4.1%)</span></div>
+          <div class="li"><span class="ld" style="background:#d1d5db;"></span>Ignoró encuesta — <span id="leg-ignoro">174</span></div>
+          <div class="li"><span class="ld" style="background:#e5e7eb;border:1px solid #d1d5db;"></span>No contactados — <span id="leg-nocontact">1.465</span></div>
         </div>
       </div>
     </div>
     <div class="card">
       <p class="lbl">Resultado de la llamada</p>
-      <div class="br"><span class="bl">Contestó</span><div class="bt"><div class="bf" style="width:100%;background:var(--navy);"></div></div><span class="bv">2.713 · 70.7%</span></div>
-      <div class="br"><span class="bl">No contestó</span><div class="bt"><div class="bf" style="width:59%;background:#f97316;"></div></div><span class="bv">644 · 16.8%</span></div>
-      <div class="br"><span class="bl">Buzón de voz</span><div class="bt"><div class="bf" style="width:39%;background:#a78bfa;"></div></div><span class="bv">413 · 10.8%</span></div>
-      <div class="br"><span class="bl">Línea ocupada</span><div class="bt"><div class="bf" style="width:4%;background:var(--amber);"></div></div><span class="bv">44 · 1.1%</span></div>
-      <div class="br"><span class="bl">Número inválido</span><div class="bt"><div class="bf" style="width:2%;background:var(--red);"></div></div><span class="bv">24 · 0.6%</span></div>
+      <div class="br"><span class="bl">Contestó</span><div class="bt"><div class="bf" id="bar-contesto" style="width:100%;background:var(--navy);"></div></div><span class="bv" id="bv-contesto">2.713 · 70.7%</span></div>
+      <div class="br"><span class="bl">No contestó</span><div class="bt"><div class="bf" id="bar-noc" style="background:#f97316;"></div></div><span class="bv" id="bv-noc">644 · 16.8%</span></div>
+      <div class="br"><span class="bl">Buzón de voz</span><div class="bt"><div class="bf" id="bar-vm" style="background:#a78bfa;"></div></div><span class="bv" id="bv-vm">413 · 10.8%</span></div>
+      <div class="br"><span class="bl">Línea ocupada</span><div class="bt"><div class="bf" id="bar-busy" style="background:var(--amber);"></div></div><span class="bv" id="bv-busy">44 · 1.1%</span></div>
+      <div class="br"><span class="bl">Número inválido</span><div class="bt"><div class="bf" id="bar-inv" style="background:var(--red);"></div></div><span class="bv" id="bv-inv">24 · 0.6%</span></div>
     </div>
   </div>
 
   <div class="card">
     <p class="lbl">Duración de llamadas contestadas (seg)</p>
     <div class="dg">
-      <div><div class="dv">238</div><div class="dbw"><div class="db" style="height:13%;background:#80deea;"></div></div><div class="dl">1–15 seg</div><div class="dp">8.8%</div></div>
-      <div><div class="dv">128</div><div class="dbw"><div class="db" style="height:7%;background:#80deea;"></div></div><div class="dl">16–30 seg</div><div class="dp">4.7%</div></div>
-      <div><div class="dv">573</div><div class="dbw"><div class="db" style="height:32%;background:var(--navy);"></div></div><div class="dl">31–45 seg</div><div class="dp">21.1%</div></div>
-      <div><div class="dv">1.774</div><div class="dbw"><div class="db" style="height:100%;background:var(--navy);"></div></div><div class="dl">>45 seg</div><div class="dp">65.4%</div></div>
+      <div><div class="dv" id="dur1">238</div><div class="dbw"><div class="db" style="height:13%;background:#80deea;"></div></div><div class="dl">1–15 seg</div><div class="dp" id="durp1">8.8%</div></div>
+      <div><div class="dv" id="dur2">128</div><div class="dbw"><div class="db" style="height:7%;background:#80deea;"></div></div><div class="dl">16–30 seg</div><div class="dp" id="durp2">4.7%</div></div>
+      <div><div class="dv" id="dur3">573</div><div class="dbw"><div class="db" style="height:32%;background:var(--navy);"></div></div><div class="dl">31–45 seg</div><div class="dp" id="durp3">21.1%</div></div>
+      <div><div class="dv" id="dur4">1.774</div><div class="dbw"><div class="db" style="height:100%;background:var(--navy);"></div></div><div class="dl">>45 seg</div><div class="dp" id="durp4">65.4%</div></div>
     </div>
   </div>
 </div>
 
 <!-- ===== TENDENCIA ===== -->
 <div class="page" id="p-tendencia">
-  <p class="lbl" style="margin-bottom:12px;">Evolución diaria — 1 al 5 de junio 2026</p>
-
+  <p class="lbl" style="margin-bottom:12px;">Evolución diaria — período seleccionado</p>
   <div class="card">
     <p class="lbl">Citas gestionadas vs contactadas por día</p>
     <div class="chart-legend">
       <div class="cl"><span class="cs" style="background:var(--navy);"></span>Total gestionadas</div>
       <div class="cl"><span class="cs" style="background:var(--teal);"></span>Contactadas</div>
     </div>
-    <div style="position:relative;height:200px;"><canvas id="barDia"></canvas></div>
+    <div style="position:relative;height:220px;"><canvas id="barDia"></canvas></div>
   </div>
-
   <div class="two">
     <div class="card">
       <p class="lbl">Contact ratio por día (%)</p>
-      <div style="position:relative;height:160px;"><canvas id="lineContact"></canvas></div>
+      <div style="position:relative;height:170px;"><canvas id="lineContact"></canvas></div>
     </div>
     <div class="card">
       <p class="lbl">Tasa de cancelación por día (%)</p>
-      <div style="position:relative;height:160px;"><canvas id="lineCancel"></canvas></div>
+      <div style="position:relative;height:170px;"><canvas id="lineCancel"></canvas></div>
     </div>
   </div>
-
   <div class="card">
     <p class="lbl">Resumen por día</p>
-    <table class="tbl">
+    <table class="tbl" id="trend-table">
       <thead><tr><th>Día</th><th>Total</th><th>Contactadas</th><th>Contact ratio</th><th>Asistirá</th><th>Cancela</th><th>Tasa cancel.</th></tr></thead>
-      <tbody>
-        <tr><td>1 jun</td><td>873</td><td>625</td><td>71.6%</td><td>506</td><td>17</td><td><span class="bdg b-b">3.3%</span></td></tr>
-        <tr><td>2 jun</td><td>763</td><td>537</td><td>70.4%</td><td>419</td><td>21</td><td><span class="bdg b-a">4.8%</span></td></tr>
-        <tr><td>3 jun</td><td>651</td><td>452</td><td>69.4%</td><td>359</td><td>13</td><td><span class="bdg b-b">3.5%</span></td></tr>
-        <tr><td>4 jun</td><td>724</td><td>515</td><td>71.1%</td><td>395</td><td>16</td><td><span class="bdg b-a">3.9%</span></td></tr>
-        <tr><td>5 jun</td><td>829</td><td>584</td><td>70.4%</td><td>432</td><td>23</td><td><span class="bdg b-a">5.1%</span></td></tr>
-        <tr class="tot"><td>Total</td><td>3.840</td><td>2.713</td><td>70.7%</td><td>2.111</td><td>90</td><td><span class="bdg b-b">4.1%</span></td></tr>
-      </tbody>
+      <tbody id="trend-tbody"></tbody>
     </table>
-    <div class="aa" style="margin-top:10px;">⚠ La tasa de cancelación muestra tendencia al alza: del 3.3% el día 1 al 5.1% el día 5. Se recomienda revisar factores operativos o de agenda que puedan estar influyendo.</div>
+    <div class="aa" style="margin-top:10px;" id="trend-alert">⚠ La tasa de cancelación muestra tendencia al alza: del 3.3% el día 1 al 5.1% el día 5.</div>
   </div>
 </div>
 
@@ -257,57 +285,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="two">
     <div class="card">
       <p class="lbl">Modalidades con más cancelaciones</p>
-      <div class="sl">
-        <div class="si"><span class="sr">1</span><span class="sn">Ultrasonido</span><span class="sc">52</span><span class="bdg b-b">3.7%</span></div>
-        <div class="si"><span class="sr">2</span><span class="sn">Rayos X</span><span class="sc">17</span><span class="bdg b-b">3.7%</span></div>
-        <div class="si"><span class="sr">3</span><span class="sn">Mamografía</span><span class="sc">12</span><span class="bdg b-r">12.5%</span></div>
-        <div class="si"><span class="sr">4</span><span class="sn">Tomografía</span><span class="sc">5</span><span class="bdg b-b">2.6%</span></div>
-        <div class="si"><span class="sr">5</span><span class="sn">Fluoroscopía</span><span class="sc">3</span><span class="bdg b-r">15.0%</span></div>
-        <div class="si"><span class="sr">6</span><span class="sn">Densitometría</span><span class="sc">1</span><span class="bdg b-b">3.7%</span></div>
-      </div>
-      <div class="sep"><span>Total cancelaciones</span><span style="font-weight:600;">90 &nbsp;·&nbsp; 4.1% base</span></div>
+      <div class="sl" id="mod-list"></div>
+      <div class="sep"><span>Total cancelaciones</span><span id="mod-total" style="font-weight:600;">90 · 4.1% base</span></div>
     </div>
     <div class="card">
       <p class="lbl">Cancelaciones por sede</p>
       <div class="sl">
-        <div class="si"><span class="sr">1</span><span class="sn">Clínica Principal</span><span class="sc">68</span><span class="bdg b-b">2.7%</span></div>
-        <div class="si"><span class="sr">2</span><span class="sn">Clínica Fundación</span><span class="sc">12</span><span class="bdg b-b">2.6%</span></div>
-        <div class="si"><span class="sr">3</span><span class="sn">Clínica los Nogales</span><span class="sc">10</span><span class="bdg b-g">1.2%</span></div>
+        <div class="si"><span class="sr">1</span><span class="sn">Clínica Principal</span><span class="sc" id="sede-1">68</span><span class="bdg b-b" id="sede-1p">2.7%</span></div>
+        <div class="si"><span class="sr">2</span><span class="sn">Clínica Fundación</span><span class="sc" id="sede-2">12</span><span class="bdg b-b" id="sede-2p">2.6%</span></div>
+        <div class="si"><span class="sr">3</span><span class="sn">Clínica los Nogales</span><span class="sc" id="sede-3">10</span><span class="bdg b-g" id="sede-3p">1.2%</span></div>
       </div>
-      <div class="sep"><span>Total</span><span style="font-weight:600;">90</span></div>
-      <div class="at">Tasas similares entre sedes (1.2%–2.7%). La Clínica Principal concentra el 75.6% del volumen total.</div>
+      <div class="sep"><span>Total</span><span style="font-weight:600;" id="sede-total">90</span></div>
+      <div class="at">Tasas similares entre sedes. La Clínica Principal concentra el mayor volumen.</div>
     </div>
   </div>
-
   <div class="card">
-    <p class="lbl">Detalle por modalidad — volumen vs tasa (período 1–5 jun)</p>
+    <p class="lbl">Detalle por modalidad — volumen vs tasa</p>
     <table class="tbl">
       <thead><tr><th>Modalidad</th><th>Total citas</th><th>Cancelan</th><th>Tasa</th><th>Riesgo</th></tr></thead>
-      <tbody>
-        <tr><td>Ultrasonido</td><td>2.430</td><td>52</td><td><span class="bdg b-b">3.7%</span></td><td><span class="bdg b-b">Bajo</span></td></tr>
-        <tr><td>Rayos X</td><td>823</td><td>17</td><td><span class="bdg b-b">3.7%</span></td><td><span class="bdg b-b">Bajo</span></td></tr>
-        <tr><td>Tomografía</td><td>338</td><td>5</td><td><span class="bdg b-b">2.6%</span></td><td><span class="bdg b-g">Bajo</span></td></tr>
-        <tr><td>Mamografía</td><td>170</td><td>12</td><td><span class="bdg b-r">12.5%</span></td><td><span class="bdg b-r">Crítico</span></td></tr>
-        <tr><td>Densitometría</td><td>53</td><td>1</td><td><span class="bdg b-b">3.7%</span></td><td><span class="bdg b-g">Bajo</span></td></tr>
-        <tr><td>Fluoroscopía</td><td>26</td><td>3</td><td><span class="bdg b-r">15.0%</span></td><td><span class="bdg b-r">Crítico</span></td></tr>
-        <tr class="tot"><td>Total</td><td>3.840</td><td>90</td><td><span class="bdg b-b">4.1%</span></td><td>—</td></tr>
-      </tbody>
+      <tbody id="mod-tbody"></tbody>
     </table>
-    <div class="aa" style="margin-top:10px;">⚠ <strong>Mamografía (12.5%) y Fluoroscopía (15.0%)</strong> presentan tasas críticas. Aunque su volumen es menor, requieren revisión urgente: tiempos de espera, preparación del paciente e información previa al examen.</div>
+    <div class="aa" style="margin-top:10px;">⚠ <strong>Mamografía y Fluoroscopía</strong> presentan tasas críticas. Requieren revisión urgente de causas.</div>
   </div>
-
   <div class="card">
     <p class="lbl">Contact ratio por sede</p>
     <table class="tbl">
       <thead><tr><th>Centro</th><th>Total citas</th><th>Contestaron</th><th>Contact ratio</th><th>Cancela</th></tr></thead>
-      <tbody>
-        <tr><td>Clínica Principal</td><td>2.544</td><td>1.844</td><td>72.5%</td><td>68</td></tr>
-        <tr><td>Clínica los Nogales</td><td>826</td><td>539</td><td>65.3%</td><td>10</td></tr>
-        <tr><td>Clínica Fundación</td><td>470</td><td>330</td><td>70.2%</td><td>12</td></tr>
-        <tr class="tot"><td>Total</td><td>3.840</td><td>2.713</td><td>70.7%</td><td>90</td></tr>
-      </tbody>
+      <tbody id="sede-tbody"></tbody>
     </table>
-    <div class="aa" style="margin-top:10px;">Clínica los Nogales tiene el contact ratio más bajo (65.3%). Verificar calidad de datos telefónicos en esa sede.</div>
+    <div class="aa" style="margin-top:10px;">Clínica los Nogales tiene el contact ratio más bajo. Verificar calidad de datos telefónicos.</div>
   </div>
 </div>
 
@@ -316,46 +322,271 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="fkpi">
     <div class="kpi" style="border-top:3px solid var(--blue);">
       <div class="kpi-l">Con teléfono alterno</div>
-      <div class="kpi-n" style="color:var(--blue);">988</div>
-      <div class="kpi-s"><span style="font-weight:600;color:var(--blue);">25.7%</span> 2do intento disponible</div>
+      <div class="kpi-n" id="f-con" style="color:var(--blue);">988</div>
+      <div class="kpi-s"><span id="f-con-p" style="font-weight:600;color:var(--blue);">25.7%</span> 2do intento disponible</div>
     </div>
     <div class="kpi" style="border-top:3px solid var(--amber);">
       <div class="kpi-l">Sin teléfono alterno</div>
-      <div class="kpi-n" style="color:var(--amber);">2.852</div>
-      <div class="kpi-s"><span style="font-weight:600;color:var(--amber);">74.3%</span> solo un número</div>
+      <div class="kpi-n" id="f-sin" style="color:var(--amber);">2.852</div>
+      <div class="kpi-s"><span id="f-sin-p" style="font-weight:600;color:var(--amber);">74.3%</span> solo un número</div>
     </div>
     <div class="kpi g">
       <div class="kpi-l">Cobertura tel. principal</div>
-      <div class="kpi-n">3.840</div>
+      <div class="kpi-n" id="f-cob">3.840</div>
       <div class="kpi-s"><span class="kpi-p">100%</span> todos tienen registrado</div>
     </div>
   </div>
-
-  <div class="aa" style="margin-bottom:14px;">⚠ <strong>Oportunidad:</strong> 2.852 pacientes (74.3%) no tienen número alterno. Los 644 que no contestaron y los 413 de buzón de voz (1.057 en total) podrían reintentarse con un segundo número — potencial de contacto adicional significativo.</div>
-
+  <div class="aa" style="margin-bottom:14px;">⚠ <strong>Oportunidad:</strong> Más del 74% de pacientes no tienen número alterno. Con un segundo número se podría reintentar más de 1.000 llamadas no contestadas.</div>
   <div class="two">
     <div class="card">
       <p class="lbl">Cobertura telefónica</p>
-      <div class="br"><span class="bl">Teléfono principal</span><div class="bt"><div class="bf" style="width:100%;background:var(--navy);"></div></div><span class="bv">3.840 · 100%</span></div>
-      <div class="br"><span class="bl">Sin número alterno</span><div class="bt"><div class="bf" style="width:74.3%;background:var(--amber);"></div></div><span class="bv">2.852 · 74.3%</span></div>
-      <div class="br"><span class="bl">Con número alterno</span><div class="bt"><div class="bf" style="width:25.7%;background:var(--blue);"></div></div><span class="bv">988 · 25.7%</span></div>
-      <div class="at">💡 Incrementar el registro de números alternos al momento del agendamiento puede llevar el contact ratio por encima del 80%.</div>
+      <div class="br"><span class="bl">Teléfono principal</span><div class="bt"><div class="bf" style="width:100%;background:var(--navy);"></div></div><span class="bv" id="f-bv1">3.840 · 100%</span></div>
+      <div class="br"><span class="bl">Sin número alterno</span><div class="bt"><div class="bf" id="f-bar-sin" style="background:var(--amber);"></div></div><span class="bv" id="f-bv2">2.852 · 74.3%</span></div>
+      <div class="br"><span class="bl">Con número alterno</span><div class="bt"><div class="bf" id="f-bar-con" style="background:var(--blue);"></div></div><span class="bv" id="f-bv3">988 · 25.7%</span></div>
+      <div class="at">💡 Incrementar el registro de números alternos puede llevar el contact ratio por encima del 80%.</div>
     </div>
     <div class="card">
       <p class="lbl">No contactados — oportunidad de mejora</p>
-      <div class="br"><span class="bl">No contestó</span><div class="bt"><div class="bf" style="width:61%;background:#f97316;"></div></div><span class="bv">644 · 16.8%</span></div>
-      <div class="br"><span class="bl">Buzón de voz</span><div class="bt"><div class="bf" style="width:39%;background:#a78bfa;"></div></div><span class="bv">413 · 10.8%</span></div>
-      <div class="br"><span class="bl">Línea ocupada</span><div class="bt"><div class="bf" style="width:4%;background:var(--amber);"></div></div><span class="bv">44 · 1.1%</span></div>
-      <div class="br"><span class="bl">Número inválido</span><div class="bt"><div class="bf" style="width:2%;background:var(--red);"></div></div><span class="bv">24 · 0.6%</span></div>
-      <div class="at">1.057 pacientes (27.5%) no fueron alcanzados. Con número alterno se podría superar el 80% de contact ratio.</div>
+      <div class="br"><span class="bl">No contestó</span><div class="bt"><div class="bf" id="f-nc1" style="background:#f97316;"></div></div><span class="bv" id="f-nv1">644 · 16.8%</span></div>
+      <div class="br"><span class="bl">Buzón de voz</span><div class="bt"><div class="bf" id="f-nc2" style="background:#a78bfa;"></div></div><span class="bv" id="f-nv2">413 · 10.8%</span></div>
+      <div class="br"><span class="bl">Línea ocupada</span><div class="bt"><div class="bf" id="f-nc3" style="background:var(--amber);"></div></div><span class="bv" id="f-nv3">44 · 1.1%</span></div>
+      <div class="br"><span class="bl">Número inválido</span><div class="bt"><div class="bf" id="f-nc4" style="background:var(--red);"></div></div><span class="bv" id="f-nv4">24 · 0.6%</span></div>
+      <div class="at">1.057 pacientes no fueron alcanzados. Con número alterno se podría superar el 80% de contact ratio.</div>
     </div>
   </div>
 </div>
 
 </div><!-- /wrap -->
-</div><!-- /padding -->
 
 <script>
+// =================== DATOS ===================
+const DATA = {
+  1:{total:873,answered:625,vm:85,na:145,busy:5,inv:12,will:506,wont:17,ignored:31,tel2:218,dur:[72,43,126,384],mod:{ULTRASONIDO:{t:567,c:9},RAYOS_X:{t:178,c:3},TOMOGRAFIA:{t:71,c:2},MAMOGRAFIA:{t:30,c:2},FLUOROSCOPIA:{t:7,c:1},DENSITOMETRIA:{t:11,c:0}},sede:{principal:{t:548,a:398,c:11},nogales:{t:184,a:113,c:4},fundacion:{t:141,a:114,c:2}}},
+  2:{total:763,answered:537,vm:87,na:135,busy:2,inv:2,will:419,wont:21,ignored:23,tel2:194,dur:[60,32,119,326],mod:{ULTRASONIDO:{t:495,c:14},RAYOS_X:{t:160,c:3},TOMOGRAFIA:{t:63,c:1},MAMOGRAFIA:{t:28,c:2},FLUOROSCOPIA:{t:5,c:1},DENSITOMETRIA:{t:9,c:0}},sede:{principal:{t:479,a:345,c:14},nogales:{t:160,a:96,c:4},fundacion:{t:124,a:96,c:3}}},
+  3:{total:651,answered:452,vm:77,na:98,busy:22,inv:2,will:359,wont:13,ignored:33,tel2:162,dur:[46,21,96,289],mod:{ULTRASONIDO:{t:420,c:8},RAYOS_X:{t:138,c:2},TOMOGRAFIA:{t:55,c:1},MAMOGRAFIA:{t:25,c:2},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:8,c:0}},sede:{principal:{t:411,a:293,c:9},nogales:{t:139,a:84,c:2},fundacion:{t:101,a:75,c:2}}},
+  4:{total:724,answered:515,vm:76,na:124,busy:7,inv:2,will:395,wont:16,ignored:46,tel2:192,dur:[32,18,110,355],mod:{ULTRASONIDO:{t:472,c:10},RAYOS_X:{t:155,c:4},TOMOGRAFIA:{t:68,c:0},MAMOGRAFIA:{t:45,c:4},FLUOROSCOPIA:{t:5,c:1},DENSITOMETRIA:{t:12,c:0}},sede:{principal:{t:460,a:331,c:11},nogales:{t:148,a:92,c:3},fundacion:{t:116,a:92,c:2}}},
+  5:{total:829,answered:584,vm:88,na:142,busy:8,inv:6,will:432,wont:23,ignored:41,tel2:222,dur:[28,14,122,420],mod:{ULTRASONIDO:{t:476,c:11},RAYOS_X:{t:192,c:5},TOMOGRAFIA:{t:81,c:1},MAMOGRAFIA:{t:42,c:2},FLUOROSCOPIA:{t:4,c:0},DENSITOMETRIA:{t:13,c:1}},sede:{principal:{t:646,a:477,c:23},nogales:{t:195,a:154,c:0},fundacion:{t:88,a:53,c:3}}}
+};
+
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun'};
+const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría'};
+
+function getRange(){
+  const p = document.getElementById('periodo-sel').value;
+  if(p==='todos') return [1,2,3,4,5];
+  if(p==='7dias') return [1,2,3,4,5];
+  if(p==='mes') return [1,2,3,4,5];
+  if(p==='fecha'){const d=+document.getElementById('fecha-sel').value; return [d];}
+  if(p==='rango'){
+    const d1=+document.getElementById('rango-desde').value;
+    const d2=+document.getElementById('rango-hasta').value;
+    const r=[];for(let i=Math.min(d1,d2);i<=Math.max(d1,d2);i++)r.push(i);return r;
+  }
+  return [1,2,3,4,5];
+}
+
+function agg(days){
+  const r={total:0,answered:0,vm:0,na:0,busy:0,inv:0,will:0,wont:0,ignored:0,tel2:0,dur:[0,0,0,0],mod:{},sede:{principal:{t:0,a:0,c:0},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}};
+  days.forEach(d=>{
+    const v=DATA[d];
+    r.total+=v.total;r.answered+=v.answered;r.vm+=v.vm;r.na+=v.na;r.busy+=v.busy;r.inv+=v.inv;
+    r.will+=v.will;r.wont+=v.wont;r.ignored+=v.ignored;r.tel2+=v.tel2;
+    v.dur.forEach((x,i)=>r.dur[i]+=x);
+    Object.keys(v.mod).forEach(m=>{
+      if(!r.mod[m])r.mod[m]={t:0,c:0};
+      r.mod[m].t+=v.mod[m].t;r.mod[m].c+=v.mod[m].c;
+    });
+    ['principal','nogales','fundacion'].forEach(s=>{r.sede[s].t+=v.sede[s].t;r.sede[s].a+=v.sede[s].a;r.sede[s].c+=v.sede[s].c;});
+  });
+  return r;
+}
+
+function fmt(n){return n.toLocaleString('es-CO');}
+function pct(a,b){return b?((a/b)*100).toFixed(1)+'%':'0%';}
+function riskBadge(t){if(t>=15)return'<span class="bdg b-r">Crítico</span>';if(t>=8)return'<span class="bdg b-a">Alto</span>';if(t>=4)return'<span class="bdg b-b">Moderado</span>';return'<span class="bdg b-g">Bajo</span>';}
+function cancelBadge(t){if(t>=15)return'<span class="bdg b-r">'+t.toFixed(1)+'%</span>';if(t>=8)return'<span class="bdg b-a">'+t.toFixed(1)+'%</span>';if(t>=4)return'<span class="bdg b-b">'+t.toFixed(1)+'%</span>';return'<span class="bdg b-g">'+t.toFixed(1)+'%</span>';}
+
+let donutChart, barChart, lineContactChart, lineCancelChart;
+
+function initCharts(v, days){
+  const gc='rgba(0,0,0,0.06)', tc='#6b7280';
+  const nc = v.total - v.answered;
+
+  if(donutChart) donutChart.destroy();
+  donutChart = new Chart(document.getElementById('dc').getContext('2d'),{
+    type:'doughnut',
+    data:{labels:['Asistirá','Cancela','Ignoró','No contactado'],
+      datasets:[{data:[v.will,v.wont,v.ignored,nc],
+        backgroundColor:['#0097a7','#dc2626','#d1d5db','#e5e7eb'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.raw)}}}}
+  });
+
+  if(barChart) barChart.destroy();
+  barChart = new Chart(document.getElementById('barDia').getContext('2d'),{
+    type:'bar',
+    data:{labels:days.map(d=>DAY_LABELS[d]),
+      datasets:[
+        {label:'Total',data:days.map(d=>DATA[d].total),backgroundColor:'#0b2545',borderRadius:4},
+        {label:'Contactadas',data:days.map(d=>DATA[d].answered),backgroundColor:'#0097a7',borderRadius:4}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{ticks:{color:tc,font:{size:11}},grid:{color:gc}}}}
+  });
+
+  if(lineContactChart) lineContactChart.destroy();
+  lineContactChart = new Chart(document.getElementById('lineContact').getContext('2d'),{
+    type:'line',
+    data:{labels:days.map(d=>DAY_LABELS[d]),
+      datasets:[{data:days.map(d=>+(DATA[d].answered/DATA[d].total*100).toFixed(1)),
+        borderColor:'#0097a7',backgroundColor:'rgba(0,151,167,0.08)',tension:.35,pointRadius:5,pointBackgroundColor:'#0097a7',fill:true}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},
+              y:{min:60,max:80,ticks:{color:tc,font:{size:11},callback:v=>v+'%'},grid:{color:gc}}}}
+  });
+
+  if(lineCancelChart) lineCancelChart.destroy();
+  lineCancelChart = new Chart(document.getElementById('lineCancel').getContext('2d'),{
+    type:'line',
+    data:{labels:days.map(d=>DAY_LABELS[d]),
+      datasets:[{data:days.map(d=>{const s=DATA[d].will+DATA[d].wont;return s?+(DATA[d].wont/s*100).toFixed(1):0;}),
+        borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.07)',tension:.35,pointRadius:5,pointBackgroundColor:'#dc2626',fill:true}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},
+              y:{min:0,max:8,ticks:{color:tc,font:{size:11},callback:v=>v+'%'},grid:{color:gc}}}}
+  });
+}
+
+function applyFilter(){
+  const days = getRange();
+  const v = agg(days);
+  const surveyed = v.will + v.wont;
+
+  // Header meta
+  const label = days.length===1 ? DAY_LABELS[days[0]]+' 2026' : DAY_LABELS[days[0]]+' – '+DAY_LABELS[days[days.length-1]]+' 2026';
+  document.getElementById('hdr-meta').textContent = label+' · '+fmt(v.total)+' registros';
+  document.getElementById('pill-citas').textContent = fmt(v.total)+' citas';
+
+  // KPIs
+  document.getElementById('k-total').textContent = fmt(v.total);
+  document.getElementById('k-total-s').textContent = days.length>1 ? '~'+fmt(Math.round(v.total/days.length))+' citas/día promedio' : '1 día seleccionado';
+  document.getElementById('k-contact').textContent = fmt(v.answered);
+  document.getElementById('k-contact-p').textContent = pct(v.answered,v.total);
+  document.getElementById('k-asiste').textContent = fmt(v.will);
+  document.getElementById('k-asiste-p').textContent = pct(v.will,surveyed);
+  document.getElementById('k-cancel').textContent = fmt(v.wont);
+  document.getElementById('k-cancel-p').textContent = pct(v.wont,surveyed);
+
+  // Cupos
+  document.getElementById('badge-cupos').textContent = fmt(v.wont)+' cupos libres';
+  document.getElementById('cupos-desc').innerHTML = '<strong>'+fmt(v.wont)+' pacientes</strong> solicitaron cancelar su cita durante el período seleccionado.';
+  document.getElementById('c-us').textContent = v.mod.ULTRASONIDO?.c||0;
+  document.getElementById('c-rx').textContent = v.mod.RAYOS_X?.c||0;
+  document.getElementById('c-mam').textContent = v.mod.MAMOGRAFIA?.c||0;
+  document.getElementById('c-tac').textContent = v.mod.TOMOGRAFIA?.c||0;
+  document.getElementById('c-flu').textContent = v.mod.FLUOROSCOPIA?.c||0;
+  document.getElementById('c-den').textContent = v.mod.DENSITOMETRIA?.c||0;
+  document.getElementById('c-tot').textContent = fmt(v.wont);
+
+  // Encuesta legend
+  const nc = v.total - v.answered;
+  document.getElementById('leg-asiste').textContent = fmt(v.will)+' ('+pct(v.will,surveyed)+')';
+  document.getElementById('leg-cancel').textContent = fmt(v.wont)+' ('+pct(v.wont,surveyed)+')';
+  document.getElementById('leg-ignoro').textContent = fmt(v.ignored);
+  document.getElementById('leg-nocontact').textContent = fmt(nc);
+
+  // Llamadas bars
+  function setBar(id,bId,val,total){
+    const p=(val/total*100).toFixed(1);
+    document.getElementById(id).textContent = fmt(val)+' · '+p+'%';
+    document.getElementById(bId).style.width = p+'%';
+  }
+  setBar('bv-contesto','bar-contesto',v.answered,v.total);
+  setBar('bv-noc','bar-noc',v.na,v.total);
+  setBar('bv-vm','bar-vm',v.vm,v.total);
+  setBar('bv-busy','bar-busy',v.busy,v.total);
+  setBar('bv-inv','bar-inv',v.inv,v.total);
+
+  // Duración
+  const ans = v.answered;
+  ['dur1','dur2','dur3','dur4'].forEach((id,i)=>{
+    document.getElementById(id).textContent = fmt(v.dur[i]);
+    document.getElementById('durp'+(i+1)).textContent = pct(v.dur[i],ans);
+  });
+
+  // Tendencia table
+  let tbody = '';
+  days.forEach(d=>{
+    const dd=DATA[d]; const s=dd.will+dd.wont;
+    const cr=(dd.answered/dd.total*100).toFixed(1);
+    const tc=s?(dd.wont/s*100).toFixed(1):'0';
+    tbody+=`<tr><td>${DAY_LABELS[d]}</td><td>${fmt(dd.total)}</td><td>${fmt(dd.answered)}</td><td>${cr}%</td><td>${fmt(dd.will)}</td><td>${dd.wont}</td><td>${cancelBadge(+tc)}</td></tr>`;
+  });
+  if(days.length>1){
+    const s2=v.will+v.wont;
+    tbody+=`<tr class="tot"><td>Total</td><td>${fmt(v.total)}</td><td>${fmt(v.answered)}</td><td>${pct(v.answered,v.total)}</td><td>${fmt(v.will)}</td><td>${v.wont}</td><td>${cancelBadge(s2?+(v.wont/s2*100):0)}</td></tr>`;
+  }
+  document.getElementById('trend-tbody').innerHTML = tbody;
+
+  // Modalidades list
+  const mods = Object.keys(v.mod).sort((a,b)=>v.mod[b].c-v.mod[a].c);
+  let mlist='', mtbody='';
+  mods.forEach((m,i)=>{
+    const s=v.mod[m].t; const c=v.mod[m].c; const t=s?(c/s*100):0;
+    mlist+=`<div class="si"><span class="sr">${i+1}</span><span class="sn">${MOD_LABELS[m]||m}</span><span class="sc">${c}</span>${cancelBadge(t)}</div>`;
+    mtbody+=`<tr><td>${MOD_LABELS[m]||m}</td><td>${fmt(s)}</td><td>${c}</td><td>${cancelBadge(t)}</td><td>${riskBadge(t)}</td></tr>`;
+  });
+  if(days.length>1) mtbody+=`<tr class="tot"><td>Total</td><td>${fmt(v.total)}</td><td>${v.wont}</td><td>${cancelBadge(surveyed?(v.wont/surveyed*100):0)}</td><td>—</td></tr>`;
+  document.getElementById('mod-list').innerHTML = mlist;
+  document.getElementById('mod-total').textContent = fmt(v.wont)+' · '+pct(v.wont,v.total)+' base';
+  document.getElementById('mod-tbody').innerHTML = mtbody;
+
+  // Sede
+  const sp = v.sede.principal, sn = v.sede.nogales, sf = v.sede.fundacion;
+  document.getElementById('sede-1').textContent = sp.c;
+  document.getElementById('sede-1p').textContent = pct(sp.c,sp.t);
+  document.getElementById('sede-2').textContent = sf.c;
+  document.getElementById('sede-2p').textContent = pct(sf.c,sf.t);
+  document.getElementById('sede-3').textContent = sn.c;
+  document.getElementById('sede-3p').textContent = pct(sn.c,sn.t);
+  document.getElementById('sede-total').textContent = v.wont;
+  document.getElementById('sede-tbody').innerHTML =
+    `<tr><td>Clínica Principal</td><td>${fmt(sp.t)}</td><td>${fmt(sp.a)}</td><td>${pct(sp.a,sp.t)}</td><td>${sp.c}</td></tr>`+
+    `<tr><td>Clínica los Nogales</td><td>${fmt(sn.t)}</td><td>${fmt(sn.a)}</td><td>${pct(sn.a,sn.t)}</td><td>${sn.c}</td></tr>`+
+    `<tr><td>Clínica Fundación</td><td>${fmt(sf.t)}</td><td>${fmt(sf.a)}</td><td>${pct(sf.a,sf.t)}</td><td>${sf.c}</td></tr>`+
+    (days.length>1?`<tr class="tot"><td>Total</td><td>${fmt(v.total)}</td><td>${fmt(v.answered)}</td><td>${pct(v.answered,v.total)}</td><td>${v.wont}</td></tr>`:'');
+
+  // Fuentes
+  const sinTel = v.total - v.tel2;
+  document.getElementById('f-con').textContent = fmt(v.tel2);
+  document.getElementById('f-con-p').textContent = pct(v.tel2,v.total);
+  document.getElementById('f-sin').textContent = fmt(sinTel);
+  document.getElementById('f-sin-p').textContent = pct(sinTel,v.total);
+  document.getElementById('f-cob').textContent = fmt(v.total);
+  document.getElementById('f-bv1').textContent = fmt(v.total)+' · 100%';
+  document.getElementById('f-bar-sin').style.width = pct(sinTel,v.total);
+  document.getElementById('f-bv2').textContent = fmt(sinTel)+' · '+pct(sinTel,v.total);
+  document.getElementById('f-bar-con').style.width = pct(v.tel2,v.total);
+  document.getElementById('f-bv3').textContent = fmt(v.tel2)+' · '+pct(v.tel2,v.total);
+  document.getElementById('f-nc1').style.width = pct(v.na,v.total);
+  document.getElementById('f-nv1').textContent = fmt(v.na)+' · '+pct(v.na,v.total);
+  document.getElementById('f-nc2').style.width = pct(v.vm,v.total);
+  document.getElementById('f-nv2').textContent = fmt(v.vm)+' · '+pct(v.vm,v.total);
+  document.getElementById('f-nc3').style.width = pct(v.busy,v.total);
+  document.getElementById('f-nv3').textContent = fmt(v.busy)+' · '+pct(v.busy,v.total);
+  document.getElementById('f-nc4').style.width = pct(v.inv,v.total);
+  document.getElementById('f-nv4').textContent = fmt(v.inv)+' · '+pct(v.inv,v.total);
+
+  initCharts(v, days);
+}
+
+function onPeriodo(){
+  const p = document.getElementById('periodo-sel').value;
+  document.getElementById('fecha-wrap').style.display = p==='fecha' ? 'flex' : 'none';
+  document.getElementById('rango-wrap').style.display = p==='rango' ? 'flex' : 'none';
+  applyFilter();
+}
+
 function st(n){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -364,52 +595,8 @@ function st(n){
   document.getElementById('p-'+n).classList.add('active');
 }
 
-const gridC='rgba(0,0,0,0.06)', tickC='#6b7280';
-
-new Chart(document.getElementById('dc').getContext('2d'),{
-  type:'doughnut',
-  data:{labels:['Asistirá','Cancela','Ignoró','No contactado'],
-    datasets:[{data:[2111,90,174,1465],backgroundColor:['#0097a7','#dc2626','#d1d5db','#e5e7eb'],borderWidth:2,borderColor:'#fff'}]},
-  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
-    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw.toLocaleString('es-CO')}}}}
-});
-
-new Chart(document.getElementById('barDia').getContext('2d'),{
-  type:'bar',
-  data:{labels:['1 jun','2 jun','3 jun','4 jun','5 jun'],
-    datasets:[
-      {label:'Total',data:[873,763,651,724,829],backgroundColor:'#0b2545',borderRadius:4},
-      {label:'Contactadas',data:[625,537,452,515,584],backgroundColor:'#0097a7',borderRadius:4}
-    ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
-    scales:{x:{ticks:{color:tickC,font:{size:11}},grid:{color:gridC}},
-            y:{ticks:{color:tickC,font:{size:11}},grid:{color:gridC}}}}
-});
-
-new Chart(document.getElementById('lineContact').getContext('2d'),{
-  type:'line',
-  data:{labels:['1 jun','2 jun','3 jun','4 jun','5 jun'],
-    datasets:[{label:'Contact ratio %',data:[71.6,70.4,69.4,71.1,70.4],
-      borderColor:'#0097a7',backgroundColor:'rgba(0,151,167,0.08)',
-      tension:.35,pointRadius:5,pointBackgroundColor:'#0097a7',fill:true}]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
-    scales:{x:{ticks:{color:tickC,font:{size:11}},grid:{color:gridC}},
-            y:{min:65,max:75,ticks:{color:tickC,font:{size:11},callback:v=>v+'%'},grid:{color:gridC}}}}
-});
-
-new Chart(document.getElementById('lineCancel').getContext('2d'),{
-  type:'line',
-  data:{labels:['1 jun','2 jun','3 jun','4 jun','5 jun'],
-    datasets:[{label:'Tasa %',data:[3.3,4.8,3.5,3.9,5.1],
-      borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.07)',
-      tension:.35,pointRadius:5,pointBackgroundColor:'#dc2626',fill:true}]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
-    scales:{x:{ticks:{color:tickC,font:{size:11}},grid:{color:gridC}},
-            y:{min:0,max:7,ticks:{color:tickC,font:{size:11},callback:v=>v+'%'},grid:{color:gridC}}}}
-});
+// Init
+onPeriodo();
 </script>
 </body>
 </html>
