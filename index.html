@@ -131,7 +131,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
     <div class="hdr-sub">Gestión de confirmación de citas</div>
   </div>
-  <div class="hdr-right" id="hdr-meta">1 al 17 jun 2026 · 9.522 registros</div>
+  <div class="hdr-right" id="hdr-meta">1 al 18 jun 2026 · 10.288 registros</div>
 </div>
 
 <!-- TABS -->
@@ -170,7 +170,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="13">13 jun 2026</option>
       <option value="14">14 jun 2026</option>
       <option value="16">16 jun 2026</option>
-      <option value="17" selected>17 jun 2026</option>
+      <option value="17">17 jun 2026</option>
+      <option value="18" selected>18 jun 2026</option>
     </select>
   </div>
 
@@ -192,6 +193,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="14">14 jun 2026</option>
       <option value="16">16 jun 2026</option>
       <option value="17">17 jun 2026</option>
+      <option value="18">18 jun 2026</option>
     </select>
     <label>Hasta:</label>
     <select class="fsel" id="rango-hasta" onchange="applyFilter()">
@@ -209,7 +211,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="13">13 jun 2026</option>
       <option value="14">14 jun 2026</option>
       <option value="16">16 jun 2026</option>
-      <option value="17" selected>17 jun 2026</option>
+      <option value="17">17 jun 2026</option>
+      <option value="18" selected>18 jun 2026</option>
     </select>
   </div>
 
@@ -220,7 +223,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 <div class="page active" id="p-resumen">
   <p class="lbl">Indicadores clave del período</p>
   <div class="kpi-row">
-    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n" id="k-total">9.522</div><div class="kpi-s" id="k-total-s">~768 citas/día promedio</div></div>
+    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n" id="k-total">10.288</div><div class="kpi-s" id="k-total-s">~768 citas/día promedio</div></div>
     <div class="kpi t"><div class="kpi-l">Contactadas</div><div class="kpi-n" id="k-contact">2.713</div><div class="kpi-s"><span class="kpi-p" id="k-contact-p">70.7%</span> contact ratio</div></div>
     <div class="kpi g"><div class="kpi-l">Confirman asistencia</div><div class="kpi-n" id="k-asiste">2.111</div><div class="kpi-s"><span class="kpi-p" id="k-asiste-p">95.9%</span> de encuestados</div></div>
     <div class="kpi r"><div class="kpi-l">Cancelaciones</div><div class="kpi-n" id="k-cancel">90</div><div class="kpi-s"><span class="kpi-p" id="k-cancel-p">4.1%</span> cupos liberados</div></div>
@@ -405,17 +408,18 @@ const DATA = {
   13:{total:343,answered:258,vm:35,na:45,busy:2,inv:2,will:218,wont:8,ignored:32,tel2:98,dur:[10,11,56,181],mod:{ULTRASONIDO:{t:97,c:4},RAYOS_X:{t:142,c:2},TOMOGRAFIA:{t:61,c:0},MAMOGRAFIA:{t:34,c:1},FLUOROSCOPIA:{t:9,c:1},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:229,a:180,c:6},nogales:{t:52,a:31,c:0},fundacion:{t:62,a:47,c:2}}},
   14:{total:93,answered:70,vm:7,na:10,busy:0,inv:0,will:51,wont:4,ignored:15,tel2:43,dur:[5,5,12,48],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:93,c:4},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:93,a:70,c:4},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
   16:{total:920,answered:682,vm:106,na:110,busy:5,inv:4,will:537,wont:23,ignored:122,tel2:248,dur:[49,28,146,459],mod:{ULTRASONIDO:{t:547,c:11},RAYOS_X:{t:171,c:3},TOMOGRAFIA:{t:79,c:3},MAMOGRAFIA:{t:90,c:6},FLUOROSCOPIA:{t:13,c:0},DENSITOMETRIA:{t:20,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:652,a:490,c:16},nogales:{t:145,a:101,c:3},fundacion:{t:123,a:91,c:4}}},
-  17:{total:721,answered:521,vm:70,na:117,busy:6,inv:3,will:411,wont:17,ignored:93,tel2:159,dur:[36,24,120,341],mod:{ULTRASONIDO:{t:486,c:9},RAYOS_X:{t:111,c:4},TOMOGRAFIA:{t:72,c:4},MAMOGRAFIA:{t:36,c:0},FLUOROSCOPIA:{t:11,c:0},DENSITOMETRIA:{t:5,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:516,a:379,c:14},nogales:{t:105,a:80,c:2},fundacion:{t:100,a:62,c:1}}}
+  17:{total:721,answered:521,vm:70,na:117,busy:6,inv:3,will:411,wont:17,ignored:93,tel2:159,dur:[36,24,120,341],mod:{ULTRASONIDO:{t:486,c:9},RAYOS_X:{t:111,c:4},TOMOGRAFIA:{t:72,c:4},MAMOGRAFIA:{t:36,c:0},FLUOROSCOPIA:{t:11,c:0},DENSITOMETRIA:{t:5,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:516,a:379,c:14},nogales:{t:105,a:80,c:2},fundacion:{t:100,a:62,c:1}}},
+  18:{total:766,answered:539,vm:77,na:130,busy:12,inv:3,will:449,wont:11,ignored:79,tel2:205,dur:[37,16,99,387],mod:{ULTRASONIDO:{t:499,c:7},RAYOS_X:{t:136,c:2},TOMOGRAFIA:{t:71,c:2},MAMOGRAFIA:{t:38,c:0},FLUOROSCOPIA:{t:6,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:553,a:394,c:11},nogales:{t:124,a:91,c:0},fundacion:{t:89,a:54,c:0}}}
 };
 
-const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun'};
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun'};
 const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría',RESONANCIA_MAGNETICA:'Resonancia Mag.'};
 
 function getRange(){
   const p = document.getElementById('periodo-sel').value;
-  if(p==='todos') return [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17];
-  if(p==='7dias') return [7,9,10,11,12,13,14,16,17];
-  if(p==='mes') return [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17];
+  if(p==='todos') return [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18];
+  if(p==='7dias') return [9,10,11,12,13,14,16,17,18];
+  if(p==='mes') return [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18];
   if(p==='fecha'){const d=+document.getElementById('fecha-sel').value; return [d];}
   if(p==='rango'){
     const d1=+document.getElementById('rango-desde').value;
