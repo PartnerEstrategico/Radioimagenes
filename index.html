@@ -131,7 +131,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
     <div class="hdr-sub">Gestión de confirmación de citas</div>
   </div>
-  <div class="hdr-right" id="hdr-meta">1 jun al 11 jul 2026 · 23.811 registros</div>
+  <div class="hdr-right" id="hdr-meta">1 jun al 13 jul 2026 · 24.010 registros</div>
 </div>
 
 <!-- TABS -->
@@ -191,7 +191,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="708">8 jul 2026</option>
       <option value="709">9 jul 2026</option>
       <option value="710">10 jul 2026</option>
-      <option value="711" selected>11 jul 2026</option>
+      <option value="711">11 jul 2026</option>
+      <option value="712">12 jul 2026</option>
+      <option value="713" selected>13 jul 2026</option>
     </select>
   </div>
 
@@ -234,6 +236,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="709">9 jul 2026</option>
       <option value="710">10 jul 2026</option>
       <option value="711">11 jul 2026</option>
+      <option value="712">12 jul 2026</option>
+      <option value="713">13 jul 2026</option>
     </select>
     <label>Hasta:</label>
     <select class="fsel" id="rango-hasta" onchange="applyFilter()">
@@ -272,7 +276,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="708">8 jul 2026</option>
       <option value="709">9 jul 2026</option>
       <option value="710">10 jul 2026</option>
-      <option value="711" selected>11 jul 2026</option>
+      <option value="711">11 jul 2026</option>
+      <option value="712">12 jul 2026</option>
+      <option value="713" selected>13 jul 2026</option>
     </select>
   </div>
 
@@ -283,7 +289,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 <div class="page active" id="p-resumen">
   <p class="lbl">Indicadores clave del período</p>
   <div class="kpi-row">
-    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n" id="k-total">23.811</div><div class="kpi-s" id="k-total-s">~768 citas/día promedio</div></div>
+    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n" id="k-total">24.010</div><div class="kpi-s" id="k-total-s">~768 citas/día promedio</div></div>
     <div class="kpi t"><div class="kpi-l">Contactadas</div><div class="kpi-n" id="k-contact">2.713</div><div class="kpi-s"><span class="kpi-p" id="k-contact-p">70.7%</span> contact ratio</div></div>
     <div class="kpi g"><div class="kpi-l">Confirman asistencia</div><div class="kpi-n" id="k-asiste">2.111</div><div class="kpi-s"><span class="kpi-p" id="k-asiste-p">95.9%</span> de encuestados</div></div>
     <div class="kpi r"><div class="kpi-l">Cancelaciones</div><div class="kpi-n" id="k-cancel">90</div><div class="kpi-s"><span class="kpi-p" id="k-cancel-p">4.1%</span> cupos liberados</div></div>
@@ -489,17 +495,19 @@ const DATA = {
   708:{total:862,answered:618,vm:67,na:160,busy:6,inv:11,will:487,wont:20,ignored:111,tel2:239,dur:[40,54,476,48],mod:{ULTRASONIDO:{t:526,c:11},RAYOS_X:{t:171,c:3},TOMOGRAFIA:{t:57,c:0},MAMOGRAFIA:{t:87,c:6},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:630,a:460,c:14},nogales:{t:133,a:96,c:4},fundacion:{t:99,a:62,c:2}}},
   709:{total:831,answered:604,vm:89,na:129,busy:6,inv:3,will:506,wont:19,ignored:79,tel2:207,dur:[31,65,445,63],mod:{ULTRASONIDO:{t:534,c:9},RAYOS_X:{t:141,c:2},TOMOGRAFIA:{t:48,c:0},MAMOGRAFIA:{t:86,c:7},FLUOROSCOPIA:{t:3,c:0},DENSITOMETRIA:{t:19,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:621,a:470,c:16},nogales:{t:123,a:75,c:1},fundacion:{t:87,a:59,c:2}}},
   710:{total:850,answered:630,vm:93,na:110,busy:3,inv:10,will:493,wont:19,ignored:118,tel2:220,dur:[39,54,477,60],mod:{ULTRASONIDO:{t:533,c:9},RAYOS_X:{t:150,c:3},TOMOGRAFIA:{t:58,c:1},MAMOGRAFIA:{t:86,c:5},FLUOROSCOPIA:{t:10,c:1},DENSITOMETRIA:{t:13,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:640,a:472,c:14},nogales:{t:103,a:76,c:4},fundacion:{t:107,a:82,c:1}}},
-  711:{total:380,answered:288,vm:31,na:57,busy:1,inv:2,will:224,wont:7,ignored:57,tel2:103,dur:[14,19,227,28],mod:{ULTRASONIDO:{t:126,c:1},RAYOS_X:{t:142,c:2},TOMOGRAFIA:{t:41,c:2},MAMOGRAFIA:{t:63,c:1},FLUOROSCOPIA:{t:8,c:1},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:239,a:193,c:7},nogales:{t:70,a:53,c:0},fundacion:{t:71,a:42,c:0}}}
+  711:{total:380,answered:288,vm:31,na:57,busy:1,inv:2,will:224,wont:7,ignored:57,tel2:103,dur:[14,19,227,28],mod:{ULTRASONIDO:{t:126,c:1},RAYOS_X:{t:142,c:2},TOMOGRAFIA:{t:41,c:2},MAMOGRAFIA:{t:63,c:1},FLUOROSCOPIA:{t:8,c:1},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:239,a:193,c:7},nogales:{t:70,a:53,c:0},fundacion:{t:71,a:42,c:0}}},
+  712:{total:52,answered:42,vm:0,na:10,busy:0,inv:0,will:35,wont:5,ignored:2,tel2:19,dur:[0,2,36,4],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:52,c:5},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:52,a:42,c:5},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  713:{total:147,answered:106,vm:8,na:23,busy:4,inv:6,will:85,wont:5,ignored:16,tel2:38,dur:[7,11,81,7],mod:{ULTRASONIDO:{t:126,c:5},RAYOS_X:{t:21,c:0},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:147,a:106,c:5},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}}
 };
 
-const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul'};
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul'};
 const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría',RESONANCIA_MAGNETICA:'Resonancia Mag.'};
 
-const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711];
+const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713];
 function getRange(){
   const p = document.getElementById('periodo-sel').value;
   if(p==='todos') return ALL_DAYS_ORDER;
-  if(p==='7dias') return [705,706,707,708,709,710,711];
+  if(p==='7dias') return [707,708,709,710,711,712,713];
   if(p==='mes') return ALL_DAYS_ORDER;
   if(p==='fecha'){const d=+document.getElementById('fecha-sel').value; return [d];}
   if(p==='rango'){
