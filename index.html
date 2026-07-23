@@ -3,1229 +3,771 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard – DENTOLASER Galerías</title>
+<title>Dashboard RRA – Radioimágenes · Radiólogos Asociados</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --primary:#0c41ab;--primary2:#0a2089;--teal:#2e63cd;
-  --green:#1a9e60;--red:#c0392b;--amber:#d4820a;--purple:#6a3db8;
-  --bg:#f2f4f9;--surface:#ffffff;--surface2:#eef1f8;
-  --text:#1a1a2e;--text2:#5a6270;--border:#d4d9e8;
+  --navy:#0b2545;--blue:#1c4a8c;--teal:#0097a7;--teal-l:#e0f7fa;--teal-d:#006978;
+  --amber:#f59e0b;--red:#dc2626;--green:#16a34a;
+  --bg:#f4f6f9;--surface:#ffffff;--surface2:#f8fafc;
+  --text:#111827;--text2:#6b7280;--border:#e5e7eb;
   --radius:8px;--radius-lg:12px;
 }
-html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 .wrap{width:100%;min-height:100vh;display:flex;flex-direction:column;}
-.hdr{background:linear-gradient(135deg,#071560 0%,#0a2089 50%,#0c41ab 100%);color:#fff;padding:13px 28px;border-bottom:3px solid #1d3eb8;display:flex;align-items:center;justify-content:space-between;}
-.hdr-logo{width:40px;height:40px;background:rgba(255,255,255,0.13);border:2px solid rgba(255,255,255,0.3);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-right:13px;font-weight:900;font-size:12px;color:#fff;flex-shrink:0;}
-.hdr-left{display:flex;align-items:center;}
-.hdr-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:.3px;}
-.hdr-sub{font-size:11px;color:rgba(255,255,255,0.58);margin-top:2px;}
-.hdr-right{font-size:11px;color:rgba(255,255,255,0.58);text-align:right;border-left:1px solid rgba(255,255,255,0.18);padding-left:16px;}
-.hdr-right strong{color:#fff;display:block;font-size:13px;font-weight:700;}
-.tabs{background:#091878;display:flex;padding:0 28px;border-bottom:1px solid rgba(255,255,255,0.07);}
-.tab{padding:11px 18px;font-size:13px;color:rgba(255,255,255,0.42);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;}
-.tab.active{color:#fff;font-weight:700;border-bottom-color:#4d7aef;}
-.tab:hover:not(.active){color:rgba(255,255,255,0.78);}
-.filterbar{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.filterbar label{font-size:12px;color:var(--text2);font-weight:600;}
-.fsel{font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:5px 28px 5px 10px;color:var(--text);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;}
-.fsel:focus{outline:none;border-color:var(--primary);}
-.pill-b{background:var(--primary);color:#fff;border-radius:20px;padding:3px 13px;font-size:12px;font-weight:700;}
-.fdate-wrap{display:flex;align-items:center;gap:7px;}
-#fecha-wrap,#rango-wrap{display:none;}
+.hdr{background:var(--navy);color:#fff;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-name{font-size:15px;font-weight:600;color:#fff;}
+.hdr-sub{font-size:11px;color:#8fa8c8;margin-top:2px;}
+.hdr-right{font-size:11px;color:#8fa8c8;text-align:right;}
+/* TABS */
+.tabs{background:var(--navy);display:flex;padding:0 28px;border-bottom:1px solid #1e3a5f;overflow-x:auto;}
+.tab{padding:10px 18px;font-size:13px;color:#8fa8c8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.tab:hover:not(.active){color:#c5d5e8;}
+/* FILTER BAR */
+.filterbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.filterbar label{font-size:12px;color:var(--text2);}
+.fsel{font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;color:var(--text);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:26px;}
+.fsel:focus{outline:none;border-color:var(--teal);}
+.finput{font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;color:var(--text);}
+.finput:focus{outline:none;border-color:var(--teal);}
+.pill{background:var(--navy);color:#fff;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;}
+.pill-r{background:var(--red);color:#fff;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;}
+.fdate-wrap{display:flex;align-items:center;gap:8px;}
+#fecha-wrap{display:none;}
+#rango-wrap{display:none;}
+/* PAGES */
 .page{display:none;padding:20px 28px;background:var(--bg);flex:1;}
 .page.active{display:block;}
-.lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--text2);margin-bottom:10px;}
+/* SECTION LABEL */
+.lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text2);margin-bottom:10px;}
+/* KPI */
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
-@media(max-width:860px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
-.kpi{background:var(--surface);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);border-top:4px solid var(--border);}
-.kpi.b{border-top-color:var(--primary);}.kpi.g{border-top-color:var(--green);}
-.kpi.r{border-top-color:var(--red);}.kpi.y{border-top-color:var(--amber);}
-.kpi-l{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:4px;font-weight:600;}
-.kpi-n{font-size:30px;font-weight:900;line-height:1.1;}
-.kpi.b .kpi-n{color:var(--primary);}.kpi.g .kpi-n{color:var(--green);}
-.kpi.r .kpi-n{color:var(--red);}.kpi.y .kpi-n{color:var(--amber);}
-.kpi-s{font-size:11px;color:var(--text2);margin-top:5px;}
-.kpi-p{font-weight:700;}
-.kpi.b .kpi-p{color:var(--primary);}.kpi.g .kpi-p{color:var(--green);}
-.kpi.r .kpi-p{color:var(--red);}.kpi.y .kpi-p{color:var(--amber);}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
+.kpi{background:var(--surface);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);border-top:3px solid var(--border);}
+.kpi.t{border-top-color:var(--teal);}.kpi.g{border-top-color:var(--green);}.kpi.r{border-top-color:var(--red);}
+.kpi-l{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:4px;}
+.kpi-n{font-size:28px;font-weight:700;line-height:1;color:var(--text);}
+.kpi.t .kpi-n{color:var(--teal);}.kpi.g .kpi-n{color:var(--green);}.kpi.r .kpi-n{color:var(--red);}
+.kpi-s{font-size:11px;color:var(--text2);margin-top:4px;}
+.kpi-p{font-weight:600;}
+.kpi.t .kpi-p{color:var(--teal);}.kpi.g .kpi-p{color:var(--green);}.kpi.r .kpi-p{color:var(--red);}
+/* CARDS */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:14px;}
-.card.hl{border-left:4px solid var(--primary);}
-.card.hl-g{border-left:4px solid var(--green);}
-.card.hl-r{border-left:4px solid var(--red);}
-.card.hl-y{border-left:4px solid var(--amber);}
-.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.ct{font-size:13px;font-weight:700;color:var(--text);}
-.csub{font-size:11px;color:var(--text2);}
+.card.ra{border-left:4px solid var(--red);}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.ct{font-size:14px;font-weight:600;color:var(--text);}
+.cd{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5;}
+.cd strong{color:var(--text);}
+/* CUPOS */
+.cupos-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+@media(max-width:600px){.cupos-g{grid-template-columns:repeat(2,1fr);}}
+.cp{background:#fff5f5;border:1px solid #fca5a5;border-radius:var(--radius);padding:10px;text-align:center;}
+.cp-l{font-size:10px;color:#991b1b;line-height:1.4;margin-bottom:3px;}
+.cp-n{font-size:22px;font-weight:700;color:var(--red);}
+.cp-s{font-size:10px;color:#991b1b;}
+.cp-tot{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:var(--radius);padding:10px;text-align:center;}
+.cp-tot-n{font-size:22px;font-weight:700;color:var(--green);}
+.cp-tot-l{font-size:10px;color:#166534;}
+/* ALERTS */
+.aa{background:#fffbeb;border:1px solid #fcd34d;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#78350f;margin-top:10px;line-height:1.5;}
+.aa strong{color:#451a03;}
+.at{background:var(--teal-l);border:1px solid #80deea;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--teal-d);margin-top:10px;line-height:1.5;}
+.at strong{color:#004d56;}
+.note{font-size:10px;color:var(--text2);margin-top:8px;}
+/* TWO COL */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
-@media(max-width:700px){.two,.three{grid-template-columns:1fr;}}
+@media(max-width:650px){.two{grid-template-columns:1fr;}}
+/* BAR ROWS */
 .br{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.bl{font-size:12px;color:var(--text2);width:165px;flex-shrink:0;line-height:1.3;}
-.bt{flex:1;height:9px;background:var(--bg);border-radius:4px;overflow:hidden;}
+.bl{font-size:12px;color:var(--text2);width:140px;flex-shrink:0;}
+.bt{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;}
 .bf{height:100%;border-radius:4px;}
-.bv{font-size:11px;color:var(--text);width:95px;text-align:right;flex-shrink:0;}
-.hbar{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
-.hbar-lbl{font-size:12px;color:var(--text);width:125px;flex-shrink:0;}
-.hbar-track{flex:1;height:9px;background:var(--bg);border-radius:4px;overflow:hidden;}
-.hbar-fill{height:100%;border-radius:4px;}
-.hbar-val{font-size:11px;color:var(--text2);width:90px;text-align:right;flex-shrink:0;}
+.bv{font-size:11px;color:var(--text);width:80px;text-align:right;flex-shrink:0;}
+/* DONUT */
+.dw{display:flex;align-items:center;gap:20px;}
+.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);margin-bottom:8px;}
+.ld{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+/* DURATION */
 .dg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;}
-.dv{font-size:22px;font-weight:900;}
-.dbw{height:48px;display:flex;align-items:flex-end;justify-content:center;margin:4px 0;}
-.db{width:36px;border-radius:3px 3px 0 0;}
+.dv{font-size:20px;font-weight:700;color:var(--text);}
+.dbw{height:44px;display:flex;align-items:flex-end;justify-content:center;margin:4px 0;}
+.db{width:40px;border-radius:3px 3px 0 0;}
 .dl{font-size:10px;color:var(--text2);}
-.dp{font-size:11px;font-weight:700;}
-.cancel-g{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:10px;}
-@media(max-width:700px){.cancel-g{grid-template-columns:repeat(3,1fr);}}
-.cp{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px;text-align:center;}
-.cp.hi{background:#fef2f2;border-color:#fca5a5;}
-.cp.tot{background:#ecfdf5;border-color:#6ee7b7;}
-.cp.zero{background:var(--surface2);border-color:var(--border);}
-.cp-n{font-size:24px;font-weight:900;color:var(--primary);}
-.cp.hi .cp-n{color:var(--red);}.cp.tot .cp-n{color:var(--green);}
-.cp.zero .cp-n{color:var(--text2);}
-.cp-l{font-size:10px;color:var(--text2);line-height:1.4;margin-top:3px;}
-/* COBERTURA */
-.cob-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;}
-.cob-box{padding:16px;border-radius:var(--radius-lg);border:1px solid var(--border);text-align:center;}
-.cob-box.p1{background:#eff6ff;border-color:#93c5fd;}
-.cob-box.p2{background:#fef9ec;border-color:#fcd34d;}
-.cob-box.p3{background:#ecfdf5;border-color:#6ee7b7;}
-.cob-n{font-size:36px;font-weight:900;line-height:1;}
-.cob-box.p1 .cob-n{color:var(--primary);}
-.cob-box.p2 .cob-n{color:var(--amber);}
-.cob-box.p3 .cob-n{color:var(--green);}
-.cob-l{font-size:11px;color:var(--text2);margin-top:5px;}
-.cob-sub{font-size:10px;color:var(--text2);margin-top:3px;}
-.tbl-wrap{overflow-x:auto;}
+.dp{font-size:11px;color:var(--text2);}
+/* TABLES */
 .tbl{width:100%;font-size:12px;border-collapse:collapse;}
-.tbl th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#fff;background:var(--primary);padding:9px 11px;text-align:left;}
+.tbl th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#fff;background:var(--navy);padding:9px 11px;text-align:left;}
 .tbl td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--text);}
 .tbl tr:hover td{background:var(--surface2);}
-.tbl tr.tot td{font-weight:700;background:var(--surface2);}
-.bdg{font-size:10px;padding:2px 9px;border-radius:10px;font-weight:700;}
-.b-g{background:#d1fae5;color:#065f46;}.b-r{background:#fee2e2;color:#991b1b;}
-.b-y{background:#fef3c7;color:#92400e;}.b-b{background:#dbeafe;color:#1e3a8a;}
-.b-gr{background:#f1f5f9;color:#475569;}
-.at{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:#064e3b;margin-top:8px;line-height:1.6;}
-.aa{background:#fffbeb;border:1px solid #fcd34d;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:#78350f;margin-top:8px;line-height:1.6;}
-.ar{background:#fef2f2;border:1px solid #fca5a5;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:#7f1d1d;margin-top:8px;line-height:1.6;}
-.ai{background:#eff6ff;border:1px solid #93c5fd;border-radius:var(--radius);padding:9px 13px;font-size:12px;color:#1e3a8a;margin-top:8px;line-height:1.6;}
-.leg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text);margin-bottom:8px;}
-.leg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0;border:1px solid rgba(0,0,0,.08);}
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;}
-.stat-box{padding:12px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);}
-.stat-n{font-size:24px;font-weight:900;}
-.stat-l{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-top:3px;}
-
-/* CUMPLIMIENTO */
-.cum-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
-@media(max-width:860px){.cum-kpi-row{grid-template-columns:repeat(2,1fr);}}
-.cum-kpi{border-radius:var(--radius);padding:14px 16px;border:2px solid;text-align:center;}
-.cum-kpi.ok{background:#d1fae5;border-color:#6ee7b7;}
-.cum-kpi.bad{background:#fee2e2;border-color:#fca5a5;}
-.cum-kpi.warn{background:#fef3c7;border-color:#fcd34d;}
-.cum-kpi.info{background:#eff6ff;border-color:#93c5fd;}
-.cum-kpi-n{font-size:32px;font-weight:900;line-height:1;}
-.cum-kpi.ok .cum-kpi-n{color:#065f46;}
-.cum-kpi.bad .cum-kpi-n{color:#991b1b;}
-.cum-kpi.warn .cum-kpi-n{color:#92400e;}
-.cum-kpi.info .cum-kpi-n{color:#1e3a8a;}
-.cum-kpi-l{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-top:5px;font-weight:600;}
-/* month cards */
-.cum-month-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
-.cmh{padding:10px 16px;display:flex;flex-direction:column;}
-.cmh-title{font-size:14px;font-weight:800;color:#fff;}
-.cmh-sub{font-size:10px;color:rgba(255,255,255,0.65);margin-top:2px;}
-.cmb{display:flex;align-items:center;gap:14px;padding:14px 16px;}
-.cm-ring-wrap{position:relative;flex-shrink:0;width:110px;height:110px;}
-.cm-ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-size:11px;font-weight:800;line-height:1.3;color:var(--text);}
-.cm-stats{flex:1;font-size:12px;}
-.cm-stat{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);}
-.cm-stat:last-child{border-bottom:none;}
-.cm-stat-l{color:var(--text2);}
-.cm-stat-v{font-weight:700;}
-/* calendar */
-.cal-grid{display:grid;gap:10px;margin-bottom:14px;}
-.week-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
-.week-hdr{background:var(--primary2);color:#fff;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;}
-.week-hdr-lbl{font-weight:700;font-size:12px;}
-.week-badge{border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;}
-.wb-ok{background:#d1fae5;color:#065f46;}.wb-warn{background:#fef3c7;color:#92400e;}
-.wb-bad{background:#fee2e2;color:#991b1b;}.wb-pend{background:#e0f2fe;color:#075985;}
-.days-row{display:flex;gap:7px;padding:10px 16px;flex-wrap:wrap;}
-.day-chip{border-radius:7px;padding:7px 10px;font-size:11px;font-weight:700;text-align:center;min-width:82px;}
-.day-chip.ok{background:#d1fae5;color:#064e3b;border:1px solid #6ee7b7;}
-.day-chip.missing{background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5;}
-.day-chip.today{background:#fef9ec;color:#78350f;border:2px dashed #fcd34d;}
-.chip-icon{font-size:13px;display:block;margin-bottom:2px;}
-.chip-lbl{display:block;font-size:9px;font-weight:600;opacity:0.75;margin-top:1px;}
-/* dow */
-.dow-analysis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px;}
-.dow-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
-.dow-n{font-size:20px;font-weight:900;}
-.dow-l{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-top:3px;}
-.dow-rate{font-size:11px;font-weight:700;margin-top:4px;}
-.streak-bar{height:8px;border-radius:4px;background:var(--bg);overflow:hidden;margin-top:6px;}
-.streak-fill{height:100%;border-radius:4px;}
+.tbl tr.tot td{font-weight:600;background:var(--surface2);}
+.bdg{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;}
+.b-r{background:#fee2e2;color:#991b1b;}.b-a{background:#fef3c7;color:#78350f;}
+.b-b{background:#dbeafe;color:#1e40af;}.b-g{background:#dcfce7;color:#166534;}
+/* SPEC LIST */
+.sl{display:flex;flex-direction:column;gap:6px;}
+.si{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius);border:1px solid var(--border);}
+.sr{font-size:12px;font-weight:700;color:var(--teal);width:18px;}
+.sn{font-size:12px;color:var(--text);flex:1;}
+.sc{font-size:13px;font-weight:700;color:var(--text);width:26px;text-align:right;}
+.sep{font-size:11px;color:var(--text2);margin-top:10px;padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;}
+/* FUENTES */
+.fkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+@media(max-width:600px){.fkpi{grid-template-columns:1fr;}}
+/* CHART LEGEND */
+.chart-legend{display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap;}
+.cl{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.cs{width:10px;height:10px;border-radius:2px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 
+<!-- HEADER -->
 <div class="hdr">
-  <div class="hdr-left">
-    <div class="hdr-logo">DL</div>
-    <div>
-      <div class="hdr-name">DENTOLASER · Sede Galerías</div>
-      <div class="hdr-sub">Gestión de confirmación de citas · Campaña outbound</div>
-    </div>
+  <div>
+    <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
+    <div class="hdr-sub">Gestión de confirmación de citas</div>
   </div>
-  <div class="hdr-right">
-    <strong id="hdr-meta">Cargando…</strong>
-    Sede Galerías · Múltiples doctores
-  </div>
+  <div class="hdr-right" id="hdr-meta">1 jun al 23 jul 2026 · 30.356 registros</div>
 </div>
 
+<!-- TABS -->
 <div class="tabs">
   <div class="tab active" onclick="st('resumen')">Resumen ejecutivo</div>
   <div class="tab" onclick="st('tendencia')">Tendencia diaria</div>
-  <div class="tab" onclick="st('doctores')">Por doctor</div>
-  <div class="tab" onclick="st('cobertura')">Fuentes y cobertura</div>
-  <div class="tab" onclick="st('cumplimiento')">Cumplimiento de envío</div>
+  <div class="tab" onclick="st('modalidad')">Por modalidad</div>
+  <div class="tab" onclick="st('fuentes')">Fuentes y cobertura</div>
 </div>
 
+<!-- FILTER BAR -->
 <div class="filterbar">
   <label>Período:</label>
   <select class="fsel" id="periodo-sel" onchange="onPeriodo()">
-    <option value="mayo">Mayo 2026 (12 días)</option>
-    <option value="junio">Junio 2026 (13 días)</option>
-    <option value="julio">Julio 2026 (11 días)</option>
-    <option value="todos">Todos los períodos</option>
+    <option value="todos">Todos los datos</option>
+    <option value="7dias">Últimos 7 días</option>
+    <option value="mes">Último mes</option>
     <option value="fecha" selected>Fecha específica</option>
     <option value="rango">Rango personalizado</option>
   </select>
+
   <div id="fecha-wrap" class="fdate-wrap">
     <label>Fecha:</label>
     <select class="fsel" id="fecha-sel" onchange="applyFilter()">
-      <option value="504">4 may 2026</option><option value="505">5 may 2026</option>
-      <option value="506">6 may 2026</option><option value="508">8 may 2026</option>
-      <option value="512">12 may 2026</option><option value="513">13 may 2026</option>
-      <option value="515">15 may 2026</option><option value="519">19 may 2026</option>
-      <option value="520">20 may 2026</option><option value="522">22 may 2026</option>
-      <option value="527">27 may 2026</option><option value="528">28 may 2026</option>
-      <option value="602">2 jun 2026</option><option value="603">3 jun 2026</option>
-      <option value="604">4 jun 2026</option><option value="605">5 jun 2026</option>
-      <option value="610">10 jun 2026</option><option value="611">11 jun 2026</option>
-      <option value="617">17 jun 2026</option><option value="618">18 jun 2026</option>
-      <option value="619">19 jun 2026</option><option value="622">22 jun 2026</option>
-      <option value="626">26 jun 2026</option><option value="630">30 jun 2026</option>
+      <option value="1">1 jun 2026</option>
+      <option value="2">2 jun 2026</option>
+      <option value="3">3 jun 2026</option>
+      <option value="4">4 jun 2026</option>
+      <option value="5">5 jun 2026</option>
+      <option value="6">6 jun 2026</option>
+      <option value="7">7 jun 2026</option>
+      <option value="9">9 jun 2026</option>
+      <option value="10">10 jun 2026</option>
+      <option value="11">11 jun 2026</option>
+      <option value="12">12 jun 2026</option>
+      <option value="13">13 jun 2026</option>
+      <option value="14">14 jun 2026</option>
+      <option value="16">16 jun 2026</option>
+      <option value="17">17 jun 2026</option>
+      <option value="18">18 jun 2026</option>
+      <option value="19">19 jun 2026</option>
+      <option value="20">20 jun 2026</option>
+      <option value="22">22 jun 2026</option>
+      <option value="23">23 jun 2026</option>
+      <option value="24">24 jun 2026</option>
+      <option value="25">25 jun 2026</option>
+      <option value="26">26 jun 2026</option>
+      <option value="27">27 jun 2026</option>
+      <option value="630">30 jun 2026</option>
       <option value="701">1 jul 2026</option>
+      <option value="702">2 jul 2026</option>
       <option value="703">3 jul 2026</option>
-      <option value="706">6 jul 2026</option><option value="707">7 jul 2026</option>
+      <option value="704">4 jul 2026</option>
+      <option value="705">5 jul 2026</option>
+      <option value="706">6 jul 2026</option>
+      <option value="707">7 jul 2026</option>
       <option value="708">8 jul 2026</option>
-      <option value="709">9 jul 2026</option><option value="710">10 jul 2026</option>
-      <option value="715">15 jul 2026</option><option value="716">16 jul 2026</option>
+      <option value="709">9 jul 2026</option>
+      <option value="710">10 jul 2026</option>
+      <option value="711">11 jul 2026</option>
+      <option value="712">12 jul 2026</option>
+      <option value="713">13 jul 2026</option>
+      <option value="714">14 jul 2026</option>
+      <option value="715">15 jul 2026</option>
+      <option value="716">16 jul 2026</option>
       <option value="717">17 jul 2026</option>
+      <option value="718">18 jul 2026</option>
+      <option value="719">19 jul 2026</option>
+      <option value="721">21 jul 2026</option>
+      <option value="722">22 jul 2026</option>
       <option value="723" selected>23 jul 2026</option>
     </select>
   </div>
+
   <div id="rango-wrap" class="fdate-wrap">
     <label>Desde:</label>
     <select class="fsel" id="rango-desde" onchange="applyFilter()">
-      <option value="504" selected>4 may 2026</option><option value="505">5 may 2026</option>
-      <option value="506">6 may 2026</option><option value="508">8 may 2026</option>
-      <option value="512">12 may 2026</option><option value="513">13 may 2026</option>
-      <option value="515">15 may 2026</option><option value="519">19 may 2026</option>
-      <option value="520">20 may 2026</option><option value="522">22 may 2026</option>
-      <option value="527">27 may 2026</option><option value="528">28 may 2026</option>
-      <option value="602">2 jun 2026</option><option value="603">3 jun 2026</option>
-      <option value="604">4 jun 2026</option><option value="605">5 jun 2026</option>
-      <option value="610">10 jun 2026</option><option value="611">11 jun 2026</option>
-      <option value="617">17 jun 2026</option><option value="618">18 jun 2026</option>
-      <option value="619">19 jun 2026</option><option value="622">22 jun 2026</option>
-      <option value="623">23 jun 2026</option><option value="626">26 jun 2026</option>
-      <option value="630">30 jun 2026</option><option value="701">1 jul 2026</option>
+      <option value="1">1 jun 2026</option>
+      <option value="2">2 jun 2026</option>
+      <option value="3">3 jun 2026</option>
+      <option value="4">4 jun 2026</option>
+      <option value="5">5 jun 2026</option>
+      <option value="6">6 jun 2026</option>
+      <option value="7">7 jun 2026</option>
+      <option value="9">9 jun 2026</option>
+      <option value="10">10 jun 2026</option>
+      <option value="11">11 jun 2026</option>
+      <option value="12">12 jun 2026</option>
+      <option value="13">13 jun 2026</option>
+      <option value="14">14 jun 2026</option>
+      <option value="16">16 jun 2026</option>
+      <option value="17">17 jun 2026</option>
+      <option value="18">18 jun 2026</option>
+      <option value="19">19 jun 2026</option>
+      <option value="20">20 jun 2026</option>
+      <option value="22">22 jun 2026</option>
+      <option value="23">23 jun 2026</option>
+      <option value="24">24 jun 2026</option>
+      <option value="25">25 jun 2026</option>
+      <option value="26">26 jun 2026</option>
+      <option value="27">27 jun 2026</option>
+      <option value="630">30 jun 2026</option>
+      <option value="701">1 jul 2026</option>
+      <option value="702">2 jul 2026</option>
       <option value="703">3 jul 2026</option>
-      <option value="706">6 jul 2026</option><option value="707">7 jul 2026</option>
+      <option value="704">4 jul 2026</option>
+      <option value="705">5 jul 2026</option>
+      <option value="706">6 jul 2026</option>
+      <option value="707">7 jul 2026</option>
       <option value="708">8 jul 2026</option>
-      <option value="709">9 jul 2026</option><option value="710">10 jul 2026</option>
-      <option value="715">15 jul 2026</option><option value="716">16 jul 2026</option>
+      <option value="709">9 jul 2026</option>
+      <option value="710">10 jul 2026</option>
+      <option value="711">11 jul 2026</option>
+      <option value="712">12 jul 2026</option>
+      <option value="713">13 jul 2026</option>
+      <option value="714">14 jul 2026</option>
+      <option value="715">15 jul 2026</option>
+      <option value="716">16 jul 2026</option>
       <option value="717">17 jul 2026</option>
+      <option value="718">18 jul 2026</option>
+      <option value="719">19 jul 2026</option>
+      <option value="721">21 jul 2026</option>
+      <option value="722">22 jul 2026</option>
       <option value="723">23 jul 2026</option>
     </select>
     <label>Hasta:</label>
     <select class="fsel" id="rango-hasta" onchange="applyFilter()">
-      <option value="504">4 may 2026</option><option value="505">5 may 2026</option>
-      <option value="506">6 may 2026</option><option value="508">8 may 2026</option>
-      <option value="512">12 may 2026</option><option value="513">13 may 2026</option>
-      <option value="515">15 may 2026</option><option value="519">19 may 2026</option>
-      <option value="520">20 may 2026</option><option value="522">22 may 2026</option>
-      <option value="527">27 may 2026</option><option value="528">28 may 2026</option>
-      <option value="602">2 jun 2026</option><option value="603">3 jun 2026</option>
-      <option value="604">4 jun 2026</option><option value="605">5 jun 2026</option>
-      <option value="610">10 jun 2026</option><option value="611">11 jun 2026</option>
-      <option value="617">17 jun 2026</option><option value="618">18 jun 2026</option>
-      <option value="619">19 jun 2026</option><option value="622">22 jun 2026</option>
-      <option value="623">23 jun 2026</option><option value="626">26 jun 2026</option>
-      <option value="630">30 jun 2026</option><option value="701">1 jul 2026</option>
+      <option value="1">1 jun 2026</option>
+      <option value="2">2 jun 2026</option>
+      <option value="3">3 jun 2026</option>
+      <option value="4">4 jun 2026</option>
+      <option value="5">5 jun 2026</option>
+      <option value="6">6 jun 2026</option>
+      <option value="7">7 jun 2026</option>
+      <option value="9">9 jun 2026</option>
+      <option value="10">10 jun 2026</option>
+      <option value="11">11 jun 2026</option>
+      <option value="12">12 jun 2026</option>
+      <option value="13">13 jun 2026</option>
+      <option value="14">14 jun 2026</option>
+      <option value="16">16 jun 2026</option>
+      <option value="17">17 jun 2026</option>
+      <option value="18">18 jun 2026</option>
+      <option value="19">19 jun 2026</option>
+      <option value="20">20 jun 2026</option>
+      <option value="22">22 jun 2026</option>
+      <option value="23">23 jun 2026</option>
+      <option value="24">24 jun 2026</option>
+      <option value="25">25 jun 2026</option>
+      <option value="26">26 jun 2026</option>
+      <option value="27">27 jun 2026</option>
+      <option value="630">30 jun 2026</option>
+      <option value="701">1 jul 2026</option>
+      <option value="702">2 jul 2026</option>
       <option value="703">3 jul 2026</option>
-      <option value="706">6 jul 2026</option><option value="707">7 jul 2026</option>
+      <option value="704">4 jul 2026</option>
+      <option value="705">5 jul 2026</option>
+      <option value="706">6 jul 2026</option>
+      <option value="707">7 jul 2026</option>
       <option value="708">8 jul 2026</option>
-      <option value="709">9 jul 2026</option><option value="710">10 jul 2026</option>
-      <option value="715">15 jul 2026</option><option value="716">16 jul 2026</option>
+      <option value="709">9 jul 2026</option>
+      <option value="710">10 jul 2026</option>
+      <option value="711">11 jul 2026</option>
+      <option value="712">12 jul 2026</option>
+      <option value="713">13 jul 2026</option>
+      <option value="714">14 jul 2026</option>
+      <option value="715">15 jul 2026</option>
+      <option value="716">16 jul 2026</option>
       <option value="717">17 jul 2026</option>
+      <option value="718">18 jul 2026</option>
+      <option value="719">19 jul 2026</option>
+      <option value="721">21 jul 2026</option>
+      <option value="722">22 jul 2026</option>
       <option value="723" selected>23 jul 2026</option>
     </select>
   </div>
-  <span class="pill-b" id="pill-citas">—</span>
+
+  <span class="pill" id="pill-citas">4.397 citas</span>
 </div>
 
-<!-- ══ RESUMEN ══ -->
+<!-- ===== RESUMEN ===== -->
 <div class="page active" id="p-resumen">
-  <p class="lbl" id="lbl-periodo">INDICADORES</p>
+  <p class="lbl">Indicadores clave del período</p>
   <div class="kpi-row">
-    <div class="kpi b"><div class="kpi-l">Total citas</div><div class="kpi-n" id="k-total">—</div><div class="kpi-s" id="k-total-s">—</div></div>
-    <div class="kpi g"><div class="kpi-l">Contactadas</div><div class="kpi-n" id="k-contact">—</div><div class="kpi-s"><span class="kpi-p" id="k-cr">—</span> contact ratio</div></div>
-    <div class="kpi g"><div class="kpi-l">Confirman asistencia</div><div class="kpi-n" id="k-will">—</div><div class="kpi-s"><span class="kpi-p" id="k-will-p">—</span> de encuestados</div></div>
-    <div class="kpi r"><div class="kpi-l">Cancelaciones</div><div class="kpi-n" id="k-wont">—</div><div class="kpi-s"><span class="kpi-p" id="k-wont-p">—</span> cupos liberados</div></div>
+    <div class="kpi"><div class="kpi-l">Total gestionadas</div><div class="kpi-n" id="k-total">30.356</div><div class="kpi-s" id="k-total-s">~768 citas/día promedio</div></div>
+    <div class="kpi t"><div class="kpi-l">Contactadas</div><div class="kpi-n" id="k-contact">2.713</div><div class="kpi-s"><span class="kpi-p" id="k-contact-p">70.7%</span> contact ratio</div></div>
+    <div class="kpi g"><div class="kpi-l">Confirman asistencia</div><div class="kpi-n" id="k-asiste">2.111</div><div class="kpi-s"><span class="kpi-p" id="k-asiste-p">95.9%</span> de encuestados</div></div>
+    <div class="kpi r"><div class="kpi-l">Cancelaciones</div><div class="kpi-n" id="k-cancel">90</div><div class="kpi-s"><span class="kpi-p" id="k-cancel-p">4.1%</span> cupos liberados</div></div>
   </div>
-  <div class="card hl-r">
-    <div class="ch"><span class="ct">Cupos liberados por actividad</span><span class="bdg b-r" id="cancel-badge">—</span></div>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:12px;" id="cancel-desc"></p>
-    <div class="cancel-g" id="cancel-grid"></div>
-    <div id="cancel-alert"></div>
+
+  <div class="card ra">
+    <div class="ch"><span class="ct">Cupos liberados por modalidad</span><span class="pill-r" id="badge-cupos">90 cupos libres</span></div>
+    <div class="cd" id="cupos-desc"><strong>90 pacientes</strong> solicitaron cancelar su cita durante el período seleccionado.</div>
+    <div class="cupos-g" id="cupos-grid">
+      <div class="cp"><div class="cp-l">Ultrasonido</div><div class="cp-n" id="c-us">52</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Rayos X</div><div class="cp-n" id="c-rx">17</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Mamografía</div><div class="cp-n" id="c-mam">12</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Tomografía</div><div class="cp-n" id="c-tac">5</div><div class="cp-s">cupos</div></div>
+    </div>
+    <div class="cupos-g" style="margin-top:8px;">
+      <div class="cp"><div class="cp-l">Fluoroscopía</div><div class="cp-n" id="c-flu">3</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Densitometría</div><div class="cp-n" id="c-den">1</div><div class="cp-s">cupos</div></div>
+      <div class="cp"><div class="cp-l">Resonancia Mag.</div><div class="cp-n" id="c-res">0</div><div class="cp-s">cupos</div></div>
+      <div class="cp-tot"><div class="cp-tot-l">Total recuperable</div><div class="cp-tot-n" id="c-tot">90</div><div class="cp-tot-l">cupos totales</div></div>
+    </div>
+    <div class="aa">⚠ <strong>Ultrasonido</strong> concentra el mayor volumen de cancelaciones. Mamografía y Fluoroscopía presentan las tasas más altas y requieren revisión.</div>
+    <p class="note">* Detalle de agenda disponible en el archivo DETALLE de cada informe diario</p>
   </div>
+
   <div class="two">
     <div class="card">
-      <div class="ch"><span class="ct">Resultado encuesta</span></div>
-      <div style="display:flex;align-items:center;gap:20px;">
-        <div style="width:150px;height:150px;flex-shrink:0;"><canvas id="dc-encuesta"></canvas></div>
-        <div style="flex:1;" id="dc-legend"></div>
+      <p class="lbl">Resultado encuesta</p>
+      <div class="dw">
+        <div style="position:relative;width:100px;height:100px;flex-shrink:0;"><canvas id="dc"></canvas></div>
+        <div>
+          <div class="li"><span class="ld" style="background:var(--teal);"></span>Asistirá — <span id="leg-asiste">2.111 (95.9%)</span></div>
+          <div class="li"><span class="ld" style="background:var(--red);"></span>Cancela — <span id="leg-cancel">90 (4.1%)</span></div>
+          <div class="li"><span class="ld" style="background:#d1d5db;"></span>Ignoró encuesta — <span id="leg-ignoro">174</span></div>
+          <div class="li"><span class="ld" style="background:#e5e7eb;border:1px solid #d1d5db;"></span>No contactados — <span id="leg-nocontact">1.465</span></div>
+        </div>
       </div>
     </div>
     <div class="card">
-      <div class="ch"><span class="ct">Resultado de la llamada</span></div>
-      <div id="hbar-llamada"></div>
-      <div style="margin-top:16px;">
-        <p class="lbl">Duración de llamadas contestadas</p>
-        <div class="dg" id="dur-grid"></div>
-        <div id="dur-alert"></div>
-      </div>
+      <p class="lbl">Resultado de la llamada</p>
+      <div class="br"><span class="bl">Contestó</span><div class="bt"><div class="bf" id="bar-contesto" style="width:100%;background:var(--navy);"></div></div><span class="bv" id="bv-contesto">2.713 · 70.7%</span></div>
+      <div class="br"><span class="bl">No contestó</span><div class="bt"><div class="bf" id="bar-noc" style="background:#f97316;"></div></div><span class="bv" id="bv-noc">644 · 16.8%</span></div>
+      <div class="br"><span class="bl">Buzón de voz</span><div class="bt"><div class="bf" id="bar-vm" style="background:#a78bfa;"></div></div><span class="bv" id="bv-vm">413 · 10.8%</span></div>
+      <div class="br"><span class="bl">Línea ocupada</span><div class="bt"><div class="bf" id="bar-busy" style="background:var(--amber);"></div></div><span class="bv" id="bv-busy">44 · 1.1%</span></div>
+      <div class="br"><span class="bl">Número inválido</span><div class="bt"><div class="bf" id="bar-inv" style="background:var(--red);"></div></div><span class="bv" id="bv-inv">24 · 0.6%</span></div>
     </div>
   </div>
+
   <div class="card">
-    <div class="ch"><span class="ct">Métricas de calidad</span><span class="csub" id="metricas-sub">—</span></div>
-    <div class="stat-row" id="metricas-grid"></div>
+    <p class="lbl">Duración de llamadas contestadas (seg)</p>
+    <div class="dg">
+      <div><div class="dv" id="dur1">238</div><div class="dbw"><div class="db" style="height:13%;background:#80deea;"></div></div><div class="dl">1–15 seg</div><div class="dp" id="durp1">8.8%</div></div>
+      <div><div class="dv" id="dur2">128</div><div class="dbw"><div class="db" style="height:7%;background:#80deea;"></div></div><div class="dl">16–30 seg</div><div class="dp" id="durp2">4.7%</div></div>
+      <div><div class="dv" id="dur3">573</div><div class="dbw"><div class="db" style="height:32%;background:var(--navy);"></div></div><div class="dl">31–45 seg</div><div class="dp" id="durp3">21.1%</div></div>
+      <div><div class="dv" id="dur4">1.774</div><div class="dbw"><div class="db" style="height:100%;background:var(--navy);"></div></div><div class="dl">>45 seg</div><div class="dp" id="durp4">65.4%</div></div>
+    </div>
   </div>
 </div>
 
-<!-- ══ TENDENCIA ══ -->
+<!-- ===== TENDENCIA ===== -->
 <div class="page" id="p-tendencia">
-  <p class="lbl">TENDENCIA DIARIA</p>
+  <p class="lbl" style="margin-bottom:12px;">Evolución diaria — período seleccionado</p>
   <div class="card">
-    <div class="ch"><span class="ct">Citas totales vs. Contactadas por día</span></div>
-    <div style="height:230px;"><canvas id="chart-tend-bar"></canvas></div>
+    <p class="lbl">Citas gestionadas vs contactadas por día</p>
+    <div class="chart-legend">
+      <div class="cl"><span class="cs" style="background:var(--navy);"></span>Total gestionadas</div>
+      <div class="cl"><span class="cs" style="background:var(--teal);"></span>Contactadas</div>
+    </div>
+    <div style="position:relative;height:220px;"><canvas id="barDia"></canvas></div>
   </div>
   <div class="two">
     <div class="card">
-      <div class="ch"><span class="ct">Contact ratio diario (%)</span></div>
-      <div style="height:185px;"><canvas id="chart-cr-line"></canvas></div>
+      <p class="lbl">Contact ratio por día (%)</p>
+      <div style="position:relative;height:170px;"><canvas id="lineContact"></canvas></div>
     </div>
     <div class="card">
-      <div class="ch"><span class="ct">Cancelaciones por día</span></div>
-      <div style="height:185px;"><canvas id="chart-cancel-bar"></canvas></div>
+      <p class="lbl">Tasa de cancelación por día (%)</p>
+      <div style="position:relative;height:170px;"><canvas id="lineCancel"></canvas></div>
     </div>
   </div>
   <div class="card">
-    <div class="ch"><span class="ct">Resumen por jornada</span></div>
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Fecha</th><th>Total</th><th>Contactadas</th><th>Contact ratio</th><th>Confirman</th><th>Cancela</th><th>Survey ratio</th><th>Dur. &gt;30s</th></tr></thead>
-        <tbody id="tbl-tend"></tbody>
-      </table>
-    </div>
+    <p class="lbl">Resumen por día</p>
+    <table class="tbl" id="trend-table">
+      <thead><tr><th>Día</th><th>Total</th><th>Contactadas</th><th>Contact ratio</th><th>Asistirá</th><th>Cancela</th><th>Tasa cancel.</th></tr></thead>
+      <tbody id="trend-tbody"></tbody>
+    </table>
+    <div class="aa" style="margin-top:10px;" id="trend-alert">⚠ La tasa de cancelación muestra tendencia al alza: del 3.3% el día 1 al 5.1% el día 5.</div>
   </div>
 </div>
 
-<!-- ══ DOCTORES ══ -->
-<div class="page" id="p-doctores">
-  <p class="lbl" id="lbl-doc">POR DOCTOR</p>
-  <div class="card">
-    <div class="ch"><span class="ct">Citas por doctor · período seleccionado</span><span class="csub" id="doc-sub">—</span></div>
-    <div style="height:230px;"><canvas id="chart-doc-bar"></canvas></div>
-  </div>
+<!-- ===== MODALIDAD ===== -->
+<div class="page" id="p-modalidad">
   <div class="two">
     <div class="card">
-      <div class="ch"><span class="ct">Distribución porcentual</span></div>
-      <div style="display:flex;align-items:center;gap:20px;">
-        <div style="width:150px;height:150px;flex-shrink:0;"><canvas id="dc-doc"></canvas></div>
-        <div id="doc-legend" style="flex:1;"></div>
-      </div>
+      <p class="lbl">Modalidades con más cancelaciones</p>
+      <div class="sl" id="mod-list"></div>
+      <div class="sep"><span>Total cancelaciones</span><span id="mod-total" style="font-weight:600;">90 · 4.1% base</span></div>
     </div>
     <div class="card">
-      <div class="ch"><span class="ct">Actividades del período</span><span class="csub" id="act-sub">—</span></div>
-      <div id="act-bars"></div>
+      <p class="lbl">Cancelaciones por sede</p>
+      <div class="sl">
+        <div class="si"><span class="sr">1</span><span class="sn">Clínica Principal</span><span class="sc" id="sede-1">68</span><span class="bdg b-b" id="sede-1p">2.7%</span></div>
+        <div class="si"><span class="sr">2</span><span class="sn">Clínica Fundación</span><span class="sc" id="sede-2">12</span><span class="bdg b-b" id="sede-2p">2.6%</span></div>
+        <div class="si"><span class="sr">3</span><span class="sn">Clínica los Nogales</span><span class="sc" id="sede-3">10</span><span class="bdg b-g" id="sede-3p">1.2%</span></div>
+      </div>
+      <div class="sep"><span>Total</span><span style="font-weight:600;" id="sede-total">90</span></div>
+      <div class="at">Tasas similares entre sedes. La Clínica Principal concentra el mayor volumen.</div>
     </div>
   </div>
   <div class="card">
-    <div class="ch"><span class="ct">Detalle por doctor</span></div>
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Doctor(a)</th><th>Citas</th><th>% del período</th></tr></thead>
-        <tbody id="tbl-doc"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- ══ COBERTURA ══ -->
-<div class="page" id="p-cobertura">
-  <p class="lbl" id="lbl-cob">FUENTES Y COBERTURA TELEFÓNICA</p>
-  <div class="three" style="margin-bottom:14px;">
-    <div class="cob-box p3" style="text-align:center;padding:20px 24px;">
-      <div class="cob-n" id="cob-p0">—</div>
-      <div class="cob-l" style="font-size:13px;font-weight:700;margin-top:6px;">Con teléfono principal</div>
-      <div class="cob-sub" style="font-size:12px;margin-top:4px;">100% · todos los pacientes</div>
-      <div style="font-size:11px;color:#065f46;margin-top:8px;font-weight:600;">✅ Base de contacto garantizada</div>
-    </div>
-    <div class="cob-box p1" style="text-align:center;padding:20px 24px;border-color:#fca5a5;">
-      <div class="cob-n" id="cob-p1">—</div>
-      <div class="cob-l" style="font-size:13px;font-weight:700;margin-top:6px;">Sin número alterno</div>
-      <div class="cob-sub" id="cob-p1-pct" style="font-size:12px;margin-top:4px;">—</div>
-      <div style="font-size:11px;color:#991b1b;margin-top:8px;font-weight:600;">⚠ Sin segunda oportunidad de contacto</div>
-    </div>
-    <div class="cob-box p2" style="text-align:center;padding:20px 24px;">
-      <div class="cob-n" id="cob-p3">—</div>
-      <div class="cob-l" style="font-size:13px;font-weight:700;margin-top:6px;">Con 3er teléfono</div>
-      <div class="cob-sub" id="cob-p3-pct" style="font-size:12px;margin-top:4px;">—</div>
-      <div style="font-size:11px;color:#065f46;margin-top:8px;font-weight:600;" id="cob-p3-note">—</div>
-    </div>
-  </div>
-  <div id="cob-alert-main"></div>
-  <div class="card" style="margin-top:14px;">
-    <div class="ch"><span class="ct">Cobertura telefónica por tipo de registro</span></div>
-    <div id="hbar-cobertura"></div>
-    <div id="cob-alert-tip"></div>
+    <p class="lbl">Detalle por modalidad — volumen vs tasa</p>
+    <table class="tbl">
+      <thead><tr><th>Modalidad</th><th>Total citas</th><th>Cancelan</th><th>Tasa</th><th>Riesgo</th></tr></thead>
+      <tbody id="mod-tbody"></tbody>
+    </table>
+    <div class="aa" style="margin-top:10px;">⚠ <strong>Mamografía y Fluoroscopía</strong> presentan tasas críticas. Requieren revisión urgente de causas.</div>
   </div>
   <div class="card">
-    <div class="ch"><span class="ct">Cobertura por jornada</span></div>
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Fecha</th><th>Total pacientes</th><th>Sin alterno ⚠</th><th>Con 2do tel. ✅</th><th>Con 3er tel. ✅</th><th>% con alterno</th></tr></thead>
-        <tbody id="tbl-cob"></tbody>
-      </table>
-    </div>
+    <p class="lbl">Contact ratio por sede</p>
+    <table class="tbl">
+      <thead><tr><th>Centro</th><th>Total citas</th><th>Contestaron</th><th>Contact ratio</th><th>Cancela</th></tr></thead>
+      <tbody id="sede-tbody"></tbody>
+    </table>
+    <div class="aa" style="margin-top:10px;">Clínica los Nogales tiene el contact ratio más bajo. Verificar calidad de datos telefónicos.</div>
   </div>
 </div>
 
-<!-- ══ CUMPLIMIENTO ══ -->
-<div class="page" id="p-cumplimiento">
-  <p class="lbl">CUMPLIMIENTO DE ENVÍO DE BASE · A HOY 23 JULIO 2026</p>
-
-  <!-- Comparativo por mes -->
-  <p class="lbl">COMPARATIVO POR MES</p>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px;">
-    <div class="cum-month-card">
-      <div class="cmh" style="background:#0c41ab;">
-        <span class="cmh-title">Mayo 2026</span>
-        <span class="cmh-sub">Lun 4 may → Sáb 30 may</span>
-      </div>
-      <div class="cmb">
-        <div class="cm-ring-wrap"><canvas id="ring-mayo" width="110" height="110"></canvas><div class="cm-ring-center" id="ring-mayo-lbl"></div></div>
-        <div class="cm-stats" id="stats-mayo"></div>
-      </div>
+<!-- ===== FUENTES ===== -->
+<div class="page" id="p-fuentes">
+  <div class="fkpi">
+    <div class="kpi" style="border-top:3px solid var(--blue);">
+      <div class="kpi-l">Con teléfono alterno</div>
+      <div class="kpi-n" id="f-con" style="color:var(--blue);">988</div>
+      <div class="kpi-s"><span id="f-con-p" style="font-weight:600;color:var(--blue);">25.7%</span> 2do intento disponible</div>
     </div>
-    <div class="cum-month-card">
-      <div class="cmh" style="background:#1a5c3a;">
-        <span class="cmh-title">Junio 2026</span>
-        <span class="cmh-sub">Lun 1 jun → Mar 30 jun</span>
-      </div>
-      <div class="cmb">
-        <div class="cm-ring-wrap"><canvas id="ring-junio" width="110" height="110"></canvas><div class="cm-ring-center" id="ring-junio-lbl"></div></div>
-        <div class="cm-stats" id="stats-junio"></div>
-      </div>
+    <div class="kpi" style="border-top:3px solid var(--amber);">
+      <div class="kpi-l">Sin teléfono alterno</div>
+      <div class="kpi-n" id="f-sin" style="color:var(--amber);">2.852</div>
+      <div class="kpi-s"><span id="f-sin-p" style="font-weight:600;color:var(--amber);">74.3%</span> solo un número</div>
     </div>
-    <div class="cum-month-card">
-      <div class="cmh" style="background:#6a3db8;">
-        <span class="cmh-title">Julio 2026</span>
-        <span class="cmh-sub">Mié 1 jul → Jue 23 jul</span>
-      </div>
-      <div class="cmb">
-        <div class="cm-ring-wrap"><canvas id="ring-julio" width="110" height="110"></canvas><div class="cm-ring-center" id="ring-julio-lbl"></div></div>
-        <div class="cm-stats" id="stats-julio"></div>
-      </div>
-    </div>
-    <div class="cum-month-card" style="border-color:#d4820a;">
-      <div class="cmh" style="background:#7a4800;">
-        <span class="cmh-title">Acumulado</span>
-        <span class="cmh-sub">4 may → 23 jul 2026</span>
-      </div>
-      <div class="cmb">
-        <div class="cm-ring-wrap"><canvas id="ring-total" width="110" height="110"></canvas><div class="cm-ring-center" id="ring-total-lbl"></div></div>
-        <div class="cm-stats" id="stats-total"></div>
-      </div>
+    <div class="kpi g">
+      <div class="kpi-l">Cobertura tel. principal</div>
+      <div class="kpi-n" id="f-cob">3.840</div>
+      <div class="kpi-s"><span class="kpi-p">100%</span> todos tienen registrado</div>
     </div>
   </div>
-
-  <!-- Alerta gerencial -->
-  <div class="card hl-r">
-    <div class="ch"><span class="ct">⚠ Alerta gerencial</span><span class="bdg b-r">13 días sin envío</span></div>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:10px;">
-      De <strong>29 días hábiles</strong> transcurridos (lun–sáb, excluyendo festivos Colombia), solo se recibió base en <strong>16</strong>.
-      El <strong>43.3%</strong> de los días laborables no se confirmaron citas.
-    </p>
-    <div class="ar">🔴 <strong>Patrón crítico:</strong> Los <strong>sábados</strong> tienen 0% de cumplimiento (0 de 5). <strong>Lunes y jueves</strong> tienen 40% de incumplimiento cada uno. La semana del 25–30 mayo fue la peor: solo 2 de 6 bases enviadas (67% de incumplimiento).</div>
-    <div class="aa" style="margin-top:8px;">💰 <strong>Impacto estimado:</strong> ~1.170 citas (13 días × 90 promedio) no recibieron llamada de confirmación automatizada. Con un contact ratio del 80%, aproximadamente <strong>936 pacientes</strong> no fueron contactados.</div>
-  </div>
-
-  <!-- Calendario semanal -->
-  <p class="lbl">CALENDARIO DE ENVÍOS DÍA A DÍA</p>
-  <div id="cal-grid"></div>
-
-  <!-- Por día de semana -->
-  <p class="lbl" style="margin-top:6px;">CUMPLIMIENTO POR DÍA DE SEMANA</p>
-  <div class="dow-analysis" id="dow-analysis"></div>
-
-  <!-- Gráfico semanal + impacto -->
+  <div class="aa" style="margin-bottom:14px;">⚠ <strong>Oportunidad:</strong> Más del 74% de pacientes no tienen número alterno. Con un segundo número se podría reintentar más de 1.000 llamadas no contestadas.</div>
   <div class="two">
     <div class="card">
-      <div class="ch"><span class="ct">Envíos por semana · apilado</span></div>
-      <div style="height:210px;"><canvas id="chart-cum-bar"></canvas></div>
+      <p class="lbl">Cobertura telefónica</p>
+      <div class="br"><span class="bl">Teléfono principal</span><div class="bt"><div class="bf" style="width:100%;background:var(--navy);"></div></div><span class="bv" id="f-bv1">3.840 · 100%</span></div>
+      <div class="br"><span class="bl">Sin número alterno</span><div class="bt"><div class="bf" id="f-bar-sin" style="background:var(--amber);"></div></div><span class="bv" id="f-bv2">2.852 · 74.3%</span></div>
+      <div class="br"><span class="bl">Con número alterno</span><div class="bt"><div class="bf" id="f-bar-con" style="background:var(--blue);"></div></div><span class="bv" id="f-bv3">988 · 25.7%</span></div>
+      <div class="at">💡 Incrementar el registro de números alternos puede llevar el contact ratio por encima del 80%.</div>
     </div>
-    <div class="card hl-y">
-      <div class="ch"><span class="ct">Impacto estimado en citas no confirmadas</span></div>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:12px;">Promedio de <strong>~90 citas/día</strong> basado en los 16 informes recibidos.</p>
-      <div id="impacto-grid"></div>
+    <div class="card">
+      <p class="lbl">No contactados — oportunidad de mejora</p>
+      <div class="br"><span class="bl">No contestó</span><div class="bt"><div class="bf" id="f-nc1" style="background:#f97316;"></div></div><span class="bv" id="f-nv1">644 · 16.8%</span></div>
+      <div class="br"><span class="bl">Buzón de voz</span><div class="bt"><div class="bf" id="f-nc2" style="background:#a78bfa;"></div></div><span class="bv" id="f-nv2">413 · 10.8%</span></div>
+      <div class="br"><span class="bl">Línea ocupada</span><div class="bt"><div class="bf" id="f-nc3" style="background:var(--amber);"></div></div><span class="bv" id="f-nv3">44 · 1.1%</span></div>
+      <div class="br"><span class="bl">Número inválido</span><div class="bt"><div class="bf" id="f-nc4" style="background:var(--red);"></div></div><span class="bv" id="f-nv4">24 · 0.6%</span></div>
+      <div class="at">1.057 pacientes no fueron alcanzados. Con número alterno se podría superar el 80% de contact ratio.</div>
     </div>
   </div>
-
 </div>
 
-</div>
+</div><!-- /wrap -->
 
 <script>
-Chart.register(ChartDataLabels);
-
-// ══ DATOS REALES POR JORNADA ══════════════════════════════════════
+// =================== DATOS ===================
 const DATA = {
-  '504':{label:'4 may',total:74, answered:53,vm:9, na:10,busy:1,invalid:1,noring:0,will:38,wont:1, ignored:14,dur:[2,2,7,42], p1:74,p2:3, p3:0, only1:71,
-    doc:{smb:30,jdcp:0,dcce:0,jcpg:0,mb:0,rm:0,mra:0,other:44},
-    act:{'Valoración':21,'P. Enfilado':15,'P. Rodete':12,'Entrega Prótesis':10,'Imp. Preliminar':10,'Imp. Definitiva':3,'Control':3}},
-  '505':{label:'5 may',total:75, answered:63,vm:4, na:6, busy:1,invalid:0,noring:1,will:39,wont:3, ignored:21,dur:[3,3,12,45],p1:75,p2:34,p3:3, only1:41,
-    doc:{smb:29,jdcp:0,dcce:0,jcpg:0,mb:0,rm:25,mra:21,other:0},
-    act:{'Valoración':18,'P. Rodete':18,'Imp. Preliminar':16,'P. Enfilado':9,'Imp. Definitiva':7,'Entrega Prótesis':5,'Control':2}},
-  '506':{label:'6 may',total:50, answered:46,vm:2, na:2, busy:0,invalid:0,noring:0,will:31,wont:1, ignored:14,dur:[2,2,5,37], p1:50,p2:27,p3:2, only1:23,
-    doc:{smb:28,jdcp:0,dcce:16,jcpg:0,mb:0,rm:0,mra:6,other:0},
-    act:{'Valoración':12,'Imp. Preliminar':11,'Imp. Definitiva':8,'P. Rodete':7,'P. Enfilado':6,'Entrega Prótesis':5,'Control':1}},
-  '508':{label:'8 may',total:81, answered:68,vm:4, na:9, busy:0,invalid:0,noring:0,will:39,wont:3, ignored:26,dur:[6,3,3,56], p1:81,p2:32,p3:0, only1:49,
-    doc:{smb:32,jdcp:25,dcce:16,jcpg:0,mb:8,rm:0,mra:0,other:0},
-    act:{'Valoración':23,'Entrega Prótesis':13,'P. Enfilado':13,'Imp. Preliminar':11,'P. Rodete':11,'Imp. Definitiva':7,'Control':3}},
-  '512':{label:'12 may',total:109,answered:85,vm:8, na:13,busy:1,invalid:2,noring:0,will:53,wont:4, ignored:28,dur:[5,3,13,64],p1:109,p2:44,p3:4, only1:65,
-    doc:{smb:29,jdcp:0,dcce:0,jcpg:23,mb:0,rm:26,mra:31,other:0},
-    act:{'Valoración':25,'P. Rodete':22,'P. Enfilado':21,'Imp. Definitiva':14,'Imp. Preliminar':13,'Entrega Prótesis':11,'Control':3}},
-  '513':{label:'13 may',total:80, answered:62,vm:4, na:13,busy:0,invalid:1,noring:0,will:36,wont:0, ignored:26,dur:[3,2,1,56], p1:80,p2:31,p3:0, only1:49,
-    doc:{smb:29,jdcp:13,dcce:0,jcpg:0,mb:0,rm:24,mra:0,other:14},
-    act:{'Valoración':20,'Imp. Preliminar':17,'Entrega Prótesis':12,'P. Enfilado':10,'P. Rodete':9,'Imp. Definitiva':6,'Control':6}},
-  '515':{label:'15 may',total:79, answered:62,vm:10,na:6, busy:0,invalid:1,noring:0,will:44,wont:2, ignored:16,dur:[5,2,5,50], p1:79,p2:29,p3:1, only1:50,
-    doc:{smb:28,jdcp:26,dcce:16,jcpg:0,mb:9,rm:0,mra:0,other:0},
-    act:{'Entrega Prótesis':18,'Valoración':15,'Imp. Preliminar':15,'P. Enfilado':14,'P. Rodete':10,'Imp. Definitiva':5,'Control':2}},
-  '519':{label:'19 may',total:114,answered:94,vm:9, na:11,busy:0,invalid:0,noring:0,will:60,wont:0, ignored:34,dur:[10,0,12,72],p1:114,p2:58,p3:0, only1:56,
-    doc:{smb:34,jdcp:0,dcce:0,jcpg:17,mb:0,rm:29,mra:20,other:14},
-    act:{'Valoración':34,'Imp. Preliminar':16,'P. Rodete':16,'Imp. Definitiva':14,'P. Enfilado':13,'Entrega Prótesis':12,'Control':9}},
-  '520':{label:'20 may',total:61, answered:51,vm:4, na:6, busy:0,invalid:0,noring:0,will:34,wont:1, ignored:16,dur:[4,2,5,40], p1:61,p2:36,p3:8, only1:25,
-    doc:{smb:13,jdcp:13,dcce:0,jcpg:0,mb:0,rm:0,mra:23,other:12},
-    act:{'P. Rodete':13,'Valoración':12,'Imp. Definitiva':11,'P. Enfilado':9,'Entrega Prótesis':6,'Control':5,'Imp. Preliminar':5}},
-  '522':{label:'22 may',total:76, answered:56,vm:8, na:8, busy:2,invalid:1,noring:1,will:30,wont:2, ignored:24,dur:[4,4,6,42], p1:76,p2:29,p3:1, only1:47,
-    doc:{smb:34,jdcp:0,dcce:12,jcpg:19,mb:11,rm:0,mra:0,other:0},
-    act:{'Valoración':18,'Entrega Prótesis':16,'Imp. Preliminar':15,'P. Rodete':11,'P. Enfilado':11,'Imp. Definitiva':3,'Control':2}},
-  '527':{label:'27 may',total:82, answered:67,vm:6, na:5, busy:0,invalid:0,noring:4,will:39,wont:3, ignored:25,dur:[6,1,3,57], p1:82,p2:28,p3:0, only1:54,
-    doc:{smb:28,jdcp:0,dcce:0,jcpg:0,mb:0,rm:31,mra:0,other:23},
-    act:{'Imp. Preliminar':24,'Valoración':16,'P. Enfilado':13,'Entrega Prótesis':11,'P. Rodete':9,'Imp. Definitiva':5,'Control':4}},
-  '528':{label:'28 may',total:56, answered:45,vm:4, na:6, busy:0,invalid:1,noring:0,will:26,wont:0, ignored:19,dur:[4,0,5,36], p1:56,p2:24,p3:1, only1:32,
-    doc:{smb:0,jdcp:0,dcce:0,jcpg:25,mb:0,rm:31,mra:0,other:0},
-    act:{'Valoración':17,'Imp. Preliminar':17,'P. Rodete':7,'P. Enfilado':6,'Imp. Definitiva':3,'Entrega Prótesis':3,'Control':3}},
-  '602':{label:'2 jun', total:114,answered:87,vm:16,na:10,busy:1,invalid:0,noring:0,will:67,wont:4, ignored:16,dur:[2,3,4,78], p1:114,p2:38,p3:7, only1:76,
-    doc:{smb:14,jdcp:0,dcce:0,jcpg:23,mb:0,rm:32,mra:29,other:16},
-    act:{'Imp. Preliminar':26,'Valoración':25,'P. Enfilado':19,'P. Rodete':16,'Imp. Definitiva':15,'Entrega Prótesis':8,'Control':5}},
-  '603':{label:'3 jun', total:129,answered:101,vm:13,na:14,busy:1,invalid:0,noring:0,will:70,wont:3, ignored:28,dur:[5,3,7,86], p1:129,p2:56,p3:8, only1:73,
-    doc:{smb:27,jdcp:17,dcce:16,jcpg:0,mb:0,rm:27,mra:19,other:23},
-    act:{'Valoración':30,'P. Enfilado':25,'Entrega Prótesis':21,'P. Rodete':18,'Imp. Preliminar':17,'Imp. Definitiva':14,'Control':4}},
-  '604':{label:'4 jun', total:155,answered:130,vm:8, na:14,busy:2,invalid:1,noring:0,will:89,wont:5, ignored:36,dur:[10,5,5,110],p1:155,p2:58,p3:3, only1:97,
-    doc:{smb:41,jdcp:0,dcce:0,jcpg:29,mb:25,rm:28,mra:0,other:32},
-    act:{'Imp. Preliminar':33,'Valoración':33,'Entrega Prótesis':25,'P. Rodete':19,'P. Enfilado':19,'Imp. Definitiva':19,'Control':7}},
-  '605':{label:'5 jun', total:97, answered:76,vm:3, na:18,busy:0,invalid:0,noring:0,will:53,wont:0, ignored:23,dur:[2,1,4,69], p1:97,p2:30,p3:4, only1:67,
-    doc:{smb:32,jdcp:24,dcce:18,jcpg:12,mb:11,rm:0,mra:0,other:0},
-    act:{'Entrega Prótesis':22,'Imp. Preliminar':18,'Valoración':18,'P. Enfilado':17,'P. Rodete':15,'Imp. Definitiva':4,'Control':3}},
-  '610':{label:'10 jun',total:78, answered:68,vm:5, na:4, busy:0,invalid:1,noring:0,will:40,wont:2, ignored:26,dur:[5,4,3,56], p1:78,p2:28,p3:3, only1:50,
-    doc:{smb:0,jdcp:14,dcce:0,jcpg:0,mb:0,rm:26,mra:16,other:22},
-    act:{'P. Rodete':16,'P. Enfilado':16,'Valoración':14,'Imp. Preliminar':14,'Imp. Definitiva':8,'Entrega Prótesis':7,'Control':3}},
-  '611':{label:'11 jun',total:107,answered:85,vm:7, na:12,busy:0,invalid:3,noring:0,will:62,wont:2, ignored:21,dur:[6,1,15,63], p1:107,p2:42,p3:5, only1:65,
-    doc:{smb:14,jdcp:0,dcce:0,jcpg:25,mb:26,rm:30,mra:0,other:12},
-    act:{'Imp. Preliminar':27,'P. Rodete':21,'Valoración':19,'Entrega Prótesis':12,'P. Enfilado':10,'Imp. Definitiva':9,'Control':9}},
-  '617':{label:'17 jun',total:98, answered:79,vm:9, na:10,busy:0,invalid:0,noring:0,will:46,wont:3, ignored:30,dur:[7,3,4,65], p1:98,p2:30,p3:3, only1:68,
-    doc:{smb:30,jdcp:8,dcce:0,jcpg:0,mb:0,rm:22,mra:12,other:26},
-    act:{'P. Rodete':23,'P. Enfilado':17,'Valoración':16,'Entrega Prótesis':16,'Imp. Preliminar':13,'Imp. Definitiva':7,'Control':6}},
-  '618':{label:'18 jun',total:115,answered:97,vm:8, na:9, busy:1,invalid:0,noring:0,will:62,wont:4, ignored:31,dur:[3,3,8,83], p1:115,p2:48,p3:11,only1:67,
-    doc:{smb:32,jdcp:0,dcce:0,jcpg:26,mb:22,rm:27,mra:0,other:8},
-    act:{'P. Rodete':27,'Imp. Preliminar':24,'Valoración':20,'P. Enfilado':14,'Imp. Definitiva':12,'Entrega Prótesis':10,'Control':8}},
-  '619':{label:'19 jun',total:122,answered:101,vm:13,na:7, busy:0,invalid:1,noring:0,will:71,wont:3, ignored:27,dur:[4,5,7,85], p1:122,p2:42,p3:3, only1:80,
-    doc:{smb:38,jdcp:24,dcce:12,jcpg:24,mb:10,rm:0,mra:0,other:14},
-    act:{'Entrega Prótesis':27,'P. Enfilado':24,'Valoración':23,'P. Rodete':16,'Imp. Preliminar':13,'Control':12,'Imp. Definitiva':7}},
-  '622':{label:'22 jun',total:106,answered:83, vm:9, na:13,busy:0,invalid:1,noring:0,will:56,wont:2, ignored:25,dur:[5,2,48,28], p1:106,p2:41,p3:7, only1:65,
-    doc:{smb:37,jdcp:0,dcce:0,jcpg:0,mb:0,rm:0,mra:26,other:43},
-    act:{'Entrega Prótesis':27,'Imp. Preliminar':22,'P. Enfilado':15,'Valoración':14,'Control':11,'P. Rodete':10,'Imp. Definitiva':7}},
-  '623':{label:'23 jun',total:112,answered:91, vm:9, na:12,busy:0,invalid:0,noring:0,will:66,wont:2, ignored:23,dur:[3,3,63,22], p1:112,p2:39,p3:8, only1:73,
-    doc:{smb:26,jdcp:0,dcce:0,jcpg:27,mb:0,rm:27,mra:15,other:17},
-    act:{'P. Enfilado':21,'P. Rodete':21,'Valoración':19,'Imp. Preliminar':15,'Imp. Definitiva':14,'Entrega Prótesis':14,'Control':7}},
-  '626':{label:'26 jun',total:58, answered:45, vm:8, na:4, busy:0,invalid:0,noring:1,will:31,wont:1, ignored:13,dur:[3,5,26,11], p1:58,p2:23,p3:3, only1:35,
-    doc:{smb:0,jdcp:0,dcce:15,jcpg:23,mb:11,rm:0,mra:0,other:9},
-    act:{'P. Enfilado':15,'Entrega Prótesis':12,'P. Rodete':10,'Imp. Definitiva':10,'Imp. Preliminar':5,'Valoración':4,'Control':2}},
-  '630':{label:'30 jun',total:90, answered:73, vm:6, na:10,busy:0,invalid:1,noring:0,will:57,wont:2, ignored:14,dur:[3,2,42,26], p1:90,p2:32,p3:4, only1:58,
-    doc:{smb:0,jdcp:0,dcce:0,jcpg:25,mb:0,rm:27,mra:26,other:12},
-    act:{'P. Enfilado':19,'Valoración':16,'Imp. Definitiva':15,'Entrega Prótesis':14,'Imp. Preliminar':13,'P. Rodete':8,'Control':5}},
-  '701':{label:'1 jul', total:98, answered:89, vm:3, na:6, busy:0,invalid:0,noring:0,will:56,wont:4, ignored:29,dur:[5,8,61,15], p1:98,p2:34,p3:5, only1:64,
-    doc:{smb:0,jdcp:14,dcce:14,jcpg:0,mb:0,rm:27,mra:22,other:21},
-    act:{'P. Rodete':25,'Entrega Prótesis':19,'P. Enfilado':13,'Imp. Preliminar':13,'Control':12,'Imp. Definitiva':12,'Valoración':4}},
-  '703':{label:'3 jul', total:100,answered:85, vm:8, na:7, busy:0,invalid:0,noring:0,will:56,wont:4, ignored:25,dur:[7,2,55,21], p1:100,p2:26,p3:4, only1:74,
-    doc:{smb:30,jdcp:22,dcce:15,jcpg:24,mb:9,rm:0,mra:0,other:0},
-    act:{'P. Rodete':27,'Entrega Prótesis':23,'Imp. Preliminar':15,'Valoración':10,'Control':9,'P. Enfilado':9,'Imp. Definitiva':7}},
-  '706':{label:'6 jul', total:82, answered:65, vm:9, na:7, busy:0,invalid:1,noring:0,will:54,wont:0, ignored:11,dur:[2,2,50,11], p1:82, p2:26,p3:3, only1:56,
-    doc:{smb:11,jdcp:0,dcce:0,jcpg:0,mb:0,rm:0,mra:34,other:37},
-    act:{'Entrega Prótesis':20,'P. Rodete':14,'Control':14,'Imp. Preliminar':12,'P. Enfilado':10,'Valoración':5,'Imp. Definitiva':5}},
-  '707':{label:'7 jul', total:90, answered:74, vm:3, na:12,busy:0,invalid:0,noring:1,will:47,wont:4, ignored:23,dur:[2,7,52,13], p1:90, p2:31,p3:3, only1:59,
-    doc:{smb:11,jdcp:0,dcce:0,jcpg:28,mb:0,rm:26,mra:25,other:0},
-    act:{'P. Rodete':21,'Imp. Preliminar':18,'P. Enfilado':14,'Entrega Prótesis':13,'Valoración':10,'Imp. Definitiva':8,'Control':6}},
-  '708':{label:'8 jul', total:125,answered:99, vm:5, na:20,busy:0,invalid:0,noring:1,will:59,wont:3, ignored:37,dur:[5,6,69,19], p1:125,p2:42,p3:5, only1:83,
-    doc:{smb:25,jdcp:11,dcce:15,jcpg:0,mb:0,rm:27,mra:24,other:23},
-    act:{'P. Rodete':29,'Entrega Prótesis':26,'P. Enfilado':24,'Imp. Preliminar':16,'Valoración':15,'Imp. Definitiva':11,'Control':4}},
-  '709':{label:'9 jul', total:110,answered:91, vm:6, na:10,busy:2,invalid:1,noring:0,will:57,wont:4, ignored:30,dur:[6,3,55,27], p1:110,p2:45,p3:3, only1:65,
-    doc:{smb:37,jdcp:0,dcce:0,jcpg:26,mb:21,rm:26,mra:0,other:0},
-    act:{'Imp. Preliminar':28,'P. Rodete':23,'Entrega Prótesis':21,'Valoración':16,'Imp. Definitiva':9,'P. Enfilado':9,'Control':4}},
-  '710':{label:'10 jul',total:75, answered:60, vm:5, na:9, busy:1,invalid:0,noring:0,will:38,wont:2, ignored:20,dur:[5,4,38,13], p1:75, p2:29,p3:6, only1:46,
-    doc:{smb:36,jdcp:0,dcce:11,jcpg:28,mb:0,rm:0,mra:0,other:0},
-    act:{'P. Enfilado':16,'Imp. Definitiva':14,'P. Rodete':13,'Entrega Prótesis':13,'Valoración':8,'Imp. Preliminar':8,'Control':3}},
-  '715':{label:'15 jul',total:103,answered:84, vm:5, na:11,busy:1,invalid:2,noring:0,will:56,wont:3, ignored:25,dur:[6,4,54,20], p1:103,p2:47,p3:5, only1:56,
-    doc:{smb:29,jdcp:11,dcce:0,jcpg:0,mb:0,rm:26,mra:12,other:25},
-    act:{'Entrega Prótesis':27,'Imp. Preliminar':21,'P. Enfilado':18,'P. Rodete':17,'Valoración':9,'Imp. Definitiva':6,'Control':5}},
-  '716':{label:'16 jul',total:130,answered:104,vm:11,na:12,busy:0,invalid:3,noring:0,will:64,wont:3, ignored:37,dur:[7,4,68,25], p1:130,p2:48,p3:2, only1:82,
-    doc:{smb:44,jdcp:0,dcce:0,jcpg:23,mb:23,rm:26,mra:0,other:14},
-    act:{'Imp. Preliminar':34,'P. Rodete':25,'Valoración':18,'P. Enfilado':16,'Entrega Prótesis':16,'Imp. Definitiva':15,'Control':6}},
-  '717':{label:'17 jul',total:44, answered:39, vm:2, na:3, busy:0,invalid:0,noring:0,will:23,wont:3, ignored:13,dur:[1,3,26,9],  p1:44, p2:18,p3:2, only1:26,
-    doc:{smb:0,jdcp:24,dcce:0,jcpg:20,mb:0,rm:0,mra:0,other:0},
-    act:{'Entrega Prótesis':18,'P. Enfilado':8,'P. Rodete':7,'Imp. Preliminar':5,'Imp. Definitiva':4,'Valoración':2,'Control':0}},
-  '723':{label:'23 jul',total:87, answered:70, vm:8, na:8, busy:0,invalid:1,noring:0,will:40,wont:1, ignored:29,dur:[8,3,48,11], p1:87, p2:22,p3:3, only1:65,
-    doc:{smb:11,jdcp:0,dcce:0,jcpg:22,mb:19,rm:25,mra:0,other:10},
-    act:{'P. Rodete':23,'P. Enfilado':14,'Entrega Prótesis':14,'Control':12,'Valoración':8,'Imp. Definitiva':8,'Imp. Preliminar':8}},
+  1:{total:873,answered:625,vm:85,na:145,busy:5,inv:12,will:506,wont:17,ignored:31,tel2:218,dur:[72,43,126,384],mod:{ULTRASONIDO:{t:567,c:9},RAYOS_X:{t:178,c:3},TOMOGRAFIA:{t:71,c:2},MAMOGRAFIA:{t:30,c:2},FLUOROSCOPIA:{t:7,c:1},DENSITOMETRIA:{t:11,c:0}},sede:{principal:{t:548,a:398,c:11},nogales:{t:184,a:113,c:4},fundacion:{t:141,a:114,c:2}}},
+  2:{total:763,answered:537,vm:87,na:135,busy:2,inv:2,will:419,wont:21,ignored:23,tel2:194,dur:[60,32,119,326],mod:{ULTRASONIDO:{t:495,c:14},RAYOS_X:{t:160,c:3},TOMOGRAFIA:{t:63,c:1},MAMOGRAFIA:{t:28,c:2},FLUOROSCOPIA:{t:5,c:1},DENSITOMETRIA:{t:9,c:0}},sede:{principal:{t:479,a:345,c:14},nogales:{t:160,a:96,c:4},fundacion:{t:124,a:96,c:3}}},
+  3:{total:651,answered:452,vm:77,na:98,busy:22,inv:2,will:359,wont:13,ignored:33,tel2:162,dur:[46,21,96,289],mod:{ULTRASONIDO:{t:420,c:8},RAYOS_X:{t:138,c:2},TOMOGRAFIA:{t:55,c:1},MAMOGRAFIA:{t:25,c:2},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:8,c:0}},sede:{principal:{t:411,a:293,c:9},nogales:{t:139,a:84,c:2},fundacion:{t:101,a:75,c:2}}},
+  4:{total:724,answered:515,vm:76,na:124,busy:7,inv:2,will:395,wont:16,ignored:46,tel2:192,dur:[32,18,110,355],mod:{ULTRASONIDO:{t:472,c:10},RAYOS_X:{t:155,c:4},TOMOGRAFIA:{t:68,c:0},MAMOGRAFIA:{t:45,c:4},FLUOROSCOPIA:{t:5,c:1},DENSITOMETRIA:{t:12,c:0}},sede:{principal:{t:460,a:331,c:11},nogales:{t:148,a:92,c:3},fundacion:{t:116,a:92,c:2}}},
+  5:{total:829,answered:584,vm:88,na:142,busy:8,inv:6,will:432,wont:23,ignored:41,tel2:222,dur:[28,14,122,420],mod:{ULTRASONIDO:{t:476,c:11},RAYOS_X:{t:192,c:5},TOMOGRAFIA:{t:81,c:1},MAMOGRAFIA:{t:42,c:2},FLUOROSCOPIA:{t:4,c:0},DENSITOMETRIA:{t:13,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:646,a:477,c:23},nogales:{t:195,a:154,c:0},fundacion:{t:88,a:53,c:3}}},
+  6:{total:557,answered:405,vm:47,na:100,busy:2,inv:3,will:302,wont:25,ignored:78,tel2:140,dur:[24,23,89,269],mod:{ULTRASONIDO:{t:273,c:14},RAYOS_X:{t:143,c:6},TOMOGRAFIA:{t:56,c:0},MAMOGRAFIA:{t:31,c:2},FLUOROSCOPIA:{t:4,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:50,c:3}},sede:{principal:{t:332,a:251,c:19},nogales:{t:140,a:102,c:5},fundacion:{t:85,a:52,c:1}}},
+  7:{total:77,answered:51,vm:9,na:17,busy:0,inv:0,will:44,wont:0,ignored:7,tel2:19,dur:[3,1,8,39],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:77,c:0},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:77,a:51,c:0},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  9:{total:939,answered:681,vm:80,na:165,busy:3,inv:6,will:535,wont:26,ignored:120,tel2:227,dur:[39,47,172,423],mod:{ULTRASONIDO:{t:553,c:15},RAYOS_X:{t:196,c:4},TOMOGRAFIA:{t:88,c:2},MAMOGRAFIA:{t:81,c:4},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:21,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:644,a:483,c:19},nogales:{t:164,a:105,c:3},fundacion:{t:131,a:93,c:4}}},
+  10:{total:696,answered:507,vm:62,na:111,busy:6,inv:8,will:411,wont:15,ignored:81,tel2:197,dur:[14,28,116,349],mod:{ULTRASONIDO:{t:481,c:12},RAYOS_X:{t:133,c:3},TOMOGRAFIA:{t:60,c:0},MAMOGRAFIA:{t:16,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:6,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:448,a:337,c:11},nogales:{t:148,a:106,c:2},fundacion:{t:100,a:64,c:2}}},
+  11:{total:702,answered:493,vm:75,na:124,busy:2,inv:8,will:397,wont:18,ignored:78,tel2:169,dur:[31,17,105,340],mod:{ULTRASONIDO:{t:466,c:13},RAYOS_X:{t:153,c:4},TOMOGRAFIA:{t:55,c:1},MAMOGRAFIA:{t:13,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:15,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:495,a:341,c:10},nogales:{t:115,a:88,c:2},fundacion:{t:92,a:64,c:6}}},
+  12:{total:634,answered:450,vm:78,na:98,busy:2,inv:4,will:359,wont:13,ignored:78,tel2:172,dur:[41,12,101,296],mod:{ULTRASONIDO:{t:376,c:8},RAYOS_X:{t:162,c:3},TOMOGRAFIA:{t:56,c:1},MAMOGRAFIA:{t:26,c:1},FLUOROSCOPIA:{t:3,c:0},DENSITOMETRIA:{t:11,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:399,a:297,c:7},nogales:{t:148,a:91,c:4},fundacion:{t:87,a:62,c:2}}},
+  13:{total:343,answered:258,vm:35,na:45,busy:2,inv:2,will:218,wont:8,ignored:32,tel2:98,dur:[10,11,56,181],mod:{ULTRASONIDO:{t:97,c:4},RAYOS_X:{t:142,c:2},TOMOGRAFIA:{t:61,c:0},MAMOGRAFIA:{t:34,c:1},FLUOROSCOPIA:{t:9,c:1},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:229,a:180,c:6},nogales:{t:52,a:31,c:0},fundacion:{t:62,a:47,c:2}}},
+  14:{total:93,answered:70,vm:7,na:10,busy:0,inv:0,will:51,wont:4,ignored:15,tel2:43,dur:[5,5,12,48],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:93,c:4},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:93,a:70,c:4},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  16:{total:920,answered:682,vm:106,na:110,busy:5,inv:4,will:537,wont:23,ignored:122,tel2:248,dur:[49,28,146,459],mod:{ULTRASONIDO:{t:547,c:11},RAYOS_X:{t:171,c:3},TOMOGRAFIA:{t:79,c:3},MAMOGRAFIA:{t:90,c:6},FLUOROSCOPIA:{t:13,c:0},DENSITOMETRIA:{t:20,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:652,a:490,c:16},nogales:{t:145,a:101,c:3},fundacion:{t:123,a:91,c:4}}},
+  17:{total:721,answered:521,vm:70,na:117,busy:6,inv:3,will:411,wont:17,ignored:93,tel2:159,dur:[36,24,120,341],mod:{ULTRASONIDO:{t:486,c:9},RAYOS_X:{t:111,c:4},TOMOGRAFIA:{t:72,c:4},MAMOGRAFIA:{t:36,c:0},FLUOROSCOPIA:{t:11,c:0},DENSITOMETRIA:{t:5,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:516,a:379,c:14},nogales:{t:105,a:80,c:2},fundacion:{t:100,a:62,c:1}}},
+  18:{total:766,answered:539,vm:77,na:130,busy:12,inv:3,will:449,wont:11,ignored:79,tel2:205,dur:[37,16,99,387],mod:{ULTRASONIDO:{t:499,c:7},RAYOS_X:{t:136,c:2},TOMOGRAFIA:{t:71,c:2},MAMOGRAFIA:{t:38,c:0},FLUOROSCOPIA:{t:6,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:553,a:394,c:11},nogales:{t:124,a:91,c:0},fundacion:{t:89,a:54,c:0}}},
+  19:{total:745,answered:527,vm:69,na:141,busy:4,inv:4,will:408,wont:20,ignored:99,tel2:183,dur:[43,17,113,354],mod:{ULTRASONIDO:{t:457,c:16},RAYOS_X:{t:154,c:3},TOMOGRAFIA:{t:71,c:0},MAMOGRAFIA:{t:40,c:1},FLUOROSCOPIA:{t:10,c:0},DENSITOMETRIA:{t:13,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:512,a:366,c:13},nogales:{t:132,a:86,c:6},fundacion:{t:101,a:75,c:1}}},
+  20:{total:457,answered:334,vm:40,na:78,busy:4,inv:0,will:265,wont:7,ignored:62,tel2:116,dur:[31,17,137,149],mod:{ULTRASONIDO:{t:224,c:2},RAYOS_X:{t:135,c:3},TOMOGRAFIA:{t:50,c:1},MAMOGRAFIA:{t:42,c:1},FLUOROSCOPIA:{t:6,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:304,a:226,c:5},nogales:{t:92,a:67,c:1},fundacion:{t:61,a:41,c:1}}},
+  22:{total:858,answered:618,vm:85,na:139,busy:10,inv:5,will:501,wont:27,ignored:90,tel2:225,dur:[37,64,463,54],mod:{ULTRASONIDO:{t:506,c:15},RAYOS_X:{t:163,c:4},TOMOGRAFIA:{t:74,c:3},MAMOGRAFIA:{t:85,c:4},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:22,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:601,a:428,c:16},nogales:{t:140,a:104,c:4},fundacion:{t:117,a:86,c:7}}},
+  23:{total:658,answered:485,vm:54,na:107,busy:8,inv:4,will:411,wont:10,ignored:64,tel2:175,dur:[34,45,364,42],mod:{ULTRASONIDO:{t:448,c:7},RAYOS_X:{t:100,c:1},TOMOGRAFIA:{t:55,c:0},MAMOGRAFIA:{t:25,c:0},FLUOROSCOPIA:{t:10,c:1},DENSITOMETRIA:{t:20,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:470,a:343,c:9},nogales:{t:100,a:80,c:0},fundacion:{t:88,a:62,c:1}}},
+  24:{total:701,answered:501,vm:74,na:108,busy:12,inv:6,will:407,wont:23,ignored:71,tel2:203,dur:[32,37,372,60],mod:{ULTRASONIDO:{t:443,c:12},RAYOS_X:{t:128,c:7},TOMOGRAFIA:{t:56,c:1},MAMOGRAFIA:{t:57,c:2},FLUOROSCOPIA:{t:9,c:1},DENSITOMETRIA:{t:8,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:490,a:361,c:15},nogales:{t:122,a:78,c:3},fundacion:{t:89,a:62,c:5}}},
+  25:{total:748,answered:526,vm:75,na:127,busy:11,inv:2,will:412,wont:20,ignored:94,tel2:200,dur:[35,50,384,57],mod:{ULTRASONIDO:{t:472,c:13},RAYOS_X:{t:143,c:2},TOMOGRAFIA:{t:54,c:1},MAMOGRAFIA:{t:58,c:4},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:518,a:362,c:15},nogales:{t:141,a:100,c:3},fundacion:{t:89,a:64,c:2}}},
+  26:{total:773,answered:556,vm:69,na:138,busy:7,inv:3,will:422,wont:32,ignored:102,tel2:172,dur:[27,49,424,56],mod:{ULTRASONIDO:{t:470,c:12},RAYOS_X:{t:124,c:4},TOMOGRAFIA:{t:61,c:3},MAMOGRAFIA:{t:98,c:13},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:12,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:555,a:409,c:27},nogales:{t:108,a:77,c:2},fundacion:{t:110,a:70,c:3}}},
+  27:{total:392,answered:283,vm:30,na:60,busy:10,inv:1,will:222,wont:16,ignored:45,tel2:104,dur:[24,25,209,25],mod:{ULTRASONIDO:{t:100,c:4},RAYOS_X:{t:160,c:4},TOMOGRAFIA:{t:58,c:4},MAMOGRAFIA:{t:71,c:4},FLUOROSCOPIA:{t:3,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:247,a:187,c:11},nogales:{t:73,a:42,c:3},fundacion:{t:72,a:54,c:2}}},
+  630:{total:827,answered:595,vm:68,na:136,busy:5,inv:6,will:484,wont:31,ignored:80,tel2:181,dur:[35,48,454,58],mod:{ULTRASONIDO:{t:494,c:17},RAYOS_X:{t:219,c:6},TOMOGRAFIA:{t:67,c:5},MAMOGRAFIA:{t:21,c:1},FLUOROSCOPIA:{t:5,c:2},DENSITOMETRIA:{t:21,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:591,a:422,c:22},nogales:{t:196,a:146,c:5},fundacion:{t:40,a:27,c:4}}},
+  701:{total:716,answered:506,vm:72,na:115,busy:11,inv:4,will:418,wont:16,ignored:72,tel2:192,dur:[28,42,385,51],mod:{ULTRASONIDO:{t:400,c:8},RAYOS_X:{t:159,c:2},TOMOGRAFIA:{t:57,c:2},MAMOGRAFIA:{t:84,c:3},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:8,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:471,a:334,c:11},nogales:{t:118,a:75,c:0},fundacion:{t:127,a:97,c:5}}},
+  702:{total:773,answered:568,vm:76,na:120,busy:7,inv:1,will:454,wont:25,ignored:89,tel2:193,dur:[34,45,411,78],mod:{ULTRASONIDO:{t:444,c:10},RAYOS_X:{t:165,c:8},TOMOGRAFIA:{t:57,c:0},MAMOGRAFIA:{t:86,c:7},FLUOROSCOPIA:{t:4,c:0},DENSITOMETRIA:{t:17,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:537,a:412,c:14},nogales:{t:113,a:82,c:7},fundacion:{t:123,a:74,c:4}}},
+  703:{total:840,answered:593,vm:104,na:134,busy:4,inv:5,will:486,wont:31,ignored:76,tel2:198,dur:[30,55,453,55],mod:{ULTRASONIDO:{t:466,c:14},RAYOS_X:{t:200,c:4},TOMOGRAFIA:{t:57,c:1},MAMOGRAFIA:{t:96,c:9},FLUOROSCOPIA:{t:7,c:1},DENSITOMETRIA:{t:14,c:2},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:565,a:395,c:24},nogales:{t:153,a:118,c:5},fundacion:{t:122,a:80,c:2}}},
+  704:{total:414,answered:292,vm:49,na:68,busy:1,inv:4,will:233,wont:12,ignored:47,tel2:139,dur:[22,29,213,28],mod:{ULTRASONIDO:{t:113,c:2},RAYOS_X:{t:166,c:3},TOMOGRAFIA:{t:54,c:0},MAMOGRAFIA:{t:74,c:7},FLUOROSCOPIA:{t:7,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:284,a:209,c:8},nogales:{t:65,a:44,c:2},fundacion:{t:65,a:39,c:2}}},
+  705:{total:55,answered:38,vm:6,na:9,busy:2,inv:0,will:29,wont:1,ignored:8,tel2:24,dur:[2,1,31,4],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:55,c:1},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:55,a:38,c:1},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  706:{total:846,answered:600,vm:91,na:150,busy:5,inv:0,will:465,wont:24,ignored:111,tel2:219,dur:[38,57,442,63],mod:{ULTRASONIDO:{t:476,c:14},RAYOS_X:{t:185,c:3},TOMOGRAFIA:{t:67,c:1},MAMOGRAFIA:{t:88,c:6},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:22,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:577,a:431,c:21},nogales:{t:146,a:95,c:2},fundacion:{t:123,a:74,c:1}}},
+  707:{total:797,answered:583,vm:79,na:121,busy:9,inv:4,will:474,wont:25,ignored:84,tel2:225,dur:[48,30,432,73],mod:{ULTRASONIDO:{t:480,c:13},RAYOS_X:{t:157,c:4},TOMOGRAFIA:{t:52,c:1},MAMOGRAFIA:{t:86,c:7},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:17,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:578,a:432,c:20},nogales:{t:105,a:69,c:4},fundacion:{t:114,a:82,c:1}}},
+  708:{total:862,answered:618,vm:67,na:160,busy:6,inv:11,will:487,wont:20,ignored:111,tel2:239,dur:[40,54,476,48],mod:{ULTRASONIDO:{t:526,c:11},RAYOS_X:{t:171,c:3},TOMOGRAFIA:{t:57,c:0},MAMOGRAFIA:{t:87,c:6},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:630,a:460,c:14},nogales:{t:133,a:96,c:4},fundacion:{t:99,a:62,c:2}}},
+  709:{total:831,answered:604,vm:89,na:129,busy:6,inv:3,will:506,wont:19,ignored:79,tel2:207,dur:[31,65,445,63],mod:{ULTRASONIDO:{t:534,c:9},RAYOS_X:{t:141,c:2},TOMOGRAFIA:{t:48,c:0},MAMOGRAFIA:{t:86,c:7},FLUOROSCOPIA:{t:3,c:0},DENSITOMETRIA:{t:19,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:621,a:470,c:16},nogales:{t:123,a:75,c:1},fundacion:{t:87,a:59,c:2}}},
+  710:{total:850,answered:630,vm:93,na:110,busy:3,inv:10,will:493,wont:19,ignored:118,tel2:220,dur:[39,54,477,60],mod:{ULTRASONIDO:{t:533,c:9},RAYOS_X:{t:150,c:3},TOMOGRAFIA:{t:58,c:1},MAMOGRAFIA:{t:86,c:5},FLUOROSCOPIA:{t:10,c:1},DENSITOMETRIA:{t:13,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:640,a:472,c:14},nogales:{t:103,a:76,c:4},fundacion:{t:107,a:82,c:1}}},
+  711:{total:380,answered:288,vm:31,na:57,busy:1,inv:2,will:224,wont:7,ignored:57,tel2:103,dur:[14,19,227,28],mod:{ULTRASONIDO:{t:126,c:1},RAYOS_X:{t:142,c:2},TOMOGRAFIA:{t:41,c:2},MAMOGRAFIA:{t:63,c:1},FLUOROSCOPIA:{t:8,c:1},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:239,a:193,c:7},nogales:{t:70,a:53,c:0},fundacion:{t:71,a:42,c:0}}},
+  712:{total:52,answered:42,vm:0,na:10,busy:0,inv:0,will:35,wont:5,ignored:2,tel2:19,dur:[0,2,36,4],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:52,c:5},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:52,a:42,c:5},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  713:{total:147,answered:106,vm:8,na:23,busy:4,inv:6,will:85,wont:5,ignored:16,tel2:38,dur:[7,11,81,7],mod:{ULTRASONIDO:{t:126,c:5},RAYOS_X:{t:21,c:0},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:147,a:106,c:5},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  714:{total:926,answered:742,vm:53,na:121,busy:4,inv:6,will:603,wont:21,ignored:118,tel2:219,dur:[49,64,561,68],mod:{ULTRASONIDO:{t:602,c:9},RAYOS_X:{t:185,c:5},TOMOGRAFIA:{t:38,c:1},MAMOGRAFIA:{t:70,c:6},FLUOROSCOPIA:{t:10,c:0},DENSITOMETRIA:{t:21,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:675,a:530,c:18},nogales:{t:129,a:112,c:3},fundacion:{t:122,a:100,c:0}}},
+  715:{total:693,answered:569,vm:41,na:73,busy:2,inv:7,will:464,wont:18,ignored:87,tel2:193,dur:[46,36,417,70],mod:{ULTRASONIDO:{t:459,c:5},RAYOS_X:{t:119,c:6},TOMOGRAFIA:{t:61,c:6},MAMOGRAFIA:{t:38,c:1},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:8,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:509,a:412,c:16},nogales:{t:98,a:83,c:0},fundacion:{t:86,a:74,c:2}}},
+  716:{total:856,answered:588,vm:94,na:146,busy:9,inv:13,will:482,wont:21,ignored:85,tel2:214,dur:[28,45,450,65],mod:{ULTRASONIDO:{t:549,c:10},RAYOS_X:{t:175,c:3},TOMOGRAFIA:{t:62,c:0},MAMOGRAFIA:{t:48,c:7},FLUOROSCOPIA:{t:5,c:0},DENSITOMETRIA:{t:17,c:1},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:607,a:433,c:19},nogales:{t:142,a:92,c:1},fundacion:{t:107,a:63,c:1}}},
+  717:{total:839,answered:619,vm:99,na:111,busy:1,inv:6,will:492,wont:24,ignored:103,tel2:197,dur:[30,40,488,61],mod:{ULTRASONIDO:{t:540,c:21},RAYOS_X:{t:169,c:2},TOMOGRAFIA:{t:70,c:0},MAMOGRAFIA:{t:39,c:0},FLUOROSCOPIA:{t:7,c:1},DENSITOMETRIA:{t:14,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:621,a:459,c:21},nogales:{t:115,a:78,c:3},fundacion:{t:103,a:82,c:0}}},
+  718:{total:370,answered:262,vm:41,na:63,busy:2,inv:2,will:209,wont:12,ignored:41,tel2:94,dur:[15,21,195,31],mod:{ULTRASONIDO:{t:147,c:6},RAYOS_X:{t:121,c:2},TOMOGRAFIA:{t:57,c:3},MAMOGRAFIA:{t:34,c:1},FLUOROSCOPIA:{t:11,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:223,a:162,c:5},nogales:{t:90,a:58,c:5},fundacion:{t:57,a:42,c:2}}},
+  719:{total:50,answered:39,vm:4,na:7,busy:0,inv:0,will:33,wont:3,ignored:3,tel2:27,dur:[1,3,29,6],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:50,c:3},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:50,a:39,c:3},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
+  721:{total:1010,answered:776,vm:80,na:144,busy:3,inv:6,will:640,wont:18,ignored:118,tel2:263,dur:[50,67,590,69],mod:{ULTRASONIDO:{t:631,c:9},RAYOS_X:{t:202,c:4},TOMOGRAFIA:{t:81,c:2},MAMOGRAFIA:{t:72,c:3},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:734,a:563,c:10},nogales:{t:168,a:133,c:7},fundacion:{t:108,a:80,c:1}}},
+  722:{total:769,answered:587,vm:63,na:113,busy:2,inv:4,will:479,wont:20,ignored:88,tel2:181,dur:[35,47,441,64],mod:{ULTRASONIDO:{t:532,c:10},RAYOS_X:{t:130,c:4},TOMOGRAFIA:{t:68,c:5},MAMOGRAFIA:{t:23,c:1},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:8,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:560,a:431,c:16},nogales:{t:104,a:78,c:3},fundacion:{t:105,a:78,c:1}}},
+  723:{total:833,answered:608,vm:74,na:143,busy:4,inv:4,will:487,wont:31,ignored:90,tel2:220,dur:[24,44,467,73],mod:{ULTRASONIDO:{t:552,c:22},RAYOS_X:{t:161,c:4},TOMOGRAFIA:{t:66,c:5},MAMOGRAFIA:{t:34,c:0},FLUOROSCOPIA:{t:6,c:0},DENSITOMETRIA:{t:14,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:588,a:446,c:29},nogales:{t:126,a:81,c:1},fundacion:{t:119,a:81,c:1}}}
 };
 
-const ALL_DAYS=['504','505','506','508','512','513','515','519','520','522','527','528','602','603','604','605','610','611','617','618','619','622','623','626','630','701','703','706','707','708','709','710','715','716','717','723'];
-const MAYO_DAYS=['504','505','506','508','512','513','515','519','520','522','527','528'];
-const JUNIO_DAYS=['602','603','604','605','610','611','617','618','619','622','623','626','630'];
-const JULIO_DAYS=['701','703','706','707','708','709','710','715','716','717','723'];
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul'};
+const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría',RESONANCIA_MAGNETICA:'Resonancia Mag.'};
 
-// Doctors: real names + distinct palette (NOT all blues)
-const DOC_KEYS  =['smb','jdcp','dcce','jcpg','mb','rm','mra','other'];
-const DOC_NAMES =['Sandra M. Bolaños','José D. Castro P.','Diana C. Castro E.','Julio C. Páez G.','Marcelo Benjumea','Rafael Mantilla','Melissa Ríos A.','Otros/Visitantes'];
-const DOC_COLORS=['#0c41ab','#e07b00','#1a9e60','#8b1fbc','#c0392b','#0891b2','#d97706','#94a3b8'];
-
-const ACT_ORDER=['Valoración','Entrega Prótesis','Imp. Preliminar','P. Enfilado','P. Rodete','Imp. Definitiva','Control'];
-const ACT_COLORS=['#0c41ab','#1a9e60','#2e63cd','#8b1fbc','#0891b2','#d97706','#94a3b8'];
-
-const fmt=n=>Number(n).toLocaleString('es-CO');
-const pct=(a,b)=>b?((a/b)*100).toFixed(1)+'%':'0.0%';
-const pctN=(a,b)=>b?parseFloat(((a/b)*100).toFixed(1)):0;
+const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723];
+function getRange(){
+  const p = document.getElementById('periodo-sel').value;
+  if(p==='todos') return ALL_DAYS_ORDER;
+  if(p==='7dias') return [717,718,719,721,722,723];
+  if(p==='mes') return ALL_DAYS_ORDER;
+  if(p==='fecha'){const d=+document.getElementById('fecha-sel').value; return [d];}
+  if(p==='rango'){
+    const d1=+document.getElementById('rango-desde').value;
+    const d2=+document.getElementById('rango-hasta').value;
+    const i1=ALL_DAYS_ORDER.indexOf(d1), i2=ALL_DAYS_ORDER.indexOf(d2);
+    const lo=Math.min(i1,i2), hi=Math.max(i1,i2);
+    return ALL_DAYS_ORDER.slice(lo,hi+1);
+  }
+  return [1,2,3,4,5];
+}
 
 function agg(days){
-  const r={total:0,answered:0,vm:0,na:0,busy:0,invalid:0,noring:0,will:0,wont:0,ignored:0,
-    dur:[0,0,0,0],p2:0,p3:0,only1:0,
-    doc:{smb:0,jdcp:0,dcce:0,jcpg:0,mb:0,rm:0,mra:0,other:0},
-    act:{}};
+  const r={total:0,answered:0,vm:0,na:0,busy:0,inv:0,will:0,wont:0,ignored:0,tel2:0,dur:[0,0,0,0],mod:{},sede:{principal:{t:0,a:0,c:0},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}};
   days.forEach(d=>{
     const v=DATA[d];
-    r.total+=v.total;r.answered+=v.answered;r.vm+=v.vm;r.na+=v.na;
-    r.busy+=v.busy;r.invalid+=v.invalid;r.noring+=v.noring||0;
-    r.will+=v.will;r.wont+=v.wont;r.ignored+=v.ignored;
+    r.total+=v.total;r.answered+=v.answered;r.vm+=v.vm;r.na+=v.na;r.busy+=v.busy;r.inv+=v.inv;
+    r.will+=v.will;r.wont+=v.wont;r.ignored+=v.ignored;r.tel2+=v.tel2;
     v.dur.forEach((x,i)=>r.dur[i]+=x);
-    r.p2+=v.p2;r.p3+=v.p3;r.only1+=v.only1;
-    DOC_KEYS.forEach(k=>{r.doc[k]+=(v.doc[k]||0);});
-    Object.entries(v.act).forEach(([a,c])=>{r.act[a]=(r.act[a]||0)+c;});
+    Object.keys(v.mod).forEach(m=>{
+      if(!r.mod[m])r.mod[m]={t:0,c:0};
+      r.mod[m].t+=v.mod[m].t;r.mod[m].c+=v.mod[m].c;
+    });
+    ['principal','nogales','fundacion'].forEach(s=>{r.sede[s].t+=v.sede[s].t;r.sede[s].a+=v.sede[s].a;r.sede[s].c+=v.sede[s].c;});
   });
   return r;
 }
 
-// ══ NAV ══════════════════════════════════════════════════════════
-function st(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['resumen','tendencia','doctores','cobertura','cumplimiento'][i]===id));
-  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='p-'+id));
-  if(id==='tendencia') buildTendencia();
-  else if(id==='doctores') buildDoctores();
-  else if(id==='cobertura') buildCobertura();
-  else if(id==='cumplimiento') buildCumplimiento();
-}
+function fmt(n){return n.toLocaleString('es-CO');}
+function pct(a,b){return b?((a/b)*100).toFixed(1)+'%':'0%';}
+function riskBadge(t){if(t>=15)return'<span class="bdg b-r">Crítico</span>';if(t>=8)return'<span class="bdg b-a">Alto</span>';if(t>=4)return'<span class="bdg b-b">Moderado</span>';return'<span class="bdg b-g">Bajo</span>';}
+function cancelBadge(t){if(t>=15)return'<span class="bdg b-r">'+t.toFixed(1)+'%</span>';if(t>=8)return'<span class="bdg b-a">'+t.toFixed(1)+'%</span>';if(t>=4)return'<span class="bdg b-b">'+t.toFixed(1)+'%</span>';return'<span class="bdg b-g">'+t.toFixed(1)+'%</span>';}
 
-// ══ FILTER ═══════════════════════════════════════════════════════
-function onPeriodo(){
-  const p=document.getElementById('periodo-sel').value;
-  document.getElementById('fecha-wrap').style.display=p==='fecha'?'flex':'none';
-  document.getElementById('rango-wrap').style.display=p==='rango'?'flex':'none';
-  applyFilter();
-}
-function getRange(){
-  const p=document.getElementById('periodo-sel').value;
-  if(p==='mayo') return MAYO_DAYS;
-  if(p==='junio') return JUNIO_DAYS;
-  if(p==='julio') return JULIO_DAYS;
-  if(p==='todos') return ALL_DAYS;
-  if(p==='fecha') return [document.getElementById('fecha-sel').value];
-  if(p==='rango'){
-    const d1=document.getElementById('rango-desde').value;
-    const d2=document.getElementById('rango-hasta').value;
-    const i1=ALL_DAYS.indexOf(d1),i2=ALL_DAYS.indexOf(d2);
-    return ALL_DAYS.slice(Math.min(i1,i2),Math.max(i1,i2)+1);
-  }
-  return ['605'];
-}
+let donutChart, barChart, lineContactChart, lineCancelChart;
 
-let cEncuesta=null,cTendBar=null,cCrLine=null,cCancelBar=null,cDocBar=null,cDocPie=null;
+function initCharts(v, days){
+  const gc='rgba(0,0,0,0.06)', tc='#6b7280';
+  const nc = v.total - v.answered;
 
-// ══ RESUMEN ══════════════════════════════════════════════════════
-function applyFilter(){
-  const days=getRange();
-  const v=agg(days);
-  const surveyed=v.will+v.wont;
-  const lbl=days.length===1?DATA[days[0]].label+' 2026':DATA[days[0]].label+' – '+DATA[days[days.length-1]].label+' 2026';
-
-  document.getElementById('hdr-meta').innerHTML=lbl+' · <strong>'+fmt(v.total)+'</strong> registros';
-  document.getElementById('pill-citas').textContent=fmt(v.total)+' citas';
-  document.getElementById('lbl-periodo').textContent='INDICADORES · '+lbl.toUpperCase();
-
-  document.getElementById('k-total').textContent=fmt(v.total);
-  document.getElementById('k-total-s').textContent=days.length>1?days.length+' jornadas · ~'+Math.round(v.total/days.length)+'/día':'1 jornada';
-  document.getElementById('k-contact').textContent=fmt(v.answered);
-  document.getElementById('k-cr').textContent=pct(v.answered,v.total);
-  document.getElementById('k-will').textContent=fmt(v.will);
-  document.getElementById('k-will-p').textContent=pct(v.will,surveyed);
-  document.getElementById('k-wont').textContent=fmt(v.wont);
-  document.getElementById('k-wont-p').textContent=pct(v.wont,surveyed);
-
-  // Cancelaciones por actividad — Método Largest Remainder (Hare-Niemeyer)
-  // Garantiza: todos los valores ≥ 0, suma exacta = wont, sin negativos
-  const actCancels={};
-  days.forEach(d=>{
-    const dv=DATA[d];
-    if(dv.wont<=0) return;
-    const acts=dv.act;
-    const actTotal=Object.values(acts).reduce((a,b)=>a+b,0);
-    if(actTotal===0) return;
-    // 1. Calcular cuotas exactas
-    const quotas={};
-    Object.keys(acts).forEach(a=>{ quotas[a]=dv.wont*(acts[a]/actTotal); });
-    // 2. Tomar parte entera (floor) — siempre ≥ 0
-    const floors={};
-    Object.keys(quotas).forEach(a=>{ floors[a]=Math.floor(quotas[a]); });
-    // 3. Distribuir el sobrante a quienes tienen mayor parte decimal
-    const totalFloor=Object.values(floors).reduce((a,b)=>a+b,0);
-    const extra=dv.wont-totalFloor; // extra siempre >= 0
-    const sortedByRem=Object.keys(quotas).sort((a,b)=>(quotas[b]-floors[b])-(quotas[a]-floors[a]));
-    sortedByRem.slice(0,extra).forEach(a=>{ floors[a]+=1; });
-    // 4. Acumular
-    Object.keys(floors).forEach(a=>{
-      actCancels[a]=(actCancels[a]||0)+floors[a];
-    });
-  });
-  document.getElementById('cancel-badge').textContent=v.wont+(v.wont===1?' cupo libre':' cupos libres');
-  document.getElementById('cancel-desc').textContent=v.wont+(v.wont===1?' paciente canceló su cita':' pacientes cancelaron su cita')+' durante el período seleccionado.';
-
-  let cancelHTML='';
-  ACT_ORDER.forEach(a=>{
-    const c=Math.max(0, actCancels[a]||0); // defensa extra: nunca mostrar negativo
-    cancelHTML+=`<div class="cp ${c>0?'hi':'zero'}"><div class="cp-n">${c}</div><div class="cp-l">${a}</div></div>`;
-  });
-  cancelHTML+=`<div class="cp tot"><div class="cp-n">${v.wont}</div><div class="cp-l">Total recuperable</div></div>`;
-  document.getElementById('cancel-grid').innerHTML=cancelHTML;
-
-  document.getElementById('cancel-alert').innerHTML=v.wont>0
-    ?`<div class="aa">⚠ Se liberaron <strong>${v.wont} cupos</strong>. Tasa de cancelación: <strong>${pct(v.wont,surveyed)}</strong> sobre encuestados. Cupos disponibles para reasignación.</div>`
-    :`<div class="at">✅ <strong>0 cancelaciones</strong> en el período seleccionado. El 100% de los encuestados confirmó asistencia.</div>`;
-
-  // Donut encuesta
-  const nc=v.total-v.answered;
-  if(cEncuesta)cEncuesta.destroy();
-  cEncuesta=new Chart(document.getElementById('dc-encuesta'),{
+  if(donutChart) donutChart.destroy();
+  donutChart = new Chart(document.getElementById('dc').getContext('2d'),{
     type:'doughnut',
-    data:{labels:['Asistirá','Cancela','Ignoró encuesta','No contactado'],
+    data:{labels:['Asistirá','Cancela','Ignoró','No contactado'],
       datasets:[{data:[v.will,v.wont,v.ignored,nc],
-        backgroundColor:['#1a9e60','#c0392b','#94a3b8','#e2e8f0'],borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:true,cutout:'68%',
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.raw)}},datalabels:{display:false}}}
+        backgroundColor:['#0097a7','#dc2626','#d1d5db','#e5e7eb'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.raw)}}}}
   });
-  document.getElementById('dc-legend').innerHTML=[
-    ['#1a9e60','Asistirá',v.will],
-    ['#c0392b','Cancela',v.wont],
-    ['#94a3b8','Ignoró encuesta',v.ignored],
-    ['#e2e8f0','No contactado',nc],
-  ].map(([c,t,val])=>`<div class="leg"><div class="leg-dot" style="background:${c}"></div>${t} — <strong>${fmt(val)}</strong> (${pct(val,v.total)})</div>`).join('');
 
-  // Hbars llamada
-  document.getElementById('hbar-llamada').innerHTML=[
-    {l:'Contestó (ANSWER)',val:v.answered,col:'#0c41ab'},
-    {l:'No contestó',val:v.na,col:'#d4820a'},
-    {l:'Buzón de voz',val:v.vm,col:'#6a3db8'},
-    {l:'Línea ocupada',val:v.busy,col:'#0891b2'},
-    {l:'Número inválido',val:v.invalid,col:'#c0392b'},
-    {l:'Sin tono',val:v.noring,col:'#64748b'},
-  ].map(h=>`<div class="hbar"><div class="hbar-lbl">${h.l}</div><div class="hbar-track"><div class="hbar-fill" style="width:${pctN(h.val,v.total)}%;background:${h.col}"></div></div><div class="hbar-val">${h.val} · ${pct(h.val,v.total)}</div></div>`).join('');
+  if(barChart) barChart.destroy();
+  barChart = new Chart(document.getElementById('barDia').getContext('2d'),{
+    type:'bar',
+    data:{labels:days.map(d=>DAY_LABELS[d]),
+      datasets:[
+        {label:'Total',data:days.map(d=>DATA[d].total),backgroundColor:'#0b2545',borderRadius:4},
+        {label:'Contactadas',data:days.map(d=>DATA[d].answered),backgroundColor:'#0097a7',borderRadius:4}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{ticks:{color:tc,font:{size:11}},grid:{color:gc}}}}
+  });
+
+  if(lineContactChart) lineContactChart.destroy();
+  lineContactChart = new Chart(document.getElementById('lineContact').getContext('2d'),{
+    type:'line',
+    data:{labels:days.map(d=>DAY_LABELS[d]),
+      datasets:[{data:days.map(d=>+(DATA[d].answered/DATA[d].total*100).toFixed(1)),
+        borderColor:'#0097a7',backgroundColor:'rgba(0,151,167,0.08)',tension:.35,pointRadius:5,pointBackgroundColor:'#0097a7',fill:true}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},
+              y:{min:60,max:80,ticks:{color:tc,font:{size:11},callback:v=>v+'%'},grid:{color:gc}}}}
+  });
+
+  if(lineCancelChart) lineCancelChart.destroy();
+  lineCancelChart = new Chart(document.getElementById('lineCancel').getContext('2d'),{
+    type:'line',
+    data:{labels:days.map(d=>DAY_LABELS[d]),
+      datasets:[{data:days.map(d=>{const s=DATA[d].will+DATA[d].wont;return s?+(DATA[d].wont/s*100).toFixed(1):0;}),
+        borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.07)',tension:.35,pointRadius:5,pointBackgroundColor:'#dc2626',fill:true}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},
+              y:{min:0,max:8,ticks:{color:tc,font:{size:11},callback:v=>v+'%'},grid:{color:gc}}}}
+  });
+}
+
+function applyFilter(){
+  const days = getRange();
+  const v = agg(days);
+  const surveyed = v.will + v.wont;
+
+  // Header meta
+  const label = days.length===1 ? DAY_LABELS[days[0]]+' 2026' : DAY_LABELS[days[0]]+' – '+DAY_LABELS[days[days.length-1]]+' 2026';
+  document.getElementById('hdr-meta').textContent = label+' · '+fmt(v.total)+' registros';
+  document.getElementById('pill-citas').textContent = fmt(v.total)+' citas';
+
+  // KPIs
+  document.getElementById('k-total').textContent = fmt(v.total);
+  document.getElementById('k-total-s').textContent = days.length>1 ? '~'+fmt(Math.round(v.total/days.length))+' citas/día promedio' : '1 día seleccionado';
+  document.getElementById('k-contact').textContent = fmt(v.answered);
+  document.getElementById('k-contact-p').textContent = pct(v.answered,v.total);
+  document.getElementById('k-asiste').textContent = fmt(v.will);
+  document.getElementById('k-asiste-p').textContent = pct(v.will,surveyed);
+  document.getElementById('k-cancel').textContent = fmt(v.wont);
+  document.getElementById('k-cancel-p').textContent = pct(v.wont,surveyed);
+
+  // Cupos
+  document.getElementById('badge-cupos').textContent = fmt(v.wont)+' cupos libres';
+  document.getElementById('cupos-desc').innerHTML = '<strong>'+fmt(v.wont)+' pacientes</strong> solicitaron cancelar su cita durante el período seleccionado.';
+  document.getElementById('c-us').textContent = v.mod.ULTRASONIDO?.c||0;
+  document.getElementById('c-rx').textContent = v.mod.RAYOS_X?.c||0;
+  document.getElementById('c-mam').textContent = v.mod.MAMOGRAFIA?.c||0;
+  document.getElementById('c-tac').textContent = v.mod.TOMOGRAFIA?.c||0;
+  document.getElementById('c-flu').textContent = v.mod.FLUOROSCOPIA?.c||0;
+  document.getElementById('c-den').textContent = v.mod.DENSITOMETRIA?.c||0;
+  document.getElementById('c-res').textContent = v.mod.RESONANCIA_MAGNETICA?.c||0;
+  document.getElementById('c-tot').textContent = fmt(v.wont);
+
+  // Encuesta legend
+  const nc = v.total - v.answered;
+  document.getElementById('leg-asiste').textContent = fmt(v.will)+' ('+pct(v.will,surveyed)+')';
+  document.getElementById('leg-cancel').textContent = fmt(v.wont)+' ('+pct(v.wont,surveyed)+')';
+  document.getElementById('leg-ignoro').textContent = fmt(v.ignored);
+  document.getElementById('leg-nocontact').textContent = fmt(nc);
+
+  // Llamadas bars
+  function setBar(id,bId,val,total){
+    const p=(val/total*100).toFixed(1);
+    document.getElementById(id).textContent = fmt(val)+' · '+p+'%';
+    document.getElementById(bId).style.width = p+'%';
+  }
+  setBar('bv-contesto','bar-contesto',v.answered,v.total);
+  setBar('bv-noc','bar-noc',v.na,v.total);
+  setBar('bv-vm','bar-vm',v.vm,v.total);
+  setBar('bv-busy','bar-busy',v.busy,v.total);
+  setBar('bv-inv','bar-inv',v.inv,v.total);
 
   // Duración
-  const durMax=Math.max(...v.dur)||1;
-  const dCols=['#c0392b','#d4820a','#2e63cd','#1a9e60'];
-  const dLbls=['1–15 seg','16–30 seg','31–45 seg','>45 seg'];
-  document.getElementById('dur-grid').innerHTML=v.dur.map((d,i)=>`
-    <div><div class="dv" style="color:${dCols[i]}">${d}</div>
-    <div class="dbw"><div class="db" style="height:${Math.max(4,(d/durMax)*100)}%;background:${dCols[i]}"></div></div>
-    <div class="dl">${dLbls[i]}</div><div class="dp" style="color:${dCols[i]}">${pct(d,v.answered)}</div></div>`).join('');
-  const dur30plus=v.dur[2]+v.dur[3];
-  const pct30=v.answered?((dur30plus/v.answered)*100).toFixed(1):0;
-  const pct45=v.answered?((v.dur[3]/v.answered)*100).toFixed(1):0;
-  document.getElementById('dur-alert').innerHTML=`<div class="at" style="margin-top:8px;"><strong>${dur30plus} llamadas (${pct30}%)</strong> superaron los 30 segundos de conversación efectiva — de estas, el <strong>${pct45}%</strong> superó los 45 seg, indicando interacción de alta calidad.</div>`;
-
-  // Métricas
-  document.getElementById('metricas-sub').textContent=lbl;
-  document.getElementById('metricas-grid').innerHTML=`
-    <div class="stat-box"><div class="stat-n" style="color:var(--primary)">${pct(v.answered,v.total)}</div><div class="stat-l">Contact Ratio</div></div>
-    <div class="stat-box"><div class="stat-n" style="color:var(--green)">${pct(v.will,surveyed)}</div><div class="stat-l">Tasa Confirmación</div></div>
-    <div class="stat-box"><div class="stat-n" style="color:#6a3db8">${pct(surveyed,v.answered)}</div><div class="stat-l">Survey Ratio</div></div>`;
-
-  const act=document.querySelector('.page.active');
-  if(act&&act.id==='p-tendencia') buildTendencia();
-  else if(act&&act.id==='p-doctores') buildDoctores();
-  else if(act&&act.id==='p-cobertura') buildCobertura();
-}
-
-// ══ TENDENCIA ════════════════════════════════════════════════════
-function buildTendencia(){
-  const days=getRange();
-  const gc='rgba(0,0,0,0.04)',tc='#666';
-  const lbls=days.map(d=>DATA[d].label);
-
-  if(cTendBar)cTendBar.destroy();
-  cTendBar=new Chart(document.getElementById('chart-tend-bar'),{
-    type:'bar',
-    data:{labels:lbls,datasets:[
-      {label:'Total',data:days.map(d=>DATA[d].total),backgroundColor:'rgba(12,65,171,0.18)',borderColor:'#0c41ab',borderWidth:2,borderRadius:4},
-      {label:'Contactadas',data:days.map(d=>DATA[d].answered),backgroundColor:'#1a9e60',borderRadius:4}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24}},
-      plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},
-        datalabels:{anchor:'end',align:'top',font:{weight:'700',size:10},color:'#333',formatter:v=>v>0?v:''}},
-      scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},y:{beginAtZero:true,ticks:{color:tc},grid:{color:gc}}}}
+  const ans = v.answered;
+  ['dur1','dur2','dur3','dur4'].forEach((id,i)=>{
+    document.getElementById(id).textContent = fmt(v.dur[i]);
+    document.getElementById('durp'+(i+1)).textContent = pct(v.dur[i],ans);
   });
 
-  if(cCrLine)cCrLine.destroy();
-  cCrLine=new Chart(document.getElementById('chart-cr-line'),{
-    type:'line',
-    data:{labels:lbls,datasets:[{data:days.map(d=>pctN(DATA[d].answered,DATA[d].total)),
-      borderColor:'#0c41ab',backgroundColor:'rgba(12,65,171,0.08)',tension:.35,pointRadius:5,pointBackgroundColor:'#0c41ab',fill:true}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},
-        datalabels:{anchor:'top',align:'top',color:'#0c41ab',font:{weight:'700',size:9},formatter:v=>v.toFixed(1)+'%'}},
-      scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{min:50,max:100,ticks:{color:tc,callback:v=>v+'%'},grid:{color:gc}}}}
+  // Tendencia table
+  let tbody = '';
+  days.forEach(d=>{
+    const dd=DATA[d]; const s=dd.will+dd.wont;
+    const cr=(dd.answered/dd.total*100).toFixed(1);
+    const tc=s?(dd.wont/s*100).toFixed(1):'0';
+    tbody+=`<tr><td>${DAY_LABELS[d]}</td><td>${fmt(dd.total)}</td><td>${fmt(dd.answered)}</td><td>${cr}%</td><td>${fmt(dd.will)}</td><td>${dd.wont}</td><td>${cancelBadge(+tc)}</td></tr>`;
   });
-
-  if(cCancelBar)cCancelBar.destroy();
-  cCancelBar=new Chart(document.getElementById('chart-cancel-bar'),{
-    type:'bar',
-    data:{labels:lbls,datasets:[{data:days.map(d=>DATA[d].wont),backgroundColor:'#c0392b',borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24}},
-      plugins:{legend:{display:false},
-        datalabels:{anchor:'end',align:'top',color:'#c0392b',font:{weight:'700',size:11},formatter:v=>v>0?v:''}},
-      scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{beginAtZero:true,ticks:{color:tc,stepSize:1},grid:{color:gc}}}}
-  });
-
-  document.getElementById('tbl-tend').innerHTML=days.map(d=>{
-    const v=DATA[d]; const s=v.will+v.wont;
-    const cr=pctN(v.answered,v.total);
-    const dur30=(v.dur[2]+v.dur[3]);
-    return `<tr>
-      <td><strong>${v.label} 2026</strong></td>
-      <td>${v.total}</td><td>${v.answered}</td>
-      <td><span class="bdg ${cr>=80?'b-g':cr>=70?'b-y':'b-r'}">${cr.toFixed(1)}%</span></td>
-      <td>${v.will}</td>
-      <td>${v.wont>0?`<span class="bdg b-r">${v.wont}</span>`:`<span class="bdg b-g">0</span>`}</td>
-      <td>${pct(s,v.answered)}</td>
-      <td><strong>${dur30}</strong> · ${pct(dur30,v.answered)}</td>
-    </tr>`;
-  }).join('')+`<tr class="tot">
-    <td><strong>TOTAL</strong></td>
-    <td><strong>${fmt(days.reduce((a,d)=>a+DATA[d].total,0))}</strong></td>
-    <td><strong>${fmt(days.reduce((a,d)=>a+DATA[d].answered,0))}</strong></td>
-    <td><strong>${pct(days.reduce((a,d)=>a+DATA[d].answered,0),days.reduce((a,d)=>a+DATA[d].total,0))}</strong></td>
-    <td><strong>${days.reduce((a,d)=>a+DATA[d].will,0)}</strong></td>
-    <td><strong>${days.reduce((a,d)=>a+DATA[d].wont,0)}</strong></td>
-    <td>—</td><td>—</td>
-  </tr>`;
-}
-
-// ══ DOCTORES ═════════════════════════════════════════════════════
-function buildDoctores(){
-  const days=getRange();
-  const v=agg(days);
-  const lbl=days.length===1?DATA[days[0]].label+' 2026':DATA[days[0]].label+' – '+DATA[days[days.length-1]].label+' 2026';
-  const gc='rgba(0,0,0,0.04)',tc='#666';
-
-  // Only show doctors present in selection
-  const activeKeys=DOC_KEYS.filter(k=>v.doc[k]>0);
-  const activeNames=activeKeys.map(k=>DOC_NAMES[DOC_KEYS.indexOf(k)]);
-  const activeColors=activeKeys.map(k=>DOC_COLORS[DOC_KEYS.indexOf(k)]);
-  const activeVals=activeKeys.map(k=>v.doc[k]);
-  const docTotal=activeVals.reduce((a,b)=>a+b,0);
-
-  document.getElementById('doc-sub').textContent=fmt(v.total)+' citas · '+lbl;
-  document.getElementById('lbl-doc').textContent='POR DOCTOR · '+lbl.toUpperCase();
-
-  if(cDocBar)cDocBar.destroy();
-  cDocBar=new Chart(document.getElementById('chart-doc-bar'),{
-    type:'bar',
-    data:{labels:activeNames,datasets:[{label:'Citas',data:activeVals,backgroundColor:activeColors,borderRadius:5}]},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:26}},
-      plugins:{legend:{display:false},
-        datalabels:{anchor:'end',align:'top',color:'#1a1a2e',font:{weight:'800',size:12},formatter:v=>v>0?fmt(v):''}},
-      scales:{x:{ticks:{color:tc,font:{size:11}},grid:{color:gc}},y:{beginAtZero:true,ticks:{color:tc},grid:{color:gc}}}}
-  });
-
-  if(cDocPie)cDocPie.destroy();
-  cDocPie=new Chart(document.getElementById('dc-doc'),{
-    type:'doughnut',
-    data:{labels:activeNames,datasets:[{data:activeVals,backgroundColor:activeColors,borderWidth:3,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:true,cutout:'55%',
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.raw)+' citas'}},datalabels:{display:false}}}
-  });
-
-  document.getElementById('doc-legend').innerHTML=activeNames.map((n,i)=>
-    `<div class="leg"><div class="leg-dot" style="background:${activeColors[i]}"></div>${n} — <strong>${fmt(activeVals[i])}</strong> (${pct(activeVals[i],docTotal)})</div>`
-  ).join('');
-
-  document.getElementById('tbl-doc').innerHTML=activeNames.map((n,i)=>
-    `<tr><td><strong style="color:${activeColors[i]}">${n}</strong></td><td>${fmt(activeVals[i])}</td><td><span class="bdg b-b">${pct(activeVals[i],docTotal)}</span></td></tr>`
-  ).join('')+`<tr class="tot"><td><strong>TOTAL</strong></td><td><strong>${fmt(docTotal)}</strong></td><td><strong>100%</strong></td></tr>`;
-
-  // Actividades — datos reales del período
-  const acts=v.act;
-  const actsSorted=Object.entries(acts).sort((a,b)=>b[1]-a[1]);
-  const actsTotal=actsSorted.reduce((a,[,c])=>a+c,0);
-  const actMax=actsSorted[0]?actsSorted[0][1]:1;
-  document.getElementById('act-sub').textContent=fmt(actsTotal)+' citas · '+lbl;
-  document.getElementById('act-bars').innerHTML=actsSorted.map(([a,c],i)=>{
-    const col=ACT_COLORS[ACT_ORDER.indexOf(a)]||'#94a3b8';
-    return `<div class="br">
-      <div class="bl">${a}</div>
-      <div class="bt"><div class="bf" style="width:${pctN(c,actMax*1.05)}%;background:${col}"></div></div>
-      <div class="bv"><strong>${fmt(c)}</strong> · ${pct(c,actsTotal)}</div>
-    </div>`;
-  }).join('');
-}
-
-// ══ COBERTURA ════════════════════════════════════════════════════
-function buildCobertura(){
-  const days=getRange();
-  const v=agg(days);
-  const lbl=days.length===1?DATA[days[0]].label+' 2026':DATA[days[0]].label+' – '+DATA[days[days.length-1]].label+' 2026';
-  document.getElementById('lbl-cob').textContent='FUENTES Y COBERTURA TELEFÓNICA · '+lbl.toUpperCase();
-
-  const sinAlt=v.only1;
-  const conAlt=v.p2;
-  const crActual=pct(v.answered,v.total);
-
-  // KPI 1: con teléfono principal (siempre = total)
-  document.getElementById('cob-p0').textContent=fmt(v.total);
-
-  // KPI 2: sin número alterno (el más crítico)
-  document.getElementById('cob-p1').textContent=fmt(sinAlt);
-  document.getElementById('cob-p1-pct').textContent=pct(sinAlt,v.total)+' del total · sin reintento posible';
-
-  // KPI 3: con 3er teléfono
-  document.getElementById('cob-p3').textContent=fmt(v.p3);
-  document.getElementById('cob-p3-pct').textContent=pct(v.p3,v.total)+' del total tienen un 3er teléfono';
-  document.getElementById('cob-p3-note').textContent=
-    v.p3>0
-      ? `${pct(v.p3,v.total)} del total tienen un tercer teléfono para un reintento posible.`
-      : 'Ningún paciente tiene un 3er teléfono registrado en este período.';
-
-  // Alerta principal — texto dinámico exacto
-  document.getElementById('cob-alert-main').innerHTML=`<div class="ar" style="margin-top:0;">
-    🔴 <strong>${fmt(sinAlt)} pacientes (${pct(sinAlt,v.total)}) NO TIENEN un segundo teléfono.</strong>
-    Si en el teléfono principal no contestan la llamada, no hay forma de otra alternativa de contacto.
-    Registrar un número alterno en su ficha permitiría una segunda oportunidad de confirmación y mejoraría el contact ratio.
-  </div>`;
-
-  // Barras
-  document.getElementById('hbar-cobertura').innerHTML=[
-    {l:'Sin número alterno', val:sinAlt, col:'#94a3b8'},
-    {l:'Con 2do teléfono',   val:v.p2,   col:'#d4820a'},
-    {l:'Con 3er teléfono',   val:v.p3,   col:'#1a9e60'},
-  ].map(h=>`<div class="hbar">
-    <div class="hbar-lbl">${h.l}</div>
-    <div class="hbar-track"><div class="hbar-fill" style="width:${pctN(h.val,v.total)}%;background:${h.col}"></div></div>
-    <div class="hbar-val">${fmt(h.val)} · ${pct(h.val,v.total)}</div>
-  </div>`).join('');
-
-  // Tip dinámico — texto exacto solicitado
-  document.getElementById('cob-alert-tip').innerHTML=`<div class="ai" style="margin-top:10px;">
-    💡 Si los <strong>${fmt(sinAlt)} pacientes sin teléfono alterno</strong> registraran un 2do número,
-    el contact ratio potencial subiría de <strong>${crActual}</strong> actual hacia <strong>&gt;90%</strong>,
-    asumiendo una tasa de respuesta similar en el reintento.
-  </div>`;
-
-  // Tabla por jornada
-  document.getElementById('tbl-cob').innerHTML=days.map(d=>{
-    const dv=DATA[d];
-    const pctA=pctN(dv.p2,dv.total);
-    return `<tr>
-      <td><strong>${dv.label} 2026</strong></td>
-      <td>${dv.total}</td>
-      <td><strong style="color:#c0392b">${dv.only1}</strong> <span class="bdg b-r">${pct(dv.only1,dv.total)}</span></td>
-      <td>${dv.p2} <span class="bdg b-y">${pct(dv.p2,dv.total)}</span></td>
-      <td>${dv.p3>0?dv.p3+' <span class="bdg b-g">'+pct(dv.p3,dv.total)+'</span>':'—'}</td>
-      <td><span class="bdg ${pctA>=40?'b-g':'b-y'}">${pct(dv.p2,dv.total)}</span></td>
-    </tr>`;
-  }).join('')+`<tr class="tot">
-    <td><strong>TOTAL</strong></td>
-    <td><strong>${fmt(days.reduce((a,d)=>a+DATA[d].total,0))}</strong></td>
-    <td><strong style="color:#c0392b">${fmt(v.only1)}</strong> (${pct(v.only1,v.total)})</td>
-    <td><strong>${fmt(v.p2)}</strong> (${pct(v.p2,v.total)})</td>
-    <td><strong>${fmt(v.p3)}</strong> (${pct(v.p3,v.total)})</td>
-    <td><strong>${pct(v.p2,v.total)}</strong></td>
-  </tr>`;
-}
-
-
-// ══ CUMPLIMIENTO ═════════════════════════════════════════════════
-// Datos: lun-sáb, sin festivos Colombia, desde 4 may hasta hoy 9 jun 2026
-// Mayo: 23 días hábiles  |  Junio (hasta hoy): 6 días hábiles  |  Total: 29
-const MONTHS_CUM = {
-  mayo: {
-    label:'Mayo 2026', habil:23, sent:12, missing:11,
-    color:'#0c41ab', colorBg:'#dbeafe',
-    missing_days:['Jue 7','Sáb 9','Lun 11','Jue 14','Sáb 16','Jue 21','Sáb 23','Lun 25','Mar 26','Vie 29','Sáb 30']
-  },
-  junio: {
-    label:'Junio 2026 (cerrado)', habil:23, sent:14, missing:9,
-    color:'#1a5c3a', colorBg:'#d1fae5',
-    missing_days:['Lun 1','Sáb 6','Mar 9','Vie 12','Sáb 13','Mar 16','Sáb 20','Mié 24','Jue 25','Sáb 27','Lun 29']
-  },
-  julio: {
-    label:'Julio 2026 (al 23 jul)', habil:20, sent:11, missing:9,
-    color:'#6a3db8', colorBg:'#ede9fe',
-    missing_days:['Jue 2','Sáb 4','Sáb 11','Lun 13','Mar 14','Sáb 18','Lun 20','Mar 21','Mié 22']
-  },
-  total: {
-    label:'Acumulado', habil:66, sent:37, missing:29,
-    color:'#7a4800', colorBg:'#fef3c7',
-    missing_days:[]
+  if(days.length>1){
+    const s2=v.will+v.wont;
+    tbody+=`<tr class="tot"><td>Total</td><td>${fmt(v.total)}</td><td>${fmt(v.answered)}</td><td>${pct(v.answered,v.total)}</td><td>${fmt(v.will)}</td><td>${v.wont}</td><td>${cancelBadge(s2?+(v.wont/s2*100):0)}</td></tr>`;
   }
-};
+  document.getElementById('trend-tbody').innerHTML = tbody;
 
-const WEEKS = [
-  {label:'Sem 4–9 May',   sent:4,total:6, days:[
-    {d:'Lun 4',s:'ok'},{d:'Mar 5',s:'ok'},{d:'Mié 6',s:'ok'},
-    {d:'Jue 7',s:'missing'},{d:'Vie 8',s:'ok'},{d:'Sáb 9',s:'missing'}]},
-  {label:'Sem 11–16 May', sent:3,total:6, days:[
-    {d:'Lun 11',s:'missing'},{d:'Mar 12',s:'ok'},{d:'Mié 13',s:'ok'},
-    {d:'Jue 14',s:'missing'},{d:'Vie 15',s:'ok'},{d:'Sáb 16',s:'missing'}]},
-  {label:'Sem 19–23 May', sent:3,total:5, days:[
-    {d:'Mar 19',s:'ok'},{d:'Mié 20',s:'ok'},
-    {d:'Jue 21',s:'missing'},{d:'Vie 22',s:'ok'},{d:'Sáb 23',s:'missing'}]},
-  {label:'Sem 25–30 May', sent:2,total:6, days:[
-    {d:'Lun 25',s:'missing'},{d:'Mar 26',s:'missing'},{d:'Mié 27',s:'ok'},
-    {d:'Jue 28',s:'ok'},{d:'Vie 29',s:'missing'},{d:'Sáb 30',s:'missing'}]},
-  {label:'Sem 1–6 Jun',   sent:4,total:6, days:[
-    {d:'Lun 1',s:'missing'},{d:'Mar 2',s:'ok'},{d:'Mié 3',s:'ok'},
-    {d:'Jue 4',s:'ok'},{d:'Vie 5',s:'ok'},{d:'Sáb 6',s:'missing'}]},
-  {label:'Sem 9–13 Jun',  sent:2,total:5, days:[
-    {d:'Mar 9',s:'missing'},{d:'Mié 10',s:'ok'},{d:'Jue 11',s:'ok'},
-    {d:'Vie 12',s:'missing'},{d:'Sáb 13',s:'missing'}]},
-  {label:'Sem 16–20 Jun', sent:3,total:5, days:[
-    {d:'Mar 16',s:'missing'},{d:'Mié 17',s:'ok'},{d:'Jue 18',s:'ok'},
-    {d:'Vie 19',s:'ok'},{d:'Sáb 20',s:'missing'}]},
-  {label:'Sem 22–27 Jun', sent:3,total:6, days:[
-    {d:'Lun 22',s:'ok'},{d:'Mar 23',s:'ok'},{d:'Mié 24',s:'missing'},
-    {d:'Jue 25',s:'missing'},{d:'Vie 26',s:'ok'},{d:'Sáb 27',s:'missing'}]},
-  {label:'Sem 29 Jun–4 Jul',sent:3,total:6, days:[
-    {d:'Lun 29',s:'missing'},{d:'Mar 30',s:'ok'},{d:'Mié 1 Jul',s:'ok'},
-    {d:'Jue 2 Jul',s:'missing'},{d:'Vie 3 Jul',s:'ok'},{d:'Sáb 4 Jul',s:'missing'}]},
-  {label:'Sem 6–11 Jul',  sent:5,total:6, days:[
-    {d:'Lun 6',s:'ok'},{d:'Mar 7',s:'ok'},{d:'Mié 8',s:'ok'},
-    {d:'Jue 9',s:'ok'},{d:'Vie 10',s:'ok'},{d:'Sáb 11',s:'missing'}]},
-  {label:'Sem 13–18 Jul', sent:3,total:6, days:[
-    {d:'Lun 13',s:'missing'},{d:'Mar 14',s:'missing'},{d:'Mié 15',s:'ok'},
-    {d:'Jue 16',s:'ok'},{d:'Vie 17',s:'ok'},{d:'Sáb 18',s:'missing'}]},
-  {label:'Sem 20–23 Jul', sent:1,total:4, days:[
-    {d:'Lun 20',s:'missing'},{d:'Mar 21',s:'missing'},{d:'Mié 22',s:'missing'},{d:'Jue 23',s:'ok'}]},
-];
-
-const MISSING_DAYS = [
-  {d:'Jue 7 May', dow:'Jueves',  mes:'Mayo', wk:'4–9 May'},
-  {d:'Sáb 9 May', dow:'Sábado',  mes:'Mayo', wk:'4–9 May'},
-  {d:'Lun 11 May',dow:'Lunes',   mes:'Mayo', wk:'11–16 May'},
-  {d:'Jue 14 May',dow:'Jueves',  mes:'Mayo', wk:'11–16 May'},
-  {d:'Sáb 16 May',dow:'Sábado',  mes:'Mayo', wk:'11–16 May'},
-  {d:'Jue 21 May',dow:'Jueves',  mes:'Mayo', wk:'19–23 May'},
-  {d:'Sáb 23 May',dow:'Sábado',  mes:'Mayo', wk:'19–23 May'},
-  {d:'Lun 25 May',dow:'Lunes',   mes:'Mayo', wk:'25–30 May'},
-  {d:'Mar 26 May',dow:'Martes',  mes:'Mayo', wk:'25–30 May'},
-  {d:'Vie 29 May',dow:'Viernes', mes:'Mayo', wk:'25–30 May'},
-  {d:'Sáb 30 May',dow:'Sábado',  mes:'Mayo', wk:'25–30 May'},
-  {d:'Lun 1 Jun', dow:'Lunes',   mes:'Junio',wk:'1–6 Jun'},
-  {d:'Sáb 6 Jun', dow:'Sábado',  mes:'Junio',wk:'1–6 Jun'},
-  {d:'Mar 9 Jun', dow:'Martes',  mes:'Junio',wk:'9–13 Jun'},
-  {d:'Vie 12 Jun',dow:'Viernes', mes:'Junio',wk:'9–13 Jun'},
-  {d:'Sáb 13 Jun',dow:'Sábado',  mes:'Junio',wk:'9–13 Jun'},
-  {d:'Mar 16 Jun',dow:'Martes',  mes:'Junio',wk:'16–20 Jun'},
-  {d:'Sáb 20 Jun',dow:'Sábado',  mes:'Junio',wk:'16–20 Jun'},
-  {d:'Mié 24 Jun',dow:'Miércoles',mes:'Junio',wk:'22–27 Jun'},
-  {d:'Jue 25 Jun',dow:'Jueves',  mes:'Junio',wk:'22–27 Jun'},
-  {d:'Sáb 27 Jun',dow:'Sábado',  mes:'Junio',wk:'22–27 Jun'},
-  {d:'Lun 29 Jun',dow:'Lunes',   mes:'Junio',wk:'29 Jun–4 Jul'},
-  {d:'Jue 2 Jul', dow:'Jueves',  mes:'Julio', wk:'29 Jun–4 Jul'},
-  {d:'Sáb 4 Jul', dow:'Sábado',  mes:'Julio', wk:'29 Jun–4 Jul'},
-  {d:'Sáb 11 Jul',dow:'Sábado',  mes:'Julio', wk:'6–11 Jul'},
-  {d:'Lun 13 Jul',dow:'Lunes',   mes:'Julio', wk:'13–17 Jul'},
-  {d:'Mar 14 Jul',dow:'Martes',  mes:'Julio', wk:'13–18 Jul'},
-  {d:'Sáb 18 Jul',dow:'Sábado',  mes:'Julio', wk:'13–18 Jul'},
-  {d:'Lun 20 Jul',dow:'Lunes',   mes:'Julio', wk:'20–23 Jul'},
-  {d:'Mar 21 Jul',dow:'Martes',  mes:'Julio', wk:'20–23 Jul'},
-  {d:'Mié 22 Jul',dow:'Miércoles',mes:'Julio',wk:'20–23 Jul'},
-];
-
-// Lun=0 Mar=1 Mié=2 Jue=3 Vie=4 Sáb=5
-const DOW_STATS = [
-  {n:'Lunes',      total:10,sent:4},
-  {n:'Martes',     total:13,sent:8},
-  {n:'Miércoles',  total:13,sent:11},
-  {n:'Jueves',     total:12,sent:7},
-  {n:'Viernes',    total:11,sent:8},
-  {n:'Sábado',     total:12,sent:0},
-];
-
-let cCumBar=null, cRingMayo=null, cRingJunio=null, cRingJulio=null, cRingTotal=null;
-let cumBuilt=false;
-
-function buildCumplimiento(){
-  // Month rings — build only once (canvas gets destroyed otherwise)
-  if(!cumBuilt){
-    cumBuilt=true;
-    buildRings();
-  }
-
-  // Calendar
-  let calHTML='';
-  WEEKS.forEach(w=>{
-    const p=w.total>0?Math.round(w.sent/w.total*100):null;
-    const bc=p===null?'wb-pend':p>=80?'wb-ok':p>=50?'wb-warn':'wb-bad';
-    const bt=p===null?'⏳ Hoy – pendiente':p+'% enviado ('+w.sent+'/'+w.total+')';
-    const dH=w.days.map(d=>{
-      const ic=d.s==='ok'?'✅':d.s==='today'?'⏳':'❌';
-      const lb=d.s==='ok'?'Enviado':d.s==='today'?'Pendiente':'Sin envío';
-      return `<div class="day-chip ${d.s}"><span class="chip-icon">${ic}</span>${d.d}<span class="chip-lbl">${lb}</span></div>`;
-    }).join('');
-    calHTML+=`<div class="week-row">
-      <div class="week-hdr"><span class="week-hdr-lbl">${w.label}</span><span class="week-badge ${bc}">${bt}</span></div>
-      <div class="days-row">${dH}</div>
-    </div>`;
+  // Modalidades list
+  const mods = Object.keys(v.mod).sort((a,b)=>v.mod[b].c-v.mod[a].c);
+  let mlist='', mtbody='';
+  mods.forEach((m,i)=>{
+    const s=v.mod[m].t; const c=v.mod[m].c; const t=s?(c/s*100):0;
+    mlist+=`<div class="si"><span class="sr">${i+1}</span><span class="sn">${MOD_LABELS[m]||m}</span><span class="sc">${c}</span>${cancelBadge(t)}</div>`;
+    mtbody+=`<tr><td>${MOD_LABELS[m]||m}</td><td>${fmt(s)}</td><td>${c}</td><td>${cancelBadge(t)}</td><td>${riskBadge(t)}</td></tr>`;
   });
-  document.getElementById('cal-grid').innerHTML=calHTML;
+  if(days.length>1) mtbody+=`<tr class="tot"><td>Total</td><td>${fmt(v.total)}</td><td>${v.wont}</td><td>${cancelBadge(surveyed?(v.wont/surveyed*100):0)}</td><td>—</td></tr>`;
+  document.getElementById('mod-list').innerHTML = mlist;
+  document.getElementById('mod-total').textContent = fmt(v.wont)+' · '+pct(v.wont,v.total)+' base';
+  document.getElementById('mod-tbody').innerHTML = mtbody;
 
-  // DOW boxes
-  document.getElementById('dow-analysis').innerHTML=DOW_STATS.map(d=>{
-    const p=Math.round(d.sent/d.total*100);
-    const miss=d.total-d.sent;
-    const col=p>=80?'#1a9e60':p>=50?'#d4820a':'#c0392b';
-    const rc=p>=80?'b-g':p>=50?'b-y':'b-r';
-    return `<div class="dow-box">
-      <div class="dow-n" style="color:${col}">${d.sent}<span style="font-size:13px;color:var(--text2)">/${d.total}</span></div>
-      <div class="dow-l">${d.n}</div>
-      <div class="dow-rate"><span class="bdg ${rc}">${p}% enviado</span></div>
-      <div class="streak-bar"><div class="streak-fill" style="width:${p}%;background:${col}"></div></div>
-      ${miss>0?`<div style="font-size:10px;color:#c0392b;margin-top:4px;font-weight:600;">${miss} día${miss>1?'s':''} perdido${miss>1?'s':''}</div>`:'<div style="font-size:10px;color:#1a9e60;margin-top:4px;font-weight:600;">✅ Perfecto</div>'}
-    </div>`;
-  }).join('');
+  // Sede
+  const sp = v.sede.principal, sn = v.sede.nogales, sf = v.sede.fundacion;
+  document.getElementById('sede-1').textContent = sp.c;
+  document.getElementById('sede-1p').textContent = pct(sp.c,sp.t);
+  document.getElementById('sede-2').textContent = sf.c;
+  document.getElementById('sede-2p').textContent = pct(sf.c,sf.t);
+  document.getElementById('sede-3').textContent = sn.c;
+  document.getElementById('sede-3p').textContent = pct(sn.c,sn.t);
+  document.getElementById('sede-total').textContent = v.wont;
+  document.getElementById('sede-tbody').innerHTML =
+    `<tr><td>Clínica Principal</td><td>${fmt(sp.t)}</td><td>${fmt(sp.a)}</td><td>${pct(sp.a,sp.t)}</td><td>${sp.c}</td></tr>`+
+    `<tr><td>Clínica los Nogales</td><td>${fmt(sn.t)}</td><td>${fmt(sn.a)}</td><td>${pct(sn.a,sn.t)}</td><td>${sn.c}</td></tr>`+
+    `<tr><td>Clínica Fundación</td><td>${fmt(sf.t)}</td><td>${fmt(sf.a)}</td><td>${pct(sf.a,sf.t)}</td><td>${sf.c}</td></tr>`+
+    (days.length>1?`<tr class="tot"><td>Total</td><td>${fmt(v.total)}</td><td>${fmt(v.answered)}</td><td>${pct(v.answered,v.total)}</td><td>${v.wont}</td></tr>`:'');
 
-  // Stacked bar chart
-  const gc='rgba(0,0,0,0.04)',tc='#666';
-  if(cCumBar)cCumBar.destroy();
-  const wFilter=WEEKS.filter(w=>w.total>0);
-  cCumBar=new Chart(document.getElementById('chart-cum-bar'),{
-    type:'bar',
-    data:{labels:wFilter.map(w=>w.label),datasets:[
-      {label:'✅ Enviado',  data:wFilter.map(w=>w.sent),       backgroundColor:'#1a9e60',borderRadius:4,stack:'s'},
-      {label:'❌ Sin envío',data:wFilter.map(w=>w.total-w.sent),backgroundColor:'#c0392b',borderRadius:4,stack:'s'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8}},
-      plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},datalabels:{display:false}},
-      scales:{x:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},
-        y:{beginAtZero:true,max:7,ticks:{color:tc,stepSize:1},grid:{color:gc}}}}
-  });
+  // Fuentes
+  const sinTel = v.total - v.tel2;
+  document.getElementById('f-con').textContent = fmt(v.tel2);
+  document.getElementById('f-con-p').textContent = pct(v.tel2,v.total);
+  document.getElementById('f-sin').textContent = fmt(sinTel);
+  document.getElementById('f-sin-p').textContent = pct(sinTel,v.total);
+  document.getElementById('f-cob').textContent = fmt(v.total);
+  document.getElementById('f-bv1').textContent = fmt(v.total)+' · 100%';
+  document.getElementById('f-bar-sin').style.width = pct(sinTel,v.total);
+  document.getElementById('f-bv2').textContent = fmt(sinTel)+' · '+pct(sinTel,v.total);
+  document.getElementById('f-bar-con').style.width = pct(v.tel2,v.total);
+  document.getElementById('f-bv3').textContent = fmt(v.tel2)+' · '+pct(v.tel2,v.total);
+  document.getElementById('f-nc1').style.width = pct(v.na,v.total);
+  document.getElementById('f-nv1').textContent = fmt(v.na)+' · '+pct(v.na,v.total);
+  document.getElementById('f-nc2').style.width = pct(v.vm,v.total);
+  document.getElementById('f-nv2').textContent = fmt(v.vm)+' · '+pct(v.vm,v.total);
+  document.getElementById('f-nc3').style.width = pct(v.busy,v.total);
+  document.getElementById('f-nv3').textContent = fmt(v.busy)+' · '+pct(v.busy,v.total);
+  document.getElementById('f-nc4').style.width = pct(v.inv,v.total);
+  document.getElementById('f-nv4').textContent = fmt(v.inv)+' · '+pct(v.inv,v.total);
 
-  // Impacto
-  const avg=90;
-  document.getElementById('impacto-grid').innerHTML=[
-    {l:'Días hábiles sin base', n:13, col:'#c0392b'},
-    {l:'Citas est. sin confirmar',n:'~1.170',col:'#d4820a'},
-    {l:'Pacientes no contactados',n:'~936',  col:'#6a3db8'},
-  ].map(x=>`<div class="br" style="padding:6px 0;border-bottom:1px solid var(--border);">
-    <div class="bl" style="width:180px;">${x.l}</div>
-    <div style="flex:1;font-size:20px;font-weight:900;color:${x.col};text-align:right;">${x.n}</div>
-  </div>`).join('');
-
-  // Table
-  const DOW_COLOR={'Sábado':'b-r','Lunes':'b-y','Jueves':'b-y','Martes':'b-gr','Viernes':'b-gr'};
-  const MES_COLOR={'Mayo':'b-b','Junio':'b-g'};
-  document.getElementById('tbl-missing').innerHTML=MISSING_DAYS.map((m,i)=>`<tr>
-    <td>${i+1}</td>
-    <td><strong>${m.d}</strong></td>
-    <td><span class="bdg ${DOW_COLOR[m.dow]||'b-gr'}">${m.dow}</span></td>
-    <td>${m.wk}</td>
-    <td><span class="bdg ${MES_COLOR[m.mes]}">${m.mes}</span></td>
-    <td style="color:#c0392b;font-weight:700;">~${avg} citas</td>
-  </tr>`).join('');
+  initCharts(v, days);
 }
 
-function buildRings(){
-  const months=[
-    {id:'mayo', data:MONTHS_CUM.mayo, ringId:'ring-mayo', lblId:'ring-mayo-lbl', statsId:'stats-mayo'},
-    {id:'junio',data:MONTHS_CUM.junio,ringId:'ring-junio',lblId:'ring-junio-lbl',statsId:'stats-junio'},
-    {id:'julio',data:MONTHS_CUM.julio,ringId:'ring-julio',lblId:'ring-julio-lbl',statsId:'stats-julio'},
-    {id:'total',data:MONTHS_CUM.total,ringId:'ring-total',lblId:'ring-total-lbl',statsId:'stats-total'},
-  ];
-  months.forEach(m=>{
-    const d=m.data;
-    const pctEnv=Math.round(d.sent/d.habil*100);
-    const pctMiss=100-pctEnv;
-    const col=pctEnv>=80?'#1a9e60':pctEnv>=60?'#d4820a':'#c0392b';
-    new Chart(document.getElementById(m.ringId),{
-      type:'doughnut',
-      data:{labels:['Enviado','Sin envío'],
-        datasets:[{data:[d.sent,d.missing],
-          backgroundColor:[col,'#fee2e2'],borderWidth:2,borderColor:'#fff'}]},
-      options:{cutout:'68%',responsive:false,
-        plugins:{legend:{display:false},tooltip:{display:false},datalabels:{display:false}}}
-    });
-    document.getElementById(m.lblId).innerHTML=
-      `<span style="font-size:18px;color:${col}">${pctEnv}%</span><br><span style="font-size:9px;color:#666">enviado</span>`;
-    document.getElementById(m.statsId).innerHTML=[
-      {l:'Días hábiles',v:d.habil},
-      {l:'Con base ✅',  v:d.sent,   vc:'#1a9e60'},
-      {l:'Sin base ❌',  v:d.missing, vc:'#c0392b'},
-      {l:'Incumplim.',  v:pctMiss+'%',vc:pctMiss>=40?'#c0392b':'#d4820a'},
-    ].map(s=>`<div class="cm-stat"><span class="cm-stat-l">${s.l}</span><span class="cm-stat-v" style="${s.vc?'color:'+s.vc:''}">${s.v}</span></div>`).join('');
-  });
+function onPeriodo(){
+  const p = document.getElementById('periodo-sel').value;
+  document.getElementById('fecha-wrap').style.display = p==='fecha' ? 'flex' : 'none';
+  document.getElementById('rango-wrap').style.display = p==='rango' ? 'flex' : 'none';
+  applyFilter();
 }
 
-// ══ INIT ═════════════════════════════════════════════════════════
+function st(n){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const m={resumen:0,tendencia:1,modalidad:2,fuentes:3};
+  document.querySelectorAll('.tab')[m[n]].classList.add('active');
+  document.getElementById('p-'+n).classList.add('active');
+}
+
+// Init
 onPeriodo();
 </script>
 </body>
