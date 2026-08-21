@@ -131,7 +131,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
     <div class="hdr-sub">Gestión de confirmación de citas</div>
   </div>
-  <div class="hdr-right" id="hdr-meta">1 jun al 20 ago 2026 · 46.078 registros</div>
+  <div class="hdr-right" id="hdr-meta">1 jun al 21 ago 2026 · 46.827 registros</div>
 </div>
 
 <!-- TABS -->
@@ -227,7 +227,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="815">15 ago 2026</option>
       <option value="818">18 ago 2026</option>
       <option value="819">19 ago 2026</option>
-      <option value="820" selected>20 ago 2026</option>
+      <option value="820">20 ago 2026</option>
+      <option value="821" selected>21 ago 2026</option>
     </select>
   </div>
 
@@ -306,6 +307,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="818">18 ago 2026</option>
       <option value="819">19 ago 2026</option>
       <option value="820">20 ago 2026</option>
+      <option value="821">21 ago 2026</option>
     </select>
     <label>Hasta:</label>
     <select class="fsel" id="rango-hasta" onchange="applyFilter()">
@@ -380,11 +382,12 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="815">15 ago 2026</option>
       <option value="818">18 ago 2026</option>
       <option value="819">19 ago 2026</option>
-      <option value="820" selected>20 ago 2026</option>
+      <option value="820">20 ago 2026</option>
+      <option value="821" selected>21 ago 2026</option>
     </select>
   </div>
 
-  <span class="pill" id="pill-citas">9.267 citas</span>
+  <span class="pill" id="pill-citas">9.719 citas</span>
 </div>
 
 <!-- ===== RESUMEN ===== -->
@@ -633,17 +636,18 @@ const DATA = {
   815:{total:33,answered:21,vm:2,na:10,busy:0,inv:0,will:17,wont:2,ignored:14,tel2:12,dur:[0,0,18,3],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:33,c:17},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:33,a:21,c:17},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
   818:{total:1048,answered:765,vm:98,na:175,busy:5,inv:5,will:605,wont:30,ignored:413,tel2:303,dur:[46,63,592,64],mod:{ULTRASONIDO:{t:622,c:351},RAYOS_X:{t:226,c:152},TOMOGRAFIA:{t:79,c:43},MAMOGRAFIA:{t:98,c:47},FLUOROSCOPIA:{t:9,c:5},DENSITOMETRIA:{t:14,c:7},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:770,a:572,c:451},nogales:{t:151,a:107,c:87},fundacion:{t:127,a:86,c:67}}},
   819:{total:820,answered:601,vm:82,na:121,busy:5,inv:8,will:486,wont:10,ignored:324,tel2:225,dur:[39,65,436,61],mod:{ULTRASONIDO:{t:518,c:299},RAYOS_X:{t:176,c:107},TOMOGRAFIA:{t:54,c:38},MAMOGRAFIA:{t:58,c:33},FLUOROSCOPIA:{t:10,c:7},DENSITOMETRIA:{t:4,c:2},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:586,a:433,c:350},nogales:{t:142,a:103,c:83},fundacion:{t:92,a:65,c:53}}},
-  820:{total:735,answered:523,vm:68,na:100,busy:24,inv:8,will:460,wont:9,ignored:266,tel2:180,dur:[18,48,403,54],mod:{ULTRASONIDO:{t:481,c:306},RAYOS_X:{t:186,c:115},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:59,c:31},FLUOROSCOPIA:{t:4,c:4},DENSITOMETRIA:{t:5,c:4},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:503,a:344,c:308},nogales:{t:111,a:79,c:71},fundacion:{t:121,a:100,c:81}}}
+  820:{total:735,answered:523,vm:68,na:100,busy:24,inv:8,will:460,wont:9,ignored:266,tel2:180,dur:[18,48,403,54],mod:{ULTRASONIDO:{t:481,c:306},RAYOS_X:{t:186,c:115},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:59,c:31},FLUOROSCOPIA:{t:4,c:4},DENSITOMETRIA:{t:5,c:4},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:503,a:344,c:308},nogales:{t:111,a:79,c:71},fundacion:{t:121,a:100,c:81}}},
+  821:{total:749,answered:571,vm:54,na:114,busy:4,inv:6,will:452,wont:25,ignored:272,tel2:187,dur:[26,49,440,56],mod:{ULTRASONIDO:{t:454,c:277},RAYOS_X:{t:193,c:114},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:87,c:51},FLUOROSCOPIA:{t:6,c:3},DENSITOMETRIA:{t:9,c:7},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:527,a:414,c:333},nogales:{t:94,a:60,c:41},fundacion:{t:128,a:97,c:78}}}
 };
 
-const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul',724:'24 jul',725:'25 jul',726:'26 jul',727:'27 jul',728:'28 jul',729:'29 jul',730:'30 jul',731:'31 jul',801:'1 ago',802:'2 ago',803:'3 ago',804:'4 ago',805:'5 ago',806:'6 ago',808:'8 ago',809:'9 ago',810:'10 ago',811:'11 ago',812:'12 ago',813:'13 ago',814:'14 ago',815:'15 ago',818:'18 ago',819:'19 ago',820:'20 ago'};
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul',724:'24 jul',725:'25 jul',726:'26 jul',727:'27 jul',728:'28 jul',729:'29 jul',730:'30 jul',731:'31 jul',801:'1 ago',802:'2 ago',803:'3 ago',804:'4 ago',805:'5 ago',806:'6 ago',808:'8 ago',809:'9 ago',810:'10 ago',811:'11 ago',812:'12 ago',813:'13 ago',814:'14 ago',815:'15 ago',818:'18 ago',819:'19 ago',820:'20 ago',821:'21 ago'};
 const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría',RESONANCIA_MAGNETICA:'Resonancia Mag.'};
 
-const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723,724,725,726,727,728,729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820];
+const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723,724,725,726,727,728,729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821];
 function getRange(){
   const p = document.getElementById('periodo-sel').value;
   if(p==='todos') return ALL_DAYS_ORDER;
-  if(p==='7dias') return [729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820];
+  if(p==='7dias') return [729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821];
   if(p==='mes') return ALL_DAYS_ORDER;
   if(p==='fecha'){const d=+document.getElementById('fecha-sel').value; return [d];}
   if(p==='rango'){
