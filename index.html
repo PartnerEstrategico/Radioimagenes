@@ -131,7 +131,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="hdr-name">Radioimágenes · Radiólogos Asociados</div>
     <div class="hdr-sub">Gestión de confirmación de citas</div>
   </div>
-  <div class="hdr-right" id="hdr-meta">1 jun al 1 sep 2026 · 53.426 registros</div>
+  <div class="hdr-right" id="hdr-meta">1 jun al 2 sep 2026 · 54.393 registros</div>
 </div>
 
 <!-- TABS -->
@@ -238,7 +238,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="828">28 ago 2026</option>
       <option value="829">29 ago 2026</option>
       <option value="831">31 ago 2026</option>
-      <option value="901" selected>1 sep 2026</option>
+      <option value="901">1 sep 2026</option>
+      <option value="902" selected>2 sep 2026</option>
     </select>
   </div>
 
@@ -328,6 +329,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="829">29 ago 2026</option>
       <option value="831">31 ago 2026</option>
       <option value="901">1 sep 2026</option>
+      <option value="902">2 sep 2026</option>
     </select>
     <label>Hasta:</label>
     <select class="fsel" id="rango-hasta" onchange="applyFilter()">
@@ -413,11 +415,12 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="828">28 ago 2026</option>
       <option value="829">29 ago 2026</option>
       <option value="831">31 ago 2026</option>
-      <option value="901" selected>1 sep 2026</option>
+      <option value="901">1 sep 2026</option>
+      <option value="902" selected>2 sep 2026</option>
     </select>
   </div>
 
-  <span class="pill" id="pill-citas">13.686 citas</span>
+  <span class="pill" id="pill-citas">14.253 citas</span>
 </div>
 
 <!-- ===== RESUMEN ===== -->
@@ -677,17 +680,18 @@ const DATA = {
   828:{total:688,answered:504,vm:60,na:112,busy:7,inv:4,will:403,wont:28,ignored:257,tel2:182,dur:[19,38,390,57],mod:{ULTRASONIDO:{t:354,c:208},RAYOS_X:{t:187,c:123},TOMOGRAFIA:{t:67,c:39},MAMOGRAFIA:{t:61,c:24},FLUOROSCOPIA:{t:6,c:2},DENSITOMETRIA:{t:13,c:7},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:456,a:343,c:265},nogales:{t:101,a:71,c:63},fundacion:{t:0,a:0,c:0}}},
   829:{total:411,answered:313,vm:26,na:57,busy:10,inv:4,will:251,wont:12,ignored:148,tel2:117,dur:[19,30,238,26],mod:{ULTRASONIDO:{t:105,c:63},RAYOS_X:{t:167,c:106},TOMOGRAFIA:{t:72,c:51},MAMOGRAFIA:{t:58,c:26},FLUOROSCOPIA:{t:9,c:5},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:259,a:202,c:162},nogales:{t:65,a:48,c:37},fundacion:{t:0,a:0,c:0}}},
   831:{total:981,answered:737,vm:78,na:142,busy:14,inv:4,will:611,wont:18,ignored:352,tel2:285,dur:[50,67,536,84],mod:{ULTRASONIDO:{t:566,c:361},RAYOS_X:{t:193,c:117},TOMOGRAFIA:{t:92,c:59},MAMOGRAFIA:{t:63,c:27},FLUOROSCOPIA:{t:9,c:7},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:684,a:511,c:421},nogales:{t:130,a:108,c:94},fundacion:{t:0,a:0,c:0}}},
-  901:{total:928,answered:722,vm:61,na:120,busy:15,inv:6,will:591,wont:14,ignored:323,tel2:271,dur:[54,73,535,60],mod:{ULTRASONIDO:{t:575,c:360},RAYOS_X:{t:165,c:105},TOMOGRAFIA:{t:104,c:73},MAMOGRAFIA:{t:13,c:4},FLUOROSCOPIA:{t:7,c:4},DENSITOMETRIA:{t:17,c:14},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:690,a:537,c:441},nogales:{t:139,a:114,c:91},fundacion:{t:0,a:0,c:0}}}
+  901:{total:928,answered:722,vm:61,na:120,busy:15,inv:6,will:591,wont:14,ignored:323,tel2:271,dur:[54,73,535,60],mod:{ULTRASONIDO:{t:575,c:360},RAYOS_X:{t:165,c:105},TOMOGRAFIA:{t:104,c:73},MAMOGRAFIA:{t:13,c:4},FLUOROSCOPIA:{t:7,c:4},DENSITOMETRIA:{t:17,c:14},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:690,a:537,c:441},nogales:{t:139,a:114,c:91},fundacion:{t:0,a:0,c:0}}},
+  902:{total:967,answered:701,vm:85,na:155,busy:20,inv:4,will:567,wont:36,ignored:364,tel2:279,dur:[35,53,524,89],mod:{ULTRASONIDO:{t:608,c:369},RAYOS_X:{t:163,c:94},TOMOGRAFIA:{t:95,c:61},MAMOGRAFIA:{t:81,c:36},FLUOROSCOPIA:{t:6,c:4},DENSITOMETRIA:{t:14,c:3},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:712,a:519,c:410},nogales:{t:136,a:99,c:85},fundacion:{t:0,a:0,c:0}}}
 };
 
-const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul',724:'24 jul',725:'25 jul',726:'26 jul',727:'27 jul',728:'28 jul',729:'29 jul',730:'30 jul',731:'31 jul',801:'1 ago',802:'2 ago',803:'3 ago',804:'4 ago',805:'5 ago',806:'6 ago',808:'8 ago',809:'9 ago',810:'10 ago',811:'11 ago',812:'12 ago',813:'13 ago',814:'14 ago',815:'15 ago',818:'18 ago',819:'19 ago',820:'20 ago',821:'21 ago',822:'22 ago',823:'23 ago',824:'24 ago',825:'25 ago',826:'26 ago',827:'27 ago',828:'28 ago',829:'29 ago',831:'31 ago',901:'1 sep'};
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul',724:'24 jul',725:'25 jul',726:'26 jul',727:'27 jul',728:'28 jul',729:'29 jul',730:'30 jul',731:'31 jul',801:'1 ago',802:'2 ago',803:'3 ago',804:'4 ago',805:'5 ago',806:'6 ago',808:'8 ago',809:'9 ago',810:'10 ago',811:'11 ago',812:'12 ago',813:'13 ago',814:'14 ago',815:'15 ago',818:'18 ago',819:'19 ago',820:'20 ago',821:'21 ago',822:'22 ago',823:'23 ago',824:'24 ago',825:'25 ago',826:'26 ago',827:'27 ago',828:'28 ago',829:'29 ago',831:'31 ago',901:'1 sep',902:'2 sep'};
 const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría',RESONANCIA_MAGNETICA:'Resonancia Mag.'};
 
-const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723,724,725,726,727,728,729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821,822,823,824,825,826,827,828,829,831,901];
+const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723,724,725,726,727,728,729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821,822,823,824,825,826,827,828,829,831,901,902];
 function getRange(){
   const p = document.getElementById('periodo-sel').value;
   if(p==='todos') return ALL_DAYS_ORDER;
-  if(p==='7dias') return [729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821,822,823,824,825,826,827,828,829,831,901];
+  if(p==='7dias') return [729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821,822,823,824,825,826,827,828,829,831,901,902];
   if(p==='mes') return ALL_DAYS_ORDER;
   if(p==='fecha'){const d=+document.getElementById('fecha-sel').value; return [d];}
   if(p==='rango'){
