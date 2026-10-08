@@ -273,7 +273,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="1003">3 oct 2026</option>
       <option value="1004">4 oct 2026</option>
       <option value="1005">5 oct 2026</option>
-      <option value="1006" selected>6 oct 2026</option>
+      <option value="1006">6 oct 2026</option>
+      <option value="1007">7 oct 2026</option>
+      <option value="1008" selected>8 oct 2026</option>
     </select>
   </div>
 
@@ -398,6 +400,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="1004">4 oct 2026</option>
       <option value="1005">5 oct 2026</option>
       <option value="1006">6 oct 2026</option>
+      <option value="1007">7 oct 2026</option>
+      <option value="1008">8 oct 2026</option>
     </select>
     <label>Hasta:</label>
     <select class="fsel" id="rango-hasta" onchange="applyFilter()">
@@ -518,7 +522,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <option value="1003">3 oct 2026</option>
       <option value="1004">4 oct 2026</option>
       <option value="1005">5 oct 2026</option>
-      <option value="1006" selected>6 oct 2026</option>
+      <option value="1006">6 oct 2026</option>
+      <option value="1007">7 oct 2026</option>
+      <option value="1008" selected>8 oct 2026</option>
     </select>
   </div>
 
@@ -817,13 +823,15 @@ const DATA = {
   1003:{total:397,answered:286,vm:44,na:57,busy:8,inv:2,will:234,wont:14,ignored:38,tel2:148,dur:[13,23,219,31],mod:{ULTRASONIDO:{t:118,c:6},RAYOS_X:{t:169,c:3},TOMOGRAFIA:{t:63,c:3},MAMOGRAFIA:{t:39,c:2},FLUOROSCOPIA:{t:8,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:273,a:192,c:10},nogales:{t:73,a:55,c:2},fundacion:{t:51,a:39,c:2}}},
   1004:{total:51,answered:39,vm:4,na:8,busy:0,inv:0,will:31,wont:0,ignored:8,tel2:19,dur:[2,1,33,3],mod:{ULTRASONIDO:{t:0,c:0},RAYOS_X:{t:51,c:0},TOMOGRAFIA:{t:0,c:0},MAMOGRAFIA:{t:0,c:0},FLUOROSCOPIA:{t:0,c:0},DENSITOMETRIA:{t:0,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:51,a:39,c:0},nogales:{t:0,a:0,c:0},fundacion:{t:0,a:0,c:0}}},
   1005:{total:868,answered:622,vm:75,na:142,busy:6,inv:11,will:502,wont:27,ignored:93,tel2:357,dur:[28,60,468,66],mod:{ULTRASONIDO:{t:541,c:12},RAYOS_X:{t:181,c:8},TOMOGRAFIA:{t:69,c:4},MAMOGRAFIA:{t:55,c:3},FLUOROSCOPIA:{t:6,c:0},DENSITOMETRIA:{t:16,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:600,a:423,c:18},nogales:{t:163,a:116,c:6},fundacion:{t:105,a:83,c:3}}},
-  1006:{total:748,answered:528,vm:79,na:114,busy:7,inv:7,will:453,wont:11,ignored:64,tel2:273,dur:[11,51,405,61],mod:{ULTRASONIDO:{t:500,c:7},RAYOS_X:{t:148,c:1},TOMOGRAFIA:{t:59,c:2},MAMOGRAFIA:{t:17,c:1},FLUOROSCOPIA:{t:11,c:0},DENSITOMETRIA:{t:13,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:518,a:371,c:8},nogales:{t:148,a:109,c:0},fundacion:{t:82,a:48,c:3}}}
+  1006:{total:748,answered:528,vm:79,na:114,busy:7,inv:7,will:453,wont:11,ignored:64,tel2:273,dur:[11,51,405,61],mod:{ULTRASONIDO:{t:500,c:7},RAYOS_X:{t:148,c:1},TOMOGRAFIA:{t:59,c:2},MAMOGRAFIA:{t:17,c:1},FLUOROSCOPIA:{t:11,c:0},DENSITOMETRIA:{t:13,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:518,a:371,c:8},nogales:{t:148,a:109,c:0},fundacion:{t:82,a:48,c:3}}},
+  1007:{total:701,answered:510,vm:60,na:96,busy:20,inv:10,will:431,wont:12,ignored:67,tel2:279,dur:[16,50,403,41],mod:{ULTRASONIDO:{t:442,c:7},RAYOS_X:{t:160,c:4},TOMOGRAFIA:{t:59,c:0},MAMOGRAFIA:{t:15,c:0},FLUOROSCOPIA:{t:10,c:1},DENSITOMETRIA:{t:15,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:472,a:356,c:5},nogales:{t:141,a:93,c:5},fundacion:{t:88,a:61,c:2}}},
+  1008:{total:721,answered:525,vm:65,na:102,busy:17,inv:5,will:458,wont:7,ignored:60,tel2:302,dur:[18,43,419,45],mod:{ULTRASONIDO:{t:411,c:4},RAYOS_X:{t:187,c:3},TOMOGRAFIA:{t:78,c:0},MAMOGRAFIA:{t:21,c:0},FLUOROSCOPIA:{t:10,c:0},DENSITOMETRIA:{t:14,c:0},RESONANCIA_MAGNETICA:{t:0,c:0}},sede:{principal:{t:492,a:356,c:5},nogales:{t:142,a:111,c:2},fundacion:{t:87,a:58,c:0}}}
 };
 
-const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul',724:'24 jul',725:'25 jul',726:'26 jul',727:'27 jul',728:'28 jul',729:'29 jul',730:'30 jul',731:'31 jul',801:'1 ago',802:'2 ago',803:'3 ago',804:'4 ago',805:'5 ago',806:'6 ago',808:'8 ago',809:'9 ago',810:'10 ago',811:'11 ago',812:'12 ago',813:'13 ago',814:'14 ago',815:'15 ago',818:'18 ago',819:'19 ago',820:'20 ago',821:'21 ago',822:'22 ago',823:'23 ago',824:'24 ago',825:'25 ago',826:'26 ago',827:'27 ago',828:'28 ago',829:'29 ago',831:'31 ago',901:'1 sep',902:'2 sep',903:'3 sep',904:'4 sep',905:'5 sep',906:'6 sep',907:'7 sep',908:'8 sep',909:'9 sep',910:'10 sep',911:'11 sep',912:'12 sep',913:'13 sep',914:'14 sep',915:'15 sep',916:'16 sep',917:'17 sep',918:'18 sep',919:'19 sep',920:'20 sep',921:'21 sep',922:'22 sep',923:'23 sep',924:'24 sep',925:'25 sep',926:'26 sep',927:'27 sep',928:'28 sep',929:'29 sep',930:'30 sep',1001:'1 oct',1002:'2 oct',1003:'3 oct',1004:'4 oct',1005:'5 oct',1006:'6 oct'};
+const DAY_LABELS = {1:'1 jun',2:'2 jun',3:'3 jun',4:'4 jun',5:'5 jun',6:'6 jun',7:'7 jun',9:'9 jun',10:'10 jun',11:'11 jun',12:'12 jun',13:'13 jun',14:'14 jun',16:'16 jun',17:'17 jun',18:'18 jun',19:'19 jun',20:'20 jun',22:'22 jun',23:'23 jun',24:'24 jun',25:'25 jun',26:'26 jun',27:'27 jun',630:'30 jun',701:'1 jul',702:'2 jul',703:'3 jul',704:'4 jul',705:'5 jul',706:'6 jul',707:'7 jul',708:'8 jul',709:'9 jul',710:'10 jul',711:'11 jul',712:'12 jul',713:'13 jul',714:'14 jul',715:'15 jul',716:'16 jul',717:'17 jul',718:'18 jul',719:'19 jul',721:'21 jul',722:'22 jul',723:'23 jul',724:'24 jul',725:'25 jul',726:'26 jul',727:'27 jul',728:'28 jul',729:'29 jul',730:'30 jul',731:'31 jul',801:'1 ago',802:'2 ago',803:'3 ago',804:'4 ago',805:'5 ago',806:'6 ago',808:'8 ago',809:'9 ago',810:'10 ago',811:'11 ago',812:'12 ago',813:'13 ago',814:'14 ago',815:'15 ago',818:'18 ago',819:'19 ago',820:'20 ago',821:'21 ago',822:'22 ago',823:'23 ago',824:'24 ago',825:'25 ago',826:'26 ago',827:'27 ago',828:'28 ago',829:'29 ago',831:'31 ago',901:'1 sep',902:'2 sep',903:'3 sep',904:'4 sep',905:'5 sep',906:'6 sep',907:'7 sep',908:'8 sep',909:'9 sep',910:'10 sep',911:'11 sep',912:'12 sep',913:'13 sep',914:'14 sep',915:'15 sep',916:'16 sep',917:'17 sep',918:'18 sep',919:'19 sep',920:'20 sep',921:'21 sep',922:'22 sep',923:'23 sep',924:'24 sep',925:'25 sep',926:'26 sep',927:'27 sep',928:'28 sep',929:'29 sep',930:'30 sep',1001:'1 oct',1002:'2 oct',1003:'3 oct',1004:'4 oct',1005:'5 oct',1006:'6 oct',1007:'7 oct',1008:'8 oct'};
 const MOD_LABELS = {ULTRASONIDO:'Ultrasonido',RAYOS_X:'Rayos X',TOMOGRAFIA:'Tomografía',MAMOGRAFIA:'Mamografía',FLUOROSCOPIA:'Fluoroscopía',DENSITOMETRIA:'Densitometría',RESONANCIA_MAGNETICA:'Resonancia Mag.'};
 
-const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723,724,725,726,727,728,729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821,822,823,824,825,826,827,828,829,831,901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,1001,1002,1003,1004,1005,1006];
+const ALL_DAYS_ORDER = [1,2,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,27,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,721,722,723,724,725,726,727,728,729,730,731,801,802,803,804,805,806,808,809,810,811,812,813,814,815,818,819,820,821,822,823,824,825,826,827,828,829,831,901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,1001,1002,1003,1004,1005,1006,1007,1008];
 function getRange(){
   const p = document.getElementById('periodo-sel').value;
   if(p==='todos') return ALL_DAYS_ORDER;
